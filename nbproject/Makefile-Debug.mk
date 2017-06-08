@@ -36,6 +36,8 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/src/Game.o \
+	${OBJECTDIR}/src/characters/Character.o \
+	${OBJECTDIR}/src/characters/Player.o \
 	${OBJECTDIR}/src/engine/InputDriver.o \
 	${OBJECTDIR}/src/engine/SignalManager.o \
 	${OBJECTDIR}/src/engine/TextureManager.o \
@@ -72,6 +74,16 @@ ${OBJECTDIR}/src/Game.o: src/Game.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -I/usr/include/ -I/usr/include/c++/6.3.1/ -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Game.o src/Game.cpp
+
+${OBJECTDIR}/src/characters/Character.o: src/characters/Character.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/characters
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I/usr/include/ -I/usr/include/c++/6.3.1/ -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/characters/Character.o src/characters/Character.cpp
+
+${OBJECTDIR}/src/characters/Player.o: src/characters/Player.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/characters
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I/usr/include/ -I/usr/include/c++/6.3.1/ -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/characters/Player.o src/characters/Player.cpp
 
 ${OBJECTDIR}/src/engine/InputDriver.o: src/engine/InputDriver.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/engine

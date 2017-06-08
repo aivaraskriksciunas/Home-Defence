@@ -1,26 +1,37 @@
 #pragma once
-#include "SFML/Graphics.hpp"
+
+#define TILE_ANGLE_CB 26.565
 
 namespace World {
 enum TileTypes {
     TILE_NONE,
     TILE_TEST,
     TILE_FLOOR,
-    TILE_WALL,
     TILE_GRASS,
     TILE_DOOR
 };
 
-enum WallTypes {
-    TILE_WALL_HOR,
-    TILE_WALL_VERT,
-    TILE_WALL_TOTAL
+enum WallPositionNames {
+    WALL_POS_N,
+    WALL_POS_E,
+    WALL_POS_S,
+    WALL_POS_W,
+    WALL_POS_TOTAL
 };
+
+/* wall positions:
+ * 
+ *   w/\n
+ *   /  \
+ *   \  /
+ *   s\/e
+ */
 
 struct Tile {
     int tileType;
     int texture;
     int tileSubType; //used for tiles that might have different orientation (e.g. walls)
+    bool wallPositions[4] = { false, false, false, false }; //which sides the walls are located at
 };
 }
 

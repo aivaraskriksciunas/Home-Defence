@@ -13,21 +13,41 @@ void InputDriver::handleInput( sf::RenderWindow* window )
         }
     }
     
-    if ( sf::Keyboard::isKeyPressed( sf::Keyboard::Left ) )
+    if ( sf::Keyboard::isKeyPressed( sf::Keyboard::Up ) &&
+              sf::Keyboard::isKeyPressed( sf::Keyboard::Right ) )
     {
-        SignalManager::sendSignal( SIG_MAP_SCROLL_LEFT );
+        SignalManager::sendSignal( SIG_PLAYER_MOVE_NE );
     }
-    if ( sf::Keyboard::isKeyPressed( sf::Keyboard::Right ) )
+    else if ( sf::Keyboard::isKeyPressed( sf::Keyboard::Down ) && 
+              sf::Keyboard::isKeyPressed( sf::Keyboard::Left ) )
     {
-        SignalManager::sendSignal( SIG_MAP_SCROLL_RIGHT );
+        SignalManager::sendSignal( SIG_PLAYER_MOVE_SW );
     }
-    if ( sf::Keyboard::isKeyPressed( sf::Keyboard::Up ) )
+    else if ( sf::Keyboard::isKeyPressed( sf::Keyboard::Right ) &&
+              sf::Keyboard::isKeyPressed( sf::Keyboard::Down ) )
     {
-        SignalManager::sendSignal( SIG_MAP_SCROLL_UP );
+        SignalManager::sendSignal( SIG_PLAYER_MOVE_SE );
     }
-    if ( sf::Keyboard::isKeyPressed( sf::Keyboard::Down ) )
+    else if ( sf::Keyboard::isKeyPressed( sf::Keyboard::Up ) && 
+              sf::Keyboard::isKeyPressed( sf::Keyboard::Left ) )
     {
-        SignalManager::sendSignal( SIG_MAP_SCROLL_DOWN );
+        SignalManager::sendSignal( SIG_PLAYER_MOVE_NW );
+    }
+    else if ( sf::Keyboard::isKeyPressed( sf::Keyboard::Up ) )
+    {
+        SignalManager::sendSignal( SIG_PLAYER_MOVE_N );
+    }
+    else if ( sf::Keyboard::isKeyPressed( sf::Keyboard::Right ) )
+    {
+        SignalManager::sendSignal( SIG_PLAYER_MOVE_E );
+    }
+    else if ( sf::Keyboard::isKeyPressed( sf::Keyboard::Down ) )
+    {
+        SignalManager::sendSignal( SIG_PLAYER_MOVE_S );
+    }
+    else if ( sf::Keyboard::isKeyPressed( sf::Keyboard::Left ) )
+    {
+        SignalManager::sendSignal( SIG_PLAYER_MOVE_W );
     }
 }
 

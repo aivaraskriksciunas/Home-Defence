@@ -8,6 +8,9 @@ public:
     VideoDriver( sf::RenderWindow* window );
     void drawTexture( sf::Texture& texture, int posx, int posy );
     
+    int getWindowWidth();
+    int getWindowHeight();
+    
 private:
     sf::RenderWindow* windowPtr;  
 };

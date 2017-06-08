@@ -22,6 +22,7 @@ private:
     
     const int windowWidth, windowHeight;
     sf::RenderWindow* mainWindow;
+    sf::View mainViewport;
     
     Engine::TextureManager* textureManager;
     Engine::VideoDriver* videoDriver;
@@ -40,5 +41,6 @@ private:
     
     //this function strips away the file name from full argv path
     std::string getPathWithoutFileName( std::string path );
+    
 };
 

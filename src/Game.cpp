@@ -12,6 +12,9 @@ Game::Game( char* programPath, char* title, int width, int height ) :
     
     this->mainWindow->setFramerateLimit( 80 );
     
+    this->mainViewport.setSize( width, height );
+    this->mainWindow->setView( this->mainViewport );
+    
     //get only the path to the file without the file name
     std::string programPathWithoutName = getPathWithoutFileName( programPath );
     
@@ -39,21 +42,37 @@ void Game::handleSignals()
             gameState = STATE_QUIT;
             this->texturesLoaded = false;
         }
-        else if ( signal == SIG_MAP_SCROLL_UP )
+        else if ( signal == SIG_PLAYER_MOVE_N )
         {
-            this->worldManager->scrollMap( 0, 2 );
+            this->worldManager->movePlayer( TEXTURE_PLAYER_N );
         }
-        else if ( signal == SIG_MAP_SCROLL_DOWN )
+        else if ( signal == SIG_PLAYER_MOVE_NE )
         {
-            this->worldManager->scrollMap( 0, -2 );
+            this->worldManager->movePlayer( TEXTURE_PLAYER_NE );
         }
-        else if ( signal == SIG_MAP_SCROLL_RIGHT )
+        else if ( signal == SIG_PLAYER_MOVE_E )
         {
-            this->worldManager->scrollMap( -2, 0 );
+            this->worldManager->movePlayer( TEXTURE_PLAYER_E );
         }
-        else if ( signal == SIG_MAP_SCROLL_LEFT )
+        else if ( signal == SIG_PLAYER_MOVE_SE )
         {
-            this->worldManager->scrollMap( 2, 0 );
+            this->worldManager->movePlayer( TEXTURE_PLAYER_SE );
+        }
+        else if ( signal == SIG_PLAYER_MOVE_S )
+        {
+            this->worldManager->movePlayer( TEXTURE_PLAYER_S );
+        }
+        else if ( signal == SIG_PLAYER_MOVE_SW )
+        {
+            this->worldManager->movePlayer( TEXTURE_PLAYER_SW );
+        }
+        else if ( signal == SIG_PLAYER_MOVE_W )
+        {
+            this->worldManager->movePlayer( TEXTURE_PLAYER_W );
+        }
+        else if ( signal == SIG_PLAYER_MOVE_NW )
+        {
+            this->worldManager->movePlayer( TEXTURE_PLAYER_NW );
         }
     }
 }
@@ -64,7 +83,13 @@ void Game::renderFrame()
     
     this->mainWindow->clear( sf::Color::Black );
     this->worldManager->renderMap( this->videoDriver );
+    
+    this->mainViewport.setCenter( worldManager->getPlayerX(), worldManager->getPlayerY() );
+    this->mainWindow->setView( this->mainViewport );
     this->mainWindow->display();
+    
+    printf( "%i, %i\n", worldManager->getPlayerX(), worldManager->getPlayerY() );
+    
 }
 
 void Game::run()

@@ -229,7 +229,7 @@ void WorldManager::renderMap( Engine::VideoDriver* videoDriver )
 void WorldManager::renderTile( Engine::VideoDriver* videoDriver, int tileIndex, int tileIsoX, int tileIsoY )
 {
     videoDriver->drawTexture( Engine::TextureManager::getTexture( map[tileIndex].texture ), 
-                                  tileIsoX + this->offsetX, tileIsoY + this->offsetY );
+                                  tileIsoX, tileIsoY );
     
     //draw two upper walls, if any
     if ( map[tileIndex].wallPositions[WALL_POS_N] )
@@ -247,13 +247,10 @@ void WorldManager::renderTile( Engine::VideoDriver* videoDriver, int tileIndex, 
     int playerPosx = this->player->getX();
     int playerPosy = this->player->getY();
     
-    if ( playerPosx >= tileIsoX && playerPosx < tileIsoX + TILE_WIDTH )
+    if ( isPosInsideTile( tileIndex, playerPosx, playerPosy ) || 
+         isPosInsideTile( tileIndex, playerPosx, playerPosy + CHARACTER_HEIGHT ) )
     {
-        if ( ( playerPosy >= tileIsoY && playerPosy < tileIsoY + TILE_HEIGHT ) ||
-             ( playerPosy + CHARACTER_HEIGHT >= tileIsoY && playerPosy + CHARACTER_HEIGHT < tileIsoY + TILE_HEIGHT ) )
-        {
-            this->player->draw( videoDriver );
-        }
+        this->player->draw( videoDriver );
     }
     
     //now draw the last lower walls.
@@ -270,67 +267,70 @@ void WorldManager::renderTile( Engine::VideoDriver* videoDriver, int tileIndex, 
     }
 }
 
-void WorldManager::scrollMap( int scrollX, int scrollY ) 
-{
-    this->offsetX += scrollX;
-    this->offsetY += scrollY;
-}
-
 int WorldManager::getTileIndexAtIsoPos( int isoX, int isoY )
 {
     for ( int index = 0; index < map.size(); index++ )
     {
-        int tileCartX = convertIndexToX( index ) * ( TILE_WIDTH / 2 );
-        int tileCartY = convertIndexToY( index ) * TILE_HEIGHT;
-        int tileIsoX, tileIsoY;
-        convertCartToIso( tileIsoX, tileIsoY, tileCartX, tileCartY );
-        
-        if ( isoX < tileIsoX || isoX > tileIsoX + TILE_WIDTH )
-            continue;
-        if ( isoY < tileIsoY || isoY > tileIsoY + TILE_HEIGHT )
-            continue;
-        
-        /*
-         * check if the point is within the tile
-         * divide the tile into 4 equal right triangles
-         * now check whether or not the point is inside the triangle or not
-         * 
-         *     /|
-         *   c/*|a
-         *  ./--|
-         *  / b |
-         * /____|
-         * 
-         * . - point
-         * * - sub-triangle to evaluate
-         * 
-         * calculate what the length of b should have been, and compare it to actual
-         * length of b. If it is longer, point is outside the tile
-         */
-        
-        int side_a = isoY - tileIsoY;
-        if ( side_a > TILE_HEIGHT / 2 )
-        {
-            side_a = TILE_HEIGHT - side_a;
-        }
-        
-        float side_b = std::abs( tileIsoX + ( TILE_WIDTH / 2 ) - isoX );
-        
-        float side_c = side_a / std::sin( ( M_PI / 180 ) * TILE_ANGLE_CB );
-        
-        //calculate what the actual side b should have been, if the angle cb was
-        //26.5 degrees
-        float actual_side_b = std::cos( ( M_PI / 180 ) * 30 ) *  side_c;
-        
-        //if the real b is shorter that what it should have been that means the point
-        //is inside the triangle. Add 1 because the results are a little inaccurate 
-        if ( side_b <= actual_side_b + 1 )
+        if ( isPosInsideTile( index, isoX, isoY ) )
         {
             return index;
         }
     }
     
     return -1;
+}
+
+bool WorldManager::isPosInsideTile( int index, int isoX, int isoY )
+{
+    int tileCartX = convertIndexToX( index ) * ( TILE_WIDTH / 2 );
+    int tileCartY = convertIndexToY( index ) * TILE_HEIGHT;
+    int tileIsoX, tileIsoY;
+    convertCartToIso( tileIsoX, tileIsoY, tileCartX, tileCartY );
+
+    if ( isoX < tileIsoX || isoX > tileIsoX + TILE_WIDTH )
+        return false;
+    if ( isoY < tileIsoY || isoY > tileIsoY + TILE_HEIGHT )
+        return false;
+
+    /*
+     * check if the point is within the tile
+     * divide the tile into 4 equal right triangles
+     * now check whether or not the point is inside the triangle or not
+     * 
+     *     /|
+     *   c/*|a
+     *  ./--|
+     *  / b |
+     * /____|
+     * 
+     * . - point
+     * * - sub-triangle to evaluate
+     * 
+     * calculate what the length of b should have been, and compare it to actual
+     * length of b. If it is longer, point is outside the tile
+     */
+
+    int side_a = isoY - tileIsoY;
+    if ( side_a > TILE_HEIGHT / 2 )
+    {
+        side_a = TILE_HEIGHT - side_a;
+    }
+
+    float side_b = std::abs( tileIsoX + ( TILE_WIDTH / 2 ) - isoX );
+
+    float side_c = side_a / std::sin( ( M_PI / 180 ) * TILE_ANGLE_CB );
+
+    //calculate what the actual side b should have been, if the angle cb was
+    //26.5 degrees
+    float actual_side_b = std::cos( ( M_PI / 180 ) * 30 ) *  side_c;
+
+    //if the real b is shorter that what it should have been that means the point
+    //is inside the triangle. Add 1 because the results are a little inaccurate 
+    if ( side_b <= actual_side_b + 1 )
+    {
+        return true;
+    }
+    return false;
 }
 
 int WorldManager::getCharacterPositionOnTile( int index, int isoX, int isoY )
@@ -389,10 +389,10 @@ bool WorldManager::isCharacterOnEdge( int tileIndex, int posx, int posy )
     float side_b = std::abs( tileIsoX + ( TILE_WIDTH / 2 ) - posx );
     
     //calculate the length of b based on edge a and angle A
-    float calculated_side_b = std::tan( TILE_ANGLE_CB * ( M_PI / 180 ) ) * side_a;
+    float calculated_side_b = side_a / std::tan( TILE_ANGLE_CB * ( M_PI / 180 ) );
     
     //compare the real and calculated length of b
-    if ( side_b >= calculated_side_b - 1 && side_b <= calculated_side_b + 1 )
+    if ( side_b >= calculated_side_b - 6 && side_b <= calculated_side_b + 6 )
     {
         return true;
     }
@@ -465,7 +465,8 @@ void WorldManager::movePlayer( int direction )
     this->player->move( newPlayerX, newPlayerY );
     
     //check if the new coordinates are not wall or empty tile
-    if ( validateCharacterCoords( newPlayerX, newPlayerY ) )
+    if ( validateCharacterCoords( newPlayerX, newPlayerY + CHARACTER_HEIGHT ) &&
+         validateCharacterCoords( newPlayerX + CHARACTER_WIDTH, newPlayerY + CHARACTER_HEIGHT ) )
     {
         this->player->setPosition( newPlayerX, newPlayerY );
     }
@@ -498,6 +499,5 @@ bool WorldManager::validateCharacterCoords( int x, int y )
         if ( isCharacterOnEdge( currentTile, x, y ) )
             return false;
     }
-    
     return true;
 }

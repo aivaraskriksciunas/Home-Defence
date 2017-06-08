@@ -23,7 +23,6 @@ public:
     void GenerateMap( std::string path );
     
     void renderMap( Engine::VideoDriver* videoDriver );
-    void scrollMap( int scrollX, int scrollY );
     
     int getStartPosX();
     int getStartPosY();
@@ -44,9 +43,6 @@ private:
     
     //map size in tiles (how many tiles make up each side)
     int tilesXCount, tilesYCount;
-    
-    //sets map offset, used for scrolling
-    int offsetX, offsetY;
     
     //player starting positions
     int startPosX, startPosY;
@@ -73,6 +69,8 @@ private:
     //checks if character is on the edge of the tile, where the walls are located
     //used for checking character collision with walls
     bool isCharacterOnEdge( int tileIndex, int posx, int posy );
+    //check if the given position is inside the tile
+    bool isPosInsideTile( int tileIndex, int posx, int posy );
     
     //will render a tile with walls, and an entity if it is on the tile
     void renderTile( Engine::VideoDriver* videoDriver, int tileIndex, int tileIsoX, int tileIsoY );

@@ -224,6 +224,8 @@ void WorldManager::renderMap( Engine::VideoDriver* videoDriver )
        
         renderTile( videoDriver, tileIndex, tileIsoX, tileIsoY );
     }
+    
+    renderBullets( videoDriver );
 }
 
 void WorldManager::renderTile( Engine::VideoDriver* videoDriver, int tileIndex, int tileIsoX, int tileIsoY )
@@ -231,15 +233,45 @@ void WorldManager::renderTile( Engine::VideoDriver* videoDriver, int tileIndex, 
     videoDriver->drawTexture( Engine::TextureManager::getTexture( map[tileIndex].texture ), 
                                   tileIsoX, tileIsoY );
     
+    int wallHorTexture, wallVertTexture;
+    if ( map[tileIndex].wallHealth >= 75 )
+    {
+        wallHorTexture = TEXTURE_WALL_HOR_100;
+        wallVertTexture = TEXTURE_WALL_VERT_100;
+    }
+    else if ( map[tileIndex].wallHealth < 75 && 
+              map[tileIndex].wallHealth >= 50 )
+    {
+        wallHorTexture = TEXTURE_WALL_HOR_75;
+        wallVertTexture = TEXTURE_WALL_VERT_75;
+    }
+    else if ( map[tileIndex].wallHealth < 50 && 
+              map[tileIndex].wallHealth >= 25 )
+    {
+        wallHorTexture = TEXTURE_WALL_HOR_50;
+        wallVertTexture = TEXTURE_WALL_VERT_50;
+    }
+    else if ( map[tileIndex].wallHealth < 25 && 
+              map[tileIndex].wallHealth >= 10 )
+    {
+        wallHorTexture = TEXTURE_WALL_HOR_25;
+        wallVertTexture = TEXTURE_WALL_VERT_25;
+    }
+    else if ( map[tileIndex].wallHealth < 10 )
+    {
+        wallHorTexture = TEXTURE_WALL_HOR_10;
+        wallVertTexture = TEXTURE_WALL_VERT_10;
+    }
+    
     //draw two upper walls, if any
     if ( map[tileIndex].wallPositions[WALL_POS_N] )
     {
-        videoDriver->drawTexture( Engine::TextureManager::getTexture( TEXTURE_WALL, TEXTURE_WALL_HOR ),
+        videoDriver->drawTexture( Engine::TextureManager::getTexture( TEXTURE_WALL, wallHorTexture ),
                                   tileIsoX + TILE_WIDTH / 2, tileIsoY + TILE_HEIGHT / 2 - WALL_HEIGHT );
     }
     if ( map[tileIndex].wallPositions[WALL_POS_W] )
     {
-        videoDriver->drawTexture( Engine::TextureManager::getTexture( TEXTURE_WALL, TEXTURE_WALL_VERT ),
+        videoDriver->drawTexture( Engine::TextureManager::getTexture( TEXTURE_WALL, wallVertTexture ),
                                  tileIsoX, tileIsoY + TILE_HEIGHT / 2 - WALL_HEIGHT );
     }
     
@@ -253,17 +285,40 @@ void WorldManager::renderTile( Engine::VideoDriver* videoDriver, int tileIndex, 
         this->player->draw( videoDriver );
     }
     
+    //check if there is a ghost on this tile 
+    for ( int ghostIndex = 0; ghostIndex < ghosts.size(); ghostIndex++ )
+    {
+        int ghostX = ghosts[ghostIndex]->getX();
+        int ghostY = ghosts[ghostIndex]->getY();
+        
+        if ( isPosInsideTile( tileIndex, ghostX, ghostY ) ||
+             isPosInsideTile( tileIndex, ghostX, ghostY + CHARACTER_HEIGHT ) )
+        {
+            this->ghosts[ghostIndex]->draw( videoDriver );
+        }
+    }
+    
     //now draw the last lower walls.
     //these walls can go over the player texture, that's why they are drawn last
     if ( map[tileIndex].wallPositions[WALL_POS_E] )
     {
-        videoDriver->drawTexture( Engine::TextureManager::getTexture( TEXTURE_WALL, TEXTURE_WALL_VERT ),
+        videoDriver->drawTexture( Engine::TextureManager::getTexture( TEXTURE_WALL, wallVertTexture ),
                                   tileIsoX + TILE_WIDTH / 2, tileIsoY + TILE_HEIGHT - WALL_HEIGHT );
     }
     if ( map[tileIndex].wallPositions[WALL_POS_S] )
     {
-        videoDriver->drawTexture( Engine::TextureManager::getTexture( TEXTURE_WALL, TEXTURE_WALL_HOR ),
+        videoDriver->drawTexture( Engine::TextureManager::getTexture( TEXTURE_WALL, wallHorTexture ),
                                  tileIsoX, tileIsoY + TILE_HEIGHT - WALL_HEIGHT );
+    }
+}
+
+void WorldManager::renderBullets( Engine::VideoDriver* videoDriver )
+{
+    for ( int bulletIndex = 0; bulletIndex < bullets.size(); bulletIndex++ )
+    {
+        videoDriver->drawTexture( Engine::TextureManager::getTexture( TEXTURE_BULLET ),
+                                  bullets[bulletIndex]->getX(), 
+                                  bullets[bulletIndex]->getY() );
     }
 }
 
@@ -430,6 +485,17 @@ void WorldManager::convertIndexToIso( int& posx, int& posy, int index )
     convertCartToIso( posx, posy, tileCartX, tileCartY );
 }
 
+int WorldManager::convertIsoToIndex( int isoX, int isoY )
+{
+    int cartX, cartY;
+    convertIsoToCart( cartX, cartY, isoX, isoY );
+    
+    int posx = cartX / TILE_WIDTH / 2;
+    int posy = cartY / TILE_HEIGHT;
+    
+    return convertPositionToIndex( posx, posy );
+}
+
 int WorldManager::convertPositionToIndex( int posx, int posy )
 {
     return ( posy * this->tilesXCount ) + posx;
@@ -472,6 +538,47 @@ void WorldManager::movePlayer( int direction )
     }
 }
 
+void WorldManager::moveEnemies()
+{
+    int playerX = player->getX();
+    int playerY = player->getY();
+    
+    for ( int ghost = 0; ghost < ghosts.size(); ghost++ )
+    {
+        if ( ghosts[ghost]->getHealth() <= 0 )
+        {
+            ghosts.erase( ghosts.begin() + ghost );
+            continue;
+        }
+        
+        float ghostX, ghostY;
+        ghosts[ghost]->move( player->getX() - ghosts[ghost]->getX(), //get the difference between player and ghost
+                             player->getY() - ghosts[ghost]->getY(),
+                             ghostX, ghostY );
+        
+        if ( validateCharacterCoords( ghostX, ghostY + CHARACTER_HEIGHT ) && 
+             validateCharacterCoords( ghostX + CHARACTER_WIDTH, ghostY + CHARACTER_HEIGHT ) )
+        {
+            ghosts[ghost]->setPosition( ghostX, ghostY );
+        }
+        else
+        {
+            handleGhostWallCollision( ghostX, ghostY + CHARACTER_HEIGHT );
+            handleGhostWallCollision( ghostX + CHARACTER_WIDTH, ghostY + CHARACTER_HEIGHT );
+        }
+    }
+}
+
+void WorldManager::updateEnemies()
+{
+    if ( ghosts.size() < 1 )
+    {
+        ghosts.push_back( new Ghost( 0, 500 ) );
+    }
+    
+    moveEnemies();
+}
+
 int WorldManager::getPlayerX()
 {
     return this->player->getX();
@@ -500,4 +607,55 @@ bool WorldManager::validateCharacterCoords( int x, int y )
             return false;
     }
     return true;
+}
+
+void WorldManager::handleGhostWallCollision( int ghostX, int ghostY )
+{
+    int currentTile = getTileIndexAtIsoPos( ghostX, ghostY );
+    if ( currentTile == -1 )
+    {
+        return;
+    }
+    
+    //get character position on tile (N, E, S, W)
+    int characterPositionOnTile = getCharacterPositionOnTile( currentTile, ghostX, ghostY );
+    
+    //check if there is a wall on the side where player is located
+    if ( map[currentTile].wallPositions[characterPositionOnTile] )
+    {
+        if ( isCharacterOnEdge( currentTile, ghostX, ghostY ) )
+            map[currentTile].wallHealth--;
+    }
+    
+    //check if walls have been destroyed;
+    if ( map[currentTile].wallHealth <= 0 )
+    {
+        resetTileWalls( currentTile );
+    }
+}
+
+void WorldManager::shoot( int direction )
+{
+    bullets.push_back( new Bullet( player->getX(), player->getY(), direction ) );
+}
+
+void WorldManager::updateBullets()
+{
+    for ( int bulletIndex = 0; bulletIndex < bullets.size(); bulletIndex++ )
+    {
+        bullets[bulletIndex]->move();
+        
+        if ( bullets[bulletIndex]->isDead() )
+        {
+            bullets.erase( bullets.begin() + bulletIndex );
+            continue;
+        }
+        
+        int ghostHit = bullets[bulletIndex]->checkCollisionWithGhost( &ghosts );
+        if ( ghostHit != -1 )
+        {
+            ghosts[ghostHit]->takeDamage( bullets[bulletIndex]->getDamage() );
+            bullets.erase( bullets.begin() + bulletIndex );
+        }
+    }
 }

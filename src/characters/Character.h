@@ -8,7 +8,7 @@ class Character {
 public:
     //returns the position that the entity would be in after moving
     void move( int& newPosX, int& newPosY );
-    void setPosition( int posx, int posy );
+    void setPosition( float posx, float posy );
     
     int getX();
     int getY();
@@ -16,10 +16,14 @@ public:
     void setDirection( int direction );
     void draw( Engine::VideoDriver* videoDriver );
     
+    void takeDamage( int damage );
+    int getHealth();
+    
 protected:
     float posx, posy;
     int direction;
     float speed;
     int textureIndex;
+    int health = 100;
 };
 

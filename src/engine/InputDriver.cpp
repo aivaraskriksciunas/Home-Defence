@@ -11,6 +11,19 @@ void InputDriver::handleInput( sf::RenderWindow* window )
         {
             SignalManager::sendSignal( SIG_QUIT );
         }
+        else if ( event.type == sf::Event::MouseButtonPressed )
+        {
+            SignalManager::sendSignal( SIG_MOUSE_LEFT_CLICK );
+        }
+        else if ( event.type == sf::Event::KeyPressed )
+        {
+            switch ( event.key.code )
+            {
+            case sf::Keyboard::Space:
+                SignalManager::sendSignal( SIG_KEY_SPACE_PRESS );
+                break;
+            }
+        }
     }
     
     if ( sf::Keyboard::isKeyPressed( sf::Keyboard::Up ) &&

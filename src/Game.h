@@ -1,8 +1,6 @@
 #pragma once
 #include <string>
 
-#include <cstdio>
-
 #include "SFML/Graphics.hpp"
 
 #include "engine/VideoDriver.h"
@@ -39,8 +37,15 @@ private:
     
     bool texturesLoaded = true;
     
+    //game clocks
+    const int enemyMoveIntervalMs = 30;
+    sf::Clock enemyMoveClock;
+    
     //this function strips away the file name from full argv path
     std::string getPathWithoutFileName( std::string path );
+    
+    //this checks all timers
+    void handleTimers();
     
 };
 

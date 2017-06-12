@@ -26,6 +26,9 @@ Game::Game( char* programPath, char* title, int width, int height ) :
     this->worldManager->GenerateMap( programPathWithoutName + "/media/maps/simple.txt" );
     
     this->gameState = STATE_RUNNING;
+    
+    //initialize clocks 
+    this->enemyMoveClock.restart();
 }
 
 void Game::handleSignals()
@@ -74,6 +77,21 @@ void Game::handleSignals()
         {
             this->worldManager->movePlayer( TEXTURE_PLAYER_NW );
         }
+        
+        if ( signal == SIG_MOUSE_LEFT_CLICK )
+        {
+            int mouseX = sf::Mouse::getPosition( (*mainWindow) ).x;
+            int mouseY = sf::Mouse::getPosition( (*mainWindow) ).y;
+            
+            int screenMiddleX = mainWindow->getSize().x / 2;
+            int screenMiddleY = mainWindow->getSize().y / 2;
+            float direction = std::atan2( mouseY - screenMiddleY,
+                                        mouseX - screenMiddleX );
+            
+            direction *= 180 / M_PI; //convert to degrees
+            
+            this->worldManager->shoot( direction );
+        }
     }
 }
 
@@ -87,8 +105,6 @@ void Game::renderFrame()
     this->mainViewport.setCenter( worldManager->getPlayerX(), worldManager->getPlayerY() );
     this->mainWindow->setView( this->mainViewport );
     this->mainWindow->display();
-    
-    printf( "%i, %i\n", worldManager->getPlayerX(), worldManager->getPlayerY() );
     
 }
 
@@ -111,7 +127,20 @@ void Game::run()
         fps++;
         
         inputDriver->handleInput( this->mainWindow );
+        
+        handleTimers();
+        
         renderFrame();
+    }
+}
+
+void Game::handleTimers()
+{
+    if ( enemyMoveClock.getElapsedTime().asMilliseconds() >= enemyMoveIntervalMs )
+    {
+        worldManager->updateEnemies();
+        worldManager->updateBullets();
+        enemyMoveClock.restart();
     }
 }
 
@@ -128,5 +157,3 @@ std::string Game::getPathWithoutFileName( std::string path )
     
     return path.substr( 0, lastSlashIndex );
 }
-
-

@@ -31,6 +31,7 @@ struct Tile {
     int tileType;
     int texture;
     int tileSubType; //used for tiles that might have different orientation (e.g. walls)
+    int wallHealth = 100;
     bool wallPositions[4] = { false, false, false, false }; //which sides the walls are located at
 };
 }

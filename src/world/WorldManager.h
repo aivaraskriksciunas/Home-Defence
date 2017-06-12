@@ -8,6 +8,8 @@
 #include "../engine/TextureManager.h"
 #include "Tile.h"
 #include "../characters/Player.h"
+#include "../characters/Ghost.h"
+#include "../characters/Bullet.h"
 
 #define TILE_WIDTH TEXTURE_WIDTH
 #define TILE_HEIGHT TEXTURE_HEIGHT
@@ -34,9 +36,17 @@ public:
     
     //character functions
     void movePlayer( int direction );
+    //checks if there are enough enemies based on game time,
+    //also calls moveEnemies Function
+    void updateEnemies();
+    //move and check if bullets have collided with any ghosts
+    void updateBullets();
+    
     int getPlayerX();
     int getPlayerY();
     bool validateCharacterCoords( int x, int y );
+    
+    void shoot( int direction );
     
 private:
     std::vector<Tile> map;
@@ -49,6 +59,10 @@ private:
     
     //characters
     Player* player;
+    std::vector<Ghost*> ghosts;
+    
+    //bullets
+    std::vector<Bullet*> bullets;
     
     void orientWalls();
     void resetTileWalls( int index );
@@ -59,6 +73,7 @@ private:
     int convertIndexToY( int index );
     int convertIndexToX( int index );
     void convertIndexToIso( int& posx, int& posy, int index );
+    int convertIsoToIndex( int isoX, int isoY );
     int convertPositionToIndex( int posx, int posy );
     int getDistanceBetweenTiles( int startTile, int endTile );
     //checks if the neighbor tile has a wall. Used in orientWalls() function
@@ -74,6 +89,11 @@ private:
     
     //will render a tile with walls, and an entity if it is on the tile
     void renderTile( Engine::VideoDriver* videoDriver, int tileIndex, int tileIsoX, int tileIsoY );
+    void renderBullets( Engine::VideoDriver* videoDriver );
+    
+    void handleGhostWallCollision( int ghostX, int ghostY );
+    
+    void moveEnemies();
     
 };
 

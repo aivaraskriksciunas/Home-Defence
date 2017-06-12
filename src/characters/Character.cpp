@@ -43,7 +43,7 @@ void Character::move( int& newPosx, int& newPosy )
         
 }
 
-void Character::setPosition( int posx, int posy )
+void Character::setPosition( float posx, float posy )
 {
     this->posx = posx;
     this->posy = posy;
@@ -63,4 +63,15 @@ int Character::getX()
 int Character::getY()
 {
     return this->posy;
+}
+
+
+void Character::takeDamage( int damage )
+{
+    this->health -= damage;
+}
+
+int Character::getHealth()
+{
+    return health;
 }

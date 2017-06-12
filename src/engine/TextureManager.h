@@ -17,12 +17,22 @@ enum TextureTypes {
     TEXTURE_FLOOR,
     TEXTURE_GRASS,
     TEXTURE_WALL,
-    TEXTURE_PLAYER
+    TEXTURE_PLAYER,
+    TEXTURE_GHOST,
+    TEXTURE_BULLET,
 };
 
 enum WallTypes {
-    TEXTURE_WALL_HOR,
-    TEXTURE_WALL_VERT,
+    TEXTURE_WALL_HOR_100,
+    TEXTURE_WALL_HOR_75,
+    TEXTURE_WALL_HOR_50,
+    TEXTURE_WALL_HOR_25,
+    TEXTURE_WALL_HOR_10,
+    TEXTURE_WALL_VERT_100,
+    TEXTURE_WALL_VERT_75,
+    TEXTURE_WALL_VERT_50,
+    TEXTURE_WALL_VERT_25,
+    TEXTURE_WALL_VERT_10,
     TEXTURE_WALL_TOTAL
 };
 
@@ -54,6 +64,8 @@ private:
     static sf::Texture grassTexture;
     static sf::Texture wallTextures[TEXTURE_WALL_TOTAL];
     static sf::Texture playerTexture[TEXTURE_PLAYER_TOTAL];
+    static sf::Texture ghostTexture[TEXTURE_PLAYER_TOTAL];
+    static sf::Texture bulletTexture;
 };
 }
 

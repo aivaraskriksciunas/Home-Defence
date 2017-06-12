@@ -4,8 +4,10 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>src/characters/Bullet.h</itemPath>
       <itemPath>src/characters/Character.h</itemPath>
       <itemPath>src/Game.h</itemPath>
+      <itemPath>src/characters/Ghost.h</itemPath>
       <itemPath>src/engine/InputDriver.h</itemPath>
       <itemPath>src/characters/Player.h</itemPath>
       <itemPath>src/engine/SignalManager.h</itemPath>
@@ -21,8 +23,10 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <itemPath>src/characters/Bullet.cpp</itemPath>
       <itemPath>src/characters/Character.cpp</itemPath>
       <itemPath>src/Game.cpp</itemPath>
+      <itemPath>src/characters/Ghost.cpp</itemPath>
       <itemPath>src/engine/InputDriver.cpp</itemPath>
       <itemPath>src/characters/Player.cpp</itemPath>
       <itemPath>src/engine/SignalManager.cpp</itemPath>
@@ -78,9 +82,17 @@
       </item>
       <item path="src/Game.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/characters/Bullet.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/characters/Bullet.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/characters/Character.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/characters/Character.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/characters/Ghost.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/characters/Ghost.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/characters/Player.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -135,9 +147,17 @@
       </item>
       <item path="src/Game.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/characters/Bullet.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/characters/Bullet.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/characters/Character.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/characters/Character.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/characters/Ghost.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/characters/Ghost.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/characters/Player.cpp" ex="false" tool="1" flavor2="0">
       </item>

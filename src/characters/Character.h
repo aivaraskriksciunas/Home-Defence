@@ -10,6 +10,8 @@ public:
     void move( int& newPosX, int& newPosY );
     void setPosition( float posx, float posy );
     
+    bool checkCollision( int posx, int posy );
+    
     int getX();
     int getY();
     
@@ -18,6 +20,7 @@ public:
     
     void takeDamage( int damage );
     int getHealth();
+    void setHealth( int value );
     
 protected:
     float posx, posy;

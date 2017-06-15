@@ -111,6 +111,19 @@ void Game::handleSignals()
                     wallRepairs--;
             }
         }
+        
+        else if ( signal == SIG_PICKUP_HEALTH )
+        {
+            worldManager->setPlayerHealth( 100 );
+        }
+        else if ( signal == SIG_PICKUP_AMMO )
+        {
+            ammo += 25;
+        }
+        else if ( signal == SIG_PICKUP_REPAIRS )
+        {
+            wallRepairs += 5;
+        }
     }
 }
 
@@ -122,7 +135,7 @@ void Game::renderFrame()
     
     
     this->mainWindow->setView( this->mainViewport );
-    this->worldManager->renderMap( this->videoDriver );
+    this->worldManager->draw( this->videoDriver );
     
     this->mainViewport.setCenter( worldManager->getPlayerX(), worldManager->getPlayerY() );
     

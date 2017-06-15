@@ -1,6 +1,13 @@
 #pragma once
 
+//for TEXTURE_WIDTH and TEXTURE_HEIGHT macros
+//yes, I know it's terrible
+#include "../engine/TextureManager.h"
+
 #define TILE_ANGLE_CB 26.565
+
+#define TILE_WIDTH TEXTURE_WIDTH
+#define TILE_HEIGHT TEXTURE_HEIGHT
 
 namespace World {
 enum TileTypes {

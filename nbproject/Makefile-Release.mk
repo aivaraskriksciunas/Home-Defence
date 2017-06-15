@@ -51,7 +51,9 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/ui/UILabel.o \
 	${OBJECTDIR}/src/ui/UIManager.o \
 	${OBJECTDIR}/src/world/Pickup.o \
-	${OBJECTDIR}/src/world/WorldManager.o
+	${OBJECTDIR}/src/world/WorldManager.o \
+	${OBJECTDIR}/src/world/WorldMath.o \
+	${OBJECTDIR}/src/world/WorldRenderManager.o
 
 
 # C Compiler Flags
@@ -162,6 +164,16 @@ ${OBJECTDIR}/src/world/WorldManager.o: src/world/WorldManager.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/world
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/world/WorldManager.o src/world/WorldManager.cpp
+
+${OBJECTDIR}/src/world/WorldMath.o: src/world/WorldMath.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/world
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/world/WorldMath.o src/world/WorldMath.cpp
+
+${OBJECTDIR}/src/world/WorldRenderManager.o: src/world/WorldRenderManager.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/world
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/world/WorldRenderManager.o src/world/WorldRenderManager.cpp
 
 # Subprojects
 .build-subprojects:

@@ -8,8 +8,8 @@
 #include "../engine/VideoDriver.h"
 #include "SFML/Graphics.hpp"
 
-#define PICKUP_WIDTH 20
-#define PICKUP_HEIGHT 20
+#define PICKUP_WIDTH 10
+#define PICKUP_HEIGHT 10
 
 enum PickupTypes {
     PICKUP_HEALTH,

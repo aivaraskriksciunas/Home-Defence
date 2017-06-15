@@ -75,3 +75,21 @@ int Character::getHealth()
 {
     return health;
 }
+
+void Character::setHealth( int value )
+{
+    health = value;
+}
+
+bool Character::checkCollision( int posx, int posy )
+{
+    if ( posx >= this->posx && posx <= this->posx + CHARACTER_WIDTH )
+    {
+        if ( posy >= this->posy && posy <= this->posy + CHARACTER_HEIGHT )
+        {
+            return true;
+        }
+    }
+    return false;
+}
+

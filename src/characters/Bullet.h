@@ -21,7 +21,7 @@ private:
     int direction;
     
     const int bulletSpeed = 4;
-    const int damage = 25;
+    const int damage = 100;
     //bullet lifespan in seconds since launch
     const int lifespan = 3;
     

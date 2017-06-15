@@ -12,7 +12,7 @@ Pickup::Pickup( int posx, int posy )
 void Pickup::draw( Engine::VideoDriver* videoDriver )
 {
     videoDriver->drawTexture( Engine::TextureManager::getTexture( getTextureID() ),
-                              this->posx, this->posy );
+                              this->posx, this->posy, PICKUP_WIDTH, PICKUP_HEIGHT );
 }
 
 bool Pickup::checkForCollision( int x, int y )
@@ -44,7 +44,7 @@ void Pickup::sendPickupSignal()
     }
 }
 
-void Pickup::getTextureID()
+int Pickup::getTextureID()
 {
     switch ( this->type )
     {

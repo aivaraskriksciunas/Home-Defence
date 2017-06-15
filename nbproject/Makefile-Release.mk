@@ -45,6 +45,12 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/engine/TextureManager.o \
 	${OBJECTDIR}/src/engine/VideoDriver.o \
 	${OBJECTDIR}/src/main.o \
+	${OBJECTDIR}/src/ui/UIBox.o \
+	${OBJECTDIR}/src/ui/UIElement.o \
+	${OBJECTDIR}/src/ui/UIIcon.o \
+	${OBJECTDIR}/src/ui/UILabel.o \
+	${OBJECTDIR}/src/ui/UIManager.o \
+	${OBJECTDIR}/src/world/Pickup.o \
 	${OBJECTDIR}/src/world/WorldManager.o
 
 
@@ -121,6 +127,36 @@ ${OBJECTDIR}/src/main.o: src/main.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/main.o src/main.cpp
+
+${OBJECTDIR}/src/ui/UIBox.o: src/ui/UIBox.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/ui
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ui/UIBox.o src/ui/UIBox.cpp
+
+${OBJECTDIR}/src/ui/UIElement.o: src/ui/UIElement.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/ui
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ui/UIElement.o src/ui/UIElement.cpp
+
+${OBJECTDIR}/src/ui/UIIcon.o: src/ui/UIIcon.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/ui
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ui/UIIcon.o src/ui/UIIcon.cpp
+
+${OBJECTDIR}/src/ui/UILabel.o: src/ui/UILabel.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/ui
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ui/UILabel.o src/ui/UILabel.cpp
+
+${OBJECTDIR}/src/ui/UIManager.o: src/ui/UIManager.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/ui
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ui/UIManager.o src/ui/UIManager.cpp
+
+${OBJECTDIR}/src/world/Pickup.o: src/world/Pickup.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/world
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/world/Pickup.o src/world/Pickup.cpp
 
 ${OBJECTDIR}/src/world/WorldManager.o: src/world/WorldManager.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/world

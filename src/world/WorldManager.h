@@ -7,6 +7,7 @@
 #include "../engine/VideoDriver.h"
 #include "../engine/TextureManager.h"
 #include "Tile.h"
+#include "Pickup.h"
 #include "../characters/Player.h"
 #include "../characters/Ghost.h"
 #include "../characters/Bullet.h"
@@ -44,9 +45,12 @@ public:
     
     int getPlayerX();
     int getPlayerY();
+    int getPlayerHealth();
     bool validateCharacterCoords( int x, int y );
     
     void shoot( int direction );
+    //fix wall the player is currently on
+    bool fixWall();
     
 private:
     std::vector<Tile> map;
@@ -64,8 +68,12 @@ private:
     //bullets
     std::vector<Bullet*> bullets;
     
+    //pickups
+    std::vector<Pickup*> pickups;
+    
     void orientWalls();
     void resetTileWalls( int index );
+    bool hasWalls( int index );
     
     void convertCartToIso( int& isoX, int& isoY, int cartX, int cartY );
     void convertIsoToCart( int& cartX, int& cartY, int isoX, int isoY );

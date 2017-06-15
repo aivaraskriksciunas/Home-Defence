@@ -8,7 +8,7 @@ void WorldManager::GenerateMap( std::string path )
     
     if ( !ifile.is_open() )
     {
-        Engine::SignalManager::sendSignal( SIG_MAP_LOAD_ERROR );
+        Engine::SignalManager::sendSignal( SIG_RESOURCE_LOAD_ERROR );
     }
     
     int mapSize = 0;
@@ -138,6 +138,14 @@ void WorldManager::orientWalls()
             
         }
     }
+}
+
+bool WorldManager::hasWalls( int index )
+{
+    return map[index].wallPositions[0] | 
+           map[index].wallPositions[1] |
+           map[index].wallPositions[2] |
+           map[index].wallPositions[3];
 }
 
 void WorldManager::resetTileWalls( int index )
@@ -571,7 +579,7 @@ void WorldManager::moveEnemies()
 
 void WorldManager::updateEnemies()
 {
-    if ( ghosts.size() < 1 )
+    if ( ghosts.size() < 2 )
     {
         ghosts.push_back( new Ghost( 0, 500 ) );
     }
@@ -587,6 +595,11 @@ int WorldManager::getPlayerX()
 int WorldManager::getPlayerY()
 {
     return this->player->getY();
+}
+
+int WorldManager::getPlayerHealth()
+{
+    return this->player->getHealth();
 }
 
 bool WorldManager::validateCharacterCoords( int x, int y )
@@ -658,4 +671,22 @@ void WorldManager::updateBullets()
             bullets.erase( bullets.begin() + bulletIndex );
         }
     }
+}
+
+bool WorldManager::fixWall()
+{
+    int playerIndex = getTileIndexAtIsoPos( player->getX() + CHARACTER_WIDTH / 2, 
+                                            player->getY() + CHARACTER_HEIGHT );
+    
+    if ( hasWalls( playerIndex ) )
+    {
+        if ( map[playerIndex].wallHealth < 100 )
+        { 
+            map[playerIndex].wallHealth = 100;
+            return true;
+        }
+    }
+    
+    return false;
+    
 }

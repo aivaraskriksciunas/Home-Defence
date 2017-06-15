@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <sstream>
 
 #include "SFML/Graphics.hpp"
 
@@ -7,6 +8,11 @@
 #include "engine/TextureManager.h"
 #include "engine/InputDriver.h"
 #include "world/WorldManager.h"
+
+#include "ui/UIManager.h"
+#include "ui/UIBox.h"
+#include "ui/UILabel.h"
+#include "ui/UIIcon.h"
 
 class Game
 {
@@ -21,11 +27,13 @@ private:
     const int windowWidth, windowHeight;
     sf::RenderWindow* mainWindow;
     sf::View mainViewport;
+    sf::View uiViewport;
     
     Engine::TextureManager* textureManager;
     Engine::VideoDriver* videoDriver;
     Engine::InputDriver* inputDriver;
     World::WorldManager* worldManager;
+    UI::UIManager* uiManager;
     
     enum GameStates {
         STATE_SPLASH, 
@@ -34,6 +42,10 @@ private:
     };
     
     int gameState;
+    
+    //game stats
+    int ammo;
+    int wallRepairs;
     
     bool texturesLoaded = true;
     
@@ -46,6 +58,19 @@ private:
     
     //this checks all timers
     void handleTimers();
+    
+    //all ui elements
+    UI::UIBox* infoBox;
+    UI::UILabel* healthLabel;
+    UI::UILabel* ammoLabel;
+    UI::UILabel* repairLabel;
+    UI::UIIcon* repairIcon;
+    UI::UIIcon* healthIcon;
+    UI::UIIcon* ammoIcon;
+    
+    //ui functions
+    void createGamePlayUI();
+    void updateUI();
     
 };
 

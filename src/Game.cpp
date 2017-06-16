@@ -18,22 +18,16 @@ Game::Game( char* programPath, char* title, int width, int height ) :
     this->uiViewport.setCenter( width / 2, height / 2 );
     
     //get only the path to the file without the file name
-    std::string programPathWithoutName = getPathWithoutFileName( programPath );
+    this->programPathWithoutName = getPathWithoutFileName( programPath );
     
     //initialize drivers and managers
     this->videoDriver = new Engine::VideoDriver( this->mainWindow );
     this->textureManager = new Engine::TextureManager( programPathWithoutName );
     this->inputDriver = new Engine::InputDriver();
     this->worldManager = new World::WorldManager();
-    this->worldManager->GenerateMap( programPathWithoutName + "/media/maps/simple.txt" );
     this->uiManager = new UI::UIManager();
     
-    this->gameState = STATE_RUNNING;
-    this->ammo = 50;
-    this->wallRepairs = 10;
-
-    //initialize clocks 
-    this->enemyMoveClock.restart();
+    this->gameState = STATE_START_SCREEN;
 }
 
 void Game::handleSignals()
@@ -49,6 +43,11 @@ void Game::handleSignals()
         {
             gameState = STATE_QUIT;
             this->texturesLoaded = false;
+        }
+        else if ( signal == SIG_GAME_RESTART )
+        {
+            resetGame();
+            gameState = STATE_RUNNING;
         }
         else if ( signal == SIG_PLAYER_MOVE_N )
         {
@@ -85,22 +84,30 @@ void Game::handleSignals()
         
         else if ( signal == SIG_MOUSE_LEFT_CLICK )
         {
-            if ( ammo > 0 )
+            if ( gameState == STATE_START_SCREEN )
             {
-                int mouseX = sf::Mouse::getPosition( (*mainWindow) ).x;
-                int mouseY = sf::Mouse::getPosition( (*mainWindow) ).y;
-
-                int screenMiddleX = mainWindow->getSize().x / 2;
-                int screenMiddleY = mainWindow->getSize().y / 2;
-                float direction = std::atan2( mouseY - screenMiddleY,
-                                            mouseX - screenMiddleX );
-
-                direction *= 180 / M_PI; //convert to degrees
-
-                this->worldManager->shoot( direction );
-                
-                ammo--;
+                startScreen.handleClick( sf::Mouse::getPosition( *mainWindow ).x,
+                                         sf::Mouse::getPosition( *mainWindow ).y );
             }
+            else if ( gameState == STATE_RUNNING )
+            {
+                if ( ammo > 0 )
+                {
+                    int mouseX = sf::Mouse::getPosition( (*mainWindow) ).x;
+                    int mouseY = sf::Mouse::getPosition( (*mainWindow) ).y;
+
+                    int screenMiddleX = mainWindow->getSize().x / 2;
+                    int screenMiddleY = mainWindow->getSize().y / 2;
+                    float direction = std::atan2( mouseY - screenMiddleY,
+                                                mouseX - screenMiddleX );
+
+                    direction *= 180 / M_PI; //convert to degrees
+
+                    this->worldManager->shoot( direction );
+
+                    ammo--;
+                }
+            }   
         }
         
         else if ( signal == SIG_KEY_SPACE_PRESS )
@@ -152,13 +159,24 @@ void Game::run()
     sf::Clock fpsClock;
     fpsClock.restart();
     
-    createGamePlayUI();
-    
     int fps = 0;
     while ( gameState != STATE_QUIT )
     {
         handleSignals();
-        updateUI();
+        inputDriver->handleInput( this->mainWindow );
+        
+        if ( gameState == STATE_RUNNING )
+        {
+            updateUI();
+        
+            handleTimers();
+
+            renderFrame();
+        }
+        else if ( gameState == STATE_START_SCREEN )
+        {
+            startScreen.renderFrame( videoDriver );
+        }
         
         if (  fpsClock.getElapsedTime().asSeconds() >= 1 )
         {
@@ -169,11 +187,6 @@ void Game::run()
         }
         fps++;
         
-        inputDriver->handleInput( this->mainWindow );
-        
-        handleTimers();
-        
-        renderFrame();
     }
 }
 
@@ -237,4 +250,17 @@ void Game::updateUI()
     text << worldManager->getPlayerHealth();
     this->healthLabel->setText( text.str() );
     
+}
+
+void Game::resetGame()
+{
+    this->worldManager->GenerateMap( programPathWithoutName + "/media/maps/simple.txt" );
+    
+    this->ammo = 50;
+    this->wallRepairs = 10;
+    
+    //initialize clocks 
+    this->enemyMoveClock.restart();
+    
+    createGamePlayUI();
 }

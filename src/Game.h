@@ -14,6 +14,8 @@
 #include "ui/UILabel.h"
 #include "ui/UIIcon.h"
 
+#include "screens/StartScreen.h"
+
 class Game
 {
 public:
@@ -24,10 +26,15 @@ private:
     void renderFrame();
     void handleSignals();
     
+    void resetGame();
+    
     const int windowWidth, windowHeight;
     sf::RenderWindow* mainWindow;
     sf::View mainViewport;
     sf::View uiViewport;
+    
+    //screens
+    Screens::StartScreen startScreen;
     
     Engine::TextureManager* textureManager;
     Engine::VideoDriver* videoDriver;
@@ -36,7 +43,7 @@ private:
     UI::UIManager* uiManager;
     
     enum GameStates {
-        STATE_SPLASH, 
+        STATE_START_SCREEN, 
         STATE_RUNNING,
         STATE_QUIT
     };
@@ -55,6 +62,8 @@ private:
     
     //this function strips away the file name from full argv path
     std::string getPathWithoutFileName( std::string path );
+    
+    std::string programPathWithoutName;
     
     //this checks all timers
     void handleTimers();

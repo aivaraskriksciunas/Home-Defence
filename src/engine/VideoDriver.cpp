@@ -53,6 +53,16 @@ void VideoDriver::drawText( sf::Font& font, sf::Color color, std::string textStr
     this->windowPtr->draw( text );
 }
 
+void VideoDriver::clearWindow( sf::Color clearColor )
+{
+    this->windowPtr->clear( clearColor );
+}
+
+void VideoDriver::displayWindow()
+{
+    this->windowPtr->display();
+}
+
 int VideoDriver::getWindowHeight()
 {
     return this->windowPtr->getSize().y;

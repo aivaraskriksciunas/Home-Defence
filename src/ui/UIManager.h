@@ -13,6 +13,8 @@ public:
     void AddElement( UIElement* element );
     void drawUI( Engine::VideoDriver* videoDriver );
     
+    bool handleClick( int mouseX, int mouseY );
+    
 private:
     std::vector<UIElement*> uiElements;
     

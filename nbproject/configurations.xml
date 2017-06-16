@@ -11,10 +11,13 @@
       <itemPath>src/engine/InputDriver.h</itemPath>
       <itemPath>src/world/Pickup.h</itemPath>
       <itemPath>src/characters/Player.h</itemPath>
+      <itemPath>src/screens/Screen.h</itemPath>
       <itemPath>src/engine/SignalManager.h</itemPath>
+      <itemPath>src/screens/StartScreen.h</itemPath>
       <itemPath>src/engine/TextureManager.h</itemPath>
       <itemPath>src/world/Tile.h</itemPath>
       <itemPath>src/ui/UIBox.h</itemPath>
+      <itemPath>src/ui/UIButton.h</itemPath>
       <itemPath>src/ui/UIElement.h</itemPath>
       <itemPath>src/ui/UIIcon.h</itemPath>
       <itemPath>src/ui/UILabel.h</itemPath>
@@ -38,9 +41,12 @@
       <itemPath>src/engine/InputDriver.cpp</itemPath>
       <itemPath>src/world/Pickup.cpp</itemPath>
       <itemPath>src/characters/Player.cpp</itemPath>
+      <itemPath>src/screens/Screen.cpp</itemPath>
       <itemPath>src/engine/SignalManager.cpp</itemPath>
+      <itemPath>src/screens/StartScreen.cpp</itemPath>
       <itemPath>src/engine/TextureManager.cpp</itemPath>
       <itemPath>src/ui/UIBox.cpp</itemPath>
+      <itemPath>src/ui/UIButton.cpp</itemPath>
       <itemPath>src/ui/UIElement.cpp</itemPath>
       <itemPath>src/ui/UIIcon.cpp</itemPath>
       <itemPath>src/ui/UILabel.cpp</itemPath>
@@ -132,9 +138,21 @@
       </item>
       <item path="src/main.cpp" ex="false" tool="1" flavor2="0">
       </item>
+      <item path="src/screens/Screen.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/screens/Screen.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/screens/StartScreen.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/screens/StartScreen.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/ui/UIBox.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/ui/UIBox.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ui/UIButton.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/ui/UIButton.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/ui/UIElement.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -229,9 +247,21 @@
       </item>
       <item path="src/main.cpp" ex="false" tool="1" flavor2="0">
       </item>
+      <item path="src/screens/Screen.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/screens/Screen.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/screens/StartScreen.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/screens/StartScreen.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/ui/UIBox.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/ui/UIBox.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ui/UIButton.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/ui/UIButton.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/ui/UIElement.cpp" ex="false" tool="1" flavor2="0">
       </item>

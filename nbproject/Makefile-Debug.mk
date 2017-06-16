@@ -45,7 +45,10 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/engine/TextureManager.o \
 	${OBJECTDIR}/src/engine/VideoDriver.o \
 	${OBJECTDIR}/src/main.o \
+	${OBJECTDIR}/src/screens/Screen.o \
+	${OBJECTDIR}/src/screens/StartScreen.o \
 	${OBJECTDIR}/src/ui/UIBox.o \
+	${OBJECTDIR}/src/ui/UIButton.o \
 	${OBJECTDIR}/src/ui/UIElement.o \
 	${OBJECTDIR}/src/ui/UIIcon.o \
 	${OBJECTDIR}/src/ui/UILabel.o \
@@ -130,10 +133,25 @@ ${OBJECTDIR}/src/main.o: src/main.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -I/usr/include/ -I/usr/include/c++/6.3.1/ -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/main.o src/main.cpp
 
+${OBJECTDIR}/src/screens/Screen.o: src/screens/Screen.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/screens
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I/usr/include/ -I/usr/include/c++/6.3.1/ -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/screens/Screen.o src/screens/Screen.cpp
+
+${OBJECTDIR}/src/screens/StartScreen.o: src/screens/StartScreen.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/screens
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I/usr/include/ -I/usr/include/c++/6.3.1/ -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/screens/StartScreen.o src/screens/StartScreen.cpp
+
 ${OBJECTDIR}/src/ui/UIBox.o: src/ui/UIBox.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/ui
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -I/usr/include/ -I/usr/include/c++/6.3.1/ -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ui/UIBox.o src/ui/UIBox.cpp
+
+${OBJECTDIR}/src/ui/UIButton.o: src/ui/UIButton.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/ui
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I/usr/include/ -I/usr/include/c++/6.3.1/ -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ui/UIButton.o src/ui/UIButton.cpp
 
 ${OBJECTDIR}/src/ui/UIElement.o: src/ui/UIElement.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/ui

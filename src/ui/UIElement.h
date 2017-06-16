@@ -9,12 +9,10 @@ namespace UI {
 class UIElement {        
 public:
     
-    //virtual void onClick();
-    //virtual void onHover();
-    //virtual void onRelease();
+    virtual void onClick();
+    void setOnClickSignal( int signal );
     
     virtual void draw( Engine::VideoDriver* videoDriver ) = 0;
-    virtual void addElement( UIElement* element );
     
     void setPosition( int posx, int posy );
     void setSize( int width, int height );
@@ -22,6 +20,8 @@ public:
     
     int getPositionX();
     int getPositionY();
+    
+    bool posInsideElement( int x, int y );
     
 protected:
     int posx, posy;

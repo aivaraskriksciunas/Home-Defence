@@ -29,4 +29,22 @@ int UIElement::getPositionY()
     return this->posy;
 }
 
-void UIElement::addElement( UIElement* element ) {}
+void UIElement::onClick() {}
+
+bool UIElement::posInsideElement( int x, int y )
+{
+    if ( x >= this->posx && x <= this->posx + this->width )
+    {
+        if ( y >= this->posy && y <= this->posy + this->height )
+        {
+            return true;
+        }
+    }
+    
+    return false;
+}
+
+void UIElement::setOnClickSignal( int signal )
+{
+    this->onClickSignal = signal;
+}

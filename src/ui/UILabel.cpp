@@ -12,6 +12,8 @@ UILabel::UILabel( int posx, int posy, std::string text, sf::Color color, int fon
     this->characterSize = characterSize;
 }
 
+UILabel::UILabel() {}
+
 void UILabel::draw( Engine::VideoDriver* videoDriver )
 {
     videoDriver->drawText( Engine::TextureManager::getFont( FONT_SIMPLE ),

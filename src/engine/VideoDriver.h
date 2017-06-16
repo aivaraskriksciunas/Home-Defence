@@ -14,6 +14,9 @@ public:
                     int posx, int posy, 
                     int characterSize );
     
+    void clearWindow( sf::Color clearColor );
+    void displayWindow();
+    
     int getWindowWidth();
     int getWindowHeight();
     

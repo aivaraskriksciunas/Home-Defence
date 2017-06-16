@@ -286,7 +286,7 @@ void WorldManager::moveEnemies()
 
 void WorldManager::updateEnemies()
 {
-    if ( ghosts.size() < 50 )
+    if ( ghosts.size() < 1 )
     {
         ghosts.push_back( new Ghost( 0, 500 ) );
     }

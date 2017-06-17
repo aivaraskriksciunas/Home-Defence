@@ -84,6 +84,7 @@ private:
     void handleGhostWallCollision( int ghostX, int ghostY );
     
     void moveEnemies();
+    void createEnemy();
     
     void createPickup( int posx, int posy );
     void checkPlayerPickupCollision();

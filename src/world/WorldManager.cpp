@@ -264,7 +264,8 @@ void WorldManager::moveEnemies()
         }
         
         //check if enemy is hitting the player
-        if ( ghosts[ghost]->checkCollision( player->getX(), player->getY() ) )
+        if ( ghosts[ghost]->checkCollision( player->getX() + CHARACTER_WIDTH / 2, 
+                                            player->getY() + CHARACTER_HEIGHT / 2 ) )
         {
             player->takeDamage( 1 );
             //check if player is dead
@@ -295,12 +296,47 @@ void WorldManager::moveEnemies()
 
 void WorldManager::updateEnemies()
 {
-    if ( ghosts.size() < 1 )
+    if ( ghosts.size() < 50 )
     {
-        ghosts.push_back( new Ghost( 0, 500 ) );
+        createEnemy();
     }
     
     moveEnemies();
+}
+
+void WorldManager::createEnemy()
+{
+    //decide at which edge to place the ghost 
+    int edge = rand() % 5;
+    
+    int spawnIndex = 0;
+    switch ( edge )
+    {
+    case 0:
+        //generate random pos on north edge
+        spawnIndex = worldMath.convertPositionToIndex( rand() % worldMath.getTilesXCount(), 0 );
+        break;
+    case 1:
+        //generate random pos on east edge
+        spawnIndex = worldMath.convertPositionToIndex( worldMath.getTilesXCount() - 1, 
+                                                       rand() % worldMath.getTilesYCount() );
+        break;
+    case 2:
+        //generate random pos on south edge
+        spawnIndex = worldMath.convertPositionToIndex( rand() % worldMath.getTilesXCount(), 
+                                                       worldMath.getTilesYCount() - 1 );
+        break;
+    case 3:
+        //generate random pos on west edge
+        spawnIndex = worldMath.convertPositionToIndex( 0, rand() % worldMath.getTilesYCount() );
+        break;
+    }
+    
+    int posx, posy;
+    worldMath.convertIndexToIso( posx, posy, spawnIndex );
+    
+    ghosts.push_back( new Ghost( posx, posy ) );
+    
 }
 
 int WorldManager::getPlayerX()

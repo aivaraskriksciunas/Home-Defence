@@ -16,6 +16,7 @@ public:
     
     void clearWindow( sf::Color clearColor );
     void displayWindow();
+    void setView( sf::View& view );
     
     int getWindowWidth();
     int getWindowHeight();

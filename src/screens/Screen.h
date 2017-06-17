@@ -13,7 +13,7 @@ public:
     virtual void handleClick( int mouseX, int mouseY );
     
 protected:
-    UI::UIManager* uiManager;
+    UI::UIManager uiManager;
     
 };
 }

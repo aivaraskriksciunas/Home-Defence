@@ -73,3 +73,7 @@ int VideoDriver::getWindowWidth()
     return this->windowPtr->getSize().x;
 }
 
+void VideoDriver::setView( sf::View& view )
+{
+    this->windowPtr->setView( view );
+}

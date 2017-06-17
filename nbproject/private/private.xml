@@ -18,24 +18,19 @@
         <group>
             <file>file:/home/aivaras/Documents/Programming/C++/HomeDefence/src/screens/StartScreen.cpp</file>
             <file>file:/home/aivaras/Documents/Programming/C++/HomeDefence/src/ui/UIElement.h</file>
-            <file>file:/home/aivaras/Documents/Programming/C++/HomeDefence/src/ui/UIBox.h</file>
-            <file>file:/home/aivaras/Documents/Programming/C++/HomeDefence/src/ui/UIButton.cpp</file>
-            <file>file:/home/aivaras/Documents/Programming/C++/HomeDefence/src/ui/UIManager.h</file>
-            <file>file:/home/aivaras/Documents/Programming/C++/HomeDefence/src/ui/UILabel.h</file>
             <file>file:/home/aivaras/Documents/Programming/C++/HomeDefence/src/screens/Screen.h</file>
-            <file>file:/home/aivaras/Documents/Programming/C++/HomeDefence/src/screens/StartScreen.h</file>
             <file>file:/home/aivaras/Documents/Programming/C++/HomeDefence/src/ui/UIManager.cpp</file>
-            <file>file:/home/aivaras/Documents/Programming/C++/HomeDefence/src/ui/UIElement.cpp</file>
             <file>file:/home/aivaras/Documents/Programming/C++/HomeDefence/src/engine/VideoDriver.cpp</file>
+            <file>file:/home/aivaras/Documents/Programming/C++/HomeDefence/src/ui/UIElement.cpp</file>
             <file>file:/home/aivaras/Documents/Programming/C++/HomeDefence/src/ui/UIBox.cpp</file>
-            <file>file:/home/aivaras/Documents/Programming/C++/HomeDefence/src/engine/SignalManager.h</file>
             <file>file:/home/aivaras/Documents/Programming/C++/HomeDefence/src/main.cpp</file>
             <file>file:/home/aivaras/Documents/Programming/C++/HomeDefence/src/Game.cpp</file>
             <file>file:/home/aivaras/Documents/Programming/C++/HomeDefence/src/screens/Screen.cpp</file>
-            <file>file:/home/aivaras/Documents/Programming/C++/HomeDefence/src/ui/UIButton.h</file>
+            <file>file:/home/aivaras/Documents/Programming/C++/HomeDefence/src/screens/GameScreen.cpp</file>
             <file>file:/home/aivaras/Documents/Programming/C++/HomeDefence/src/engine/VideoDriver.h</file>
-            <file>file:/home/aivaras/Documents/Programming/C++/HomeDefence/src/ui/UILabel.cpp</file>
             <file>file:/home/aivaras/Documents/Programming/C++/HomeDefence/src/Game.h</file>
+            <file>file:/home/aivaras/Documents/Programming/C++/HomeDefence/src/screens/GameScreen.h</file>
+            <file>file:/home/aivaras/Documents/Programming/C++/HomeDefence/src/world/WorldManager.cpp</file>
         </group>
     </open-files>
 </project-private>

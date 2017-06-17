@@ -1,6 +1,5 @@
 #pragma once
 #include <string>
-#include <sstream>
 
 #include "SFML/Graphics.hpp"
 
@@ -15,6 +14,7 @@
 #include "ui/UIIcon.h"
 
 #include "screens/StartScreen.h"
+#include "screens/GameScreen.h"
 
 class Game
 {
@@ -23,24 +23,21 @@ public:
     void run();
     
 private:
-    void renderFrame();
     void handleSignals();
     
     void resetGame();
     
     const int windowWidth, windowHeight;
     sf::RenderWindow* mainWindow;
-    sf::View mainViewport;
-    sf::View uiViewport;
     
     //screens
     Screens::StartScreen startScreen;
+    Screens::GameScreen* gameScreen;
     
     Engine::TextureManager* textureManager;
     Engine::VideoDriver* videoDriver;
     Engine::InputDriver* inputDriver;
     World::WorldManager* worldManager;
-    UI::UIManager* uiManager;
     
     enum GameStates {
         STATE_START_SCREEN, 
@@ -67,19 +64,6 @@ private:
     
     //this checks all timers
     void handleTimers();
-    
-    //all ui elements
-    UI::UIBox* infoBox;
-    UI::UILabel* healthLabel;
-    UI::UILabel* ammoLabel;
-    UI::UILabel* repairLabel;
-    UI::UIIcon* repairIcon;
-    UI::UIIcon* healthIcon;
-    UI::UIIcon* ammoIcon;
-    
-    //ui functions
-    void createGamePlayUI();
-    void updateUI();
     
 };
 

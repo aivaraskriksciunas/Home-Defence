@@ -13,10 +13,6 @@ Game::Game( char* programPath, char* title, int width, int height ) :
     
     this->mainWindow->setFramerateLimit( 80 );
     
-    this->mainViewport.setSize( width, height );
-    this->uiViewport.setSize( width, height );
-    this->uiViewport.setCenter( width / 2, height / 2 );
-    
     //get only the path to the file without the file name
     this->programPathWithoutName = getPathWithoutFileName( programPath );
     
@@ -25,7 +21,6 @@ Game::Game( char* programPath, char* title, int width, int height ) :
     this->textureManager = new Engine::TextureManager( programPathWithoutName );
     this->inputDriver = new Engine::InputDriver();
     this->worldManager = new World::WorldManager();
-    this->uiManager = new UI::UIManager();
     
     this->gameState = STATE_START_SCREEN;
 }
@@ -134,26 +129,6 @@ void Game::handleSignals()
     }
 }
 
-void Game::renderFrame()
-{
-    if ( !this->texturesLoaded ) return;
-    
-    this->mainWindow->clear( sf::Color::Black );
-    
-    
-    this->mainWindow->setView( this->mainViewport );
-    this->worldManager->draw( this->videoDriver );
-    
-    this->mainViewport.setCenter( worldManager->getPlayerX(), worldManager->getPlayerY() );
-    
-    
-    this->mainWindow->setView( this->uiViewport );
-    this->uiManager->drawUI( this->videoDriver );
-    
-    this->mainWindow->display();
-    
-}
-
 void Game::run()
 {
     sf::Clock fpsClock;
@@ -167,11 +142,11 @@ void Game::run()
         
         if ( gameState == STATE_RUNNING )
         {
-            updateUI();
+            gameScreen->updateUI( this->ammo, this->wallRepairs, this->worldManager->getPlayerHealth() );
         
             handleTimers();
 
-            renderFrame();
+            gameScreen->renderFrame( videoDriver, worldManager );
         }
         else if ( gameState == STATE_START_SCREEN )
         {
@@ -214,44 +189,6 @@ std::string Game::getPathWithoutFileName( std::string path )
     return path.substr( 0, lastSlashIndex );
 }
 
-
-void Game::createGamePlayUI()
-{
-    this->infoBox = new UI::UIBox( 0, 0, 100, 100 );
-    
-    this->healthLabel = new UI::UILabel( 30, 10, "0 ", sf::Color::White, FONT_SIMPLE, 17 );
-    this->healthIcon = new UI::UIIcon( 5, 10, TEXTURE_ICON_HEART );
-    this->ammoIcon = new UI::UIIcon( 5, 30, TEXTURE_ICON_BULLET );
-    this->ammoLabel = new UI::UILabel( 30, 30, "0 ", sf::Color::White, FONT_SIMPLE, 17 );
-    this->repairIcon = new UI::UIIcon( 5, 50, TEXTURE_ICON_HAMMER );
-    this->repairLabel = new UI::UILabel( 30, 50, "0", sf::Color::White, FONT_SIMPLE, 17 );
-    
-    this->infoBox->addElement( healthLabel );
-    this->infoBox->addElement( healthIcon );
-    this->infoBox->addElement( ammoLabel );
-    this->infoBox->addElement( ammoIcon );
-    this->infoBox->addElement( repairIcon );
-    this->infoBox->addElement( repairLabel );
-    
-    uiManager->AddElement( infoBox );
-}
-
-void Game::updateUI()
-{
-    std::stringstream text( "" );
-    text << ammo;
-    this->ammoLabel->setText( text.str() );
-    
-    text.str( "" );
-    text << wallRepairs;
-    this->repairLabel->setText( text.str() );
-    
-    text.str( "" );
-    text << worldManager->getPlayerHealth();
-    this->healthLabel->setText( text.str() );
-    
-}
-
 void Game::resetGame()
 {
     this->worldManager->GenerateMap( programPathWithoutName + "/media/maps/simple.txt" );
@@ -262,5 +199,6 @@ void Game::resetGame()
     //initialize clocks 
     this->enemyMoveClock.restart();
     
-    createGamePlayUI();
+    //reset game screen
+    this->gameScreen = new Screens::GameScreen( windowWidth, windowHeight );
 }

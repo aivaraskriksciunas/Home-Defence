@@ -7,6 +7,7 @@
       <itemPath>src/characters/Bullet.h</itemPath>
       <itemPath>src/characters/Character.h</itemPath>
       <itemPath>src/Game.h</itemPath>
+      <itemPath>src/screens/GameScreen.h</itemPath>
       <itemPath>src/characters/Ghost.h</itemPath>
       <itemPath>src/engine/InputDriver.h</itemPath>
       <itemPath>src/world/Pickup.h</itemPath>
@@ -37,6 +38,7 @@
       <itemPath>src/characters/Bullet.cpp</itemPath>
       <itemPath>src/characters/Character.cpp</itemPath>
       <itemPath>src/Game.cpp</itemPath>
+      <itemPath>src/screens/GameScreen.cpp</itemPath>
       <itemPath>src/characters/Ghost.cpp</itemPath>
       <itemPath>src/engine/InputDriver.cpp</itemPath>
       <itemPath>src/world/Pickup.cpp</itemPath>
@@ -137,6 +139,10 @@
       <item path="src/engine/VideoDriver.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/screens/GameScreen.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/screens/GameScreen.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/screens/Screen.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -246,6 +252,10 @@
       <item path="src/engine/VideoDriver.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/screens/GameScreen.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/screens/GameScreen.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/screens/Screen.cpp" ex="false" tool="1" flavor2="0">
       </item>

@@ -14,6 +14,8 @@
 #include "ui/UIIcon.h"
 
 #include "screens/StartScreen.h"
+#include "screens/PauseScreen.h"
+#include "screens/GameOverScreen.h"
 #include "screens/GameScreen.h"
 
 class Game
@@ -31,8 +33,11 @@ private:
     sf::RenderWindow* mainWindow;
     
     //screens
-    Screens::StartScreen startScreen;
+    Screens::StartScreen* startScreen;
+    Screens::PauseScreen* pauseScreen;
+    Screens::GameOverScreen* gameOverScreen;
     Screens::GameScreen* gameScreen;
+    Screens::Screen* currentScreen;
     
     Engine::TextureManager* textureManager;
     Engine::VideoDriver* videoDriver;
@@ -41,6 +46,8 @@ private:
     
     enum GameStates {
         STATE_START_SCREEN, 
+        STATE_PAUSE_SCREEN,
+        STATE_GAME_OVER_SCREEN,
         STATE_RUNNING,
         STATE_QUIT
     };

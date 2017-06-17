@@ -53,6 +53,23 @@ void VideoDriver::drawText( sf::Font& font, sf::Color color, std::string textStr
     this->windowPtr->draw( text );
 }
 
+void VideoDriver::drawTextCentered( sf::Font& font, sf::Color color, std::string textString, 
+                                    int posx, int posy, 
+                                    int characterSize )
+{
+    sf::Text text;
+    text.setFont( font );
+    text.setFillColor( color );
+    text.setString( sf::String( textString.c_str() ) );
+    text.setCharacterSize( characterSize );
+    
+    text.setOrigin( text.getGlobalBounds().width / 2,
+                    text.getGlobalBounds().height / 2 );
+    text.setPosition( posx, posy );
+    
+    this->windowPtr->draw( text );
+}
+
 void VideoDriver::clearWindow( sf::Color clearColor )
 {
     this->windowPtr->clear( clearColor );

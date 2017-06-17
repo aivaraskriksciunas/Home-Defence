@@ -18,11 +18,15 @@ public:
     
     void setText( std::string text );
     
+    void setCentered( bool center );
+    
 private:
     std::string text;
     int fontID;
     
     int characterSize;
+    
+    bool textCentered;
 };
 
 }

@@ -14,6 +14,10 @@ public:
                     int posx, int posy, 
                     int characterSize );
     
+    void drawTextCentered( sf::Font& font, sf::Color color, std::string text, 
+                           int posx, int posy, 
+                           int characterSize );
+    
     void clearWindow( sf::Color clearColor );
     void displayWindow();
     void setView( sf::View& view );

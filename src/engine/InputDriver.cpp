@@ -22,6 +22,12 @@ void InputDriver::handleInput( sf::RenderWindow* window )
             case sf::Keyboard::Space:
                 SignalManager::sendSignal( SIG_KEY_SPACE_PRESS );
                 break;
+            case sf::Keyboard::P:
+                SignalManager::sendSignal( SIG_GAME_PAUSED );
+                break;
+            case sf::Keyboard::Escape:
+                SignalManager::sendSignal( SIG_GAME_PAUSED );
+                break;
             }
         }
     }

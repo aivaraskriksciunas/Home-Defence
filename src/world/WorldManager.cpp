@@ -70,6 +70,9 @@ void WorldManager::GenerateMap( std::string path )
     orientWalls();
     
     this->player = new Player( this->startPosX, this->startPosY );
+    this->ghosts.clear();
+    this->pickups.clear();
+    this->bullets.clear();
 }
 
 void WorldManager::orientWalls()
@@ -264,6 +267,12 @@ void WorldManager::moveEnemies()
         if ( ghosts[ghost]->checkCollision( player->getX(), player->getY() ) )
         {
             player->takeDamage( 1 );
+            //check if player is dead
+            if ( player->getHealth() <= 0 )
+            {
+                Engine::SignalManager::sendSignal( SIG_PLAYER_DEAD );
+                return;
+            }
         }
         
         float ghostX, ghostY;

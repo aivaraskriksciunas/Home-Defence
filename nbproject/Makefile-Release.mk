@@ -45,7 +45,9 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/engine/TextureManager.o \
 	${OBJECTDIR}/src/engine/VideoDriver.o \
 	${OBJECTDIR}/src/main.o \
+	${OBJECTDIR}/src/screens/GameOverScreen.o \
 	${OBJECTDIR}/src/screens/GameScreen.o \
+	${OBJECTDIR}/src/screens/PauseScreen.o \
 	${OBJECTDIR}/src/screens/Screen.o \
 	${OBJECTDIR}/src/screens/StartScreen.o \
 	${OBJECTDIR}/src/ui/UIBox.o \
@@ -134,10 +136,20 @@ ${OBJECTDIR}/src/main.o: src/main.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/main.o src/main.cpp
 
+${OBJECTDIR}/src/screens/GameOverScreen.o: src/screens/GameOverScreen.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/screens
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/screens/GameOverScreen.o src/screens/GameOverScreen.cpp
+
 ${OBJECTDIR}/src/screens/GameScreen.o: src/screens/GameScreen.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/screens
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/screens/GameScreen.o src/screens/GameScreen.cpp
+
+${OBJECTDIR}/src/screens/PauseScreen.o: src/screens/PauseScreen.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/screens
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/screens/PauseScreen.o src/screens/PauseScreen.cpp
 
 ${OBJECTDIR}/src/screens/Screen.o: src/screens/Screen.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/screens

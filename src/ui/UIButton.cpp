@@ -14,6 +14,8 @@ UIButton::UIButton( int posx, int posy, int width, int height, sf::Color bgColor
                              sf::Color::White,
                              FONT_SIMPLE, 15 );
     
+    this->message.setCentered( true );
+    
     this->onClickSignal = onClickSignal;
 }
 

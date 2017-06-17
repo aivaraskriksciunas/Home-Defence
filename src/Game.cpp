@@ -22,6 +22,10 @@ Game::Game( char* programPath, char* title, int width, int height ) :
     this->inputDriver = new Engine::InputDriver();
     this->worldManager = new World::WorldManager();
     
+    this->startScreen = new Screens::StartScreen( windowWidth, windowHeight );
+    this->pauseScreen = new Screens::PauseScreen( windowWidth, windowHeight );
+    this->gameOverScreen = new Screens::GameOverScreen( windowWidth, windowHeight );
+    
     this->gameState = STATE_START_SCREEN;
 }
 
@@ -43,6 +47,24 @@ void Game::handleSignals()
         {
             resetGame();
             gameState = STATE_RUNNING;
+        }
+        else if ( signal == SIG_GAME_RESUME )
+        {
+            gameState = STATE_RUNNING;
+        }
+        else if ( signal == SIG_GAME_STATE_MENU )
+        {
+            gameState = STATE_START_SCREEN;
+        }
+        else if ( signal == SIG_GAME_PAUSED )
+        {
+            //pause game if the game is currently running
+            if ( gameState == STATE_RUNNING ) gameState = STATE_PAUSE_SCREEN;
+        }
+        
+        else if ( signal == SIG_PLAYER_DEAD )
+        {
+            gameState = STATE_GAME_OVER_SCREEN;
         }
         else if ( signal == SIG_PLAYER_MOVE_N )
         {
@@ -79,12 +101,7 @@ void Game::handleSignals()
         
         else if ( signal == SIG_MOUSE_LEFT_CLICK )
         {
-            if ( gameState == STATE_START_SCREEN )
-            {
-                startScreen.handleClick( sf::Mouse::getPosition( *mainWindow ).x,
-                                         sf::Mouse::getPosition( *mainWindow ).y );
-            }
-            else if ( gameState == STATE_RUNNING )
+            if ( gameState == STATE_RUNNING )
             {
                 if ( ammo > 0 )
                 {
@@ -103,6 +120,11 @@ void Game::handleSignals()
                     ammo--;
                 }
             }   
+            else 
+            {
+                currentScreen->handleClick( sf::Mouse::getPosition( *mainWindow ).x,
+                                            sf::Mouse::getPosition( *mainWindow ).y );
+            }
         }
         
         else if ( signal == SIG_KEY_SPACE_PRESS )
@@ -140,17 +162,32 @@ void Game::run()
         handleSignals();
         inputDriver->handleInput( this->mainWindow );
         
+        switch ( gameState )
+        {
+            case STATE_RUNNING:
+                currentScreen = gameScreen;
+                break;
+            case STATE_START_SCREEN:
+                currentScreen = startScreen;
+                break;
+            case STATE_PAUSE_SCREEN:
+                currentScreen = pauseScreen;
+                break;
+            case STATE_GAME_OVER_SCREEN:
+                currentScreen = gameOverScreen;
+                break;
+        }
+        
         if ( gameState == STATE_RUNNING )
         {
             gameScreen->updateUI( this->ammo, this->wallRepairs, this->worldManager->getPlayerHealth() );
         
             handleTimers();
-
             gameScreen->renderFrame( videoDriver, worldManager );
         }
-        else if ( gameState == STATE_START_SCREEN )
+        else 
         {
-            startScreen.renderFrame( videoDriver );
+            currentScreen->renderFrame( videoDriver );
         }
         
         if (  fpsClock.getElapsedTime().asSeconds() >= 1 )

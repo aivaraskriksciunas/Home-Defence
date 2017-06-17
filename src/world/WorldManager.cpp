@@ -4,6 +4,7 @@ using namespace World;
 
 void WorldManager::GenerateMap( std::string path )
 {
+    srand( time( 0 ) );
     std::ifstream ifile( path );
     
     if ( !ifile.is_open() )
@@ -69,7 +70,7 @@ void WorldManager::GenerateMap( std::string path )
     ifile.close();
     orientWalls();
     
-    this->player = new Player( this->startPosX, this->startPosY );
+    this->player = new Player( 50, 50 );//this->startPosX, this->startPosY );
     this->ghosts.clear();
     this->pickups.clear();
     this->bullets.clear();
@@ -144,12 +145,62 @@ void WorldManager::orientWalls()
 
 int WorldManager::getTileIndexAtIsoPos( int isoX, int isoY )
 {
-    for ( int index = 0; index < map.size(); index++ )
+    //we imagine the map is divided in to TILE_WIDTH by TILE_HEIGHT squares
+    //calculate the position of our current square
+    
+    //we first get the square index, then we find it's coordinates
+    //make sure to cast index to an int, otherwise we'll just get the same result
+    int squareX = 0;
+    int squareY = int( isoY / TILE_HEIGHT ) * TILE_HEIGHT;
+    
+    //if position is on the negative (left) side, offset it by one tile,
+    //otherwise we would get middle squares with same x positions
+    if ( isoX < 0 )
+        squareX = int( ( isoX - TILE_WIDTH ) / TILE_WIDTH ) * TILE_WIDTH; 
+    else
+        squareX = int( isoX / TILE_WIDTH ) * TILE_WIDTH; 
+    
+    //the square's position is also equal to position of a tile
+    //since we have some tiles position, we can calculate it's index
+    //find the tile cartesian coordinates
+    int tileCartX, tileCartY;
+    worldMath.convertIsoToCart( tileCartX, tileCartY, squareX, squareY );
+    //now get tile X and Y indexes
+    int tileIndexX = tileCartX / ( TILE_WIDTH / 2 );
+    int tileIndexY = tileCartY / TILE_HEIGHT;
+    //now just get the index
+    int detectedTileIndex = worldMath.convertPositionToIndex( tileIndexX, tileIndexY );
+    
+    //test the current tile
+    if ( worldMath.isPosInsideTile( detectedTileIndex, isoX, isoY ) )
     {
-        if ( worldMath.isPosInsideTile( index, isoX, isoY ) )
-        {
-            return index;
-        }
+        return detectedTileIndex;
+    }
+    
+    //test the neighbor tiles, because they take up part of a square as well
+    //west tile
+    if ( worldMath.convertIndexToX( detectedTileIndex ) > 0 )
+    {
+        if ( worldMath.isPosInsideTile( detectedTileIndex - 1, isoX, isoY ) )
+            return detectedTileIndex - 1;
+    }
+    //east tile
+    if ( worldMath.convertIndexToX( detectedTileIndex ) < worldMath.getTilesXCount() )
+    {
+        if ( worldMath.isPosInsideTile( detectedTileIndex + 1, isoX, isoY ) )
+            return detectedTileIndex + 1;
+    }
+    //north tile
+    if ( worldMath.convertIndexToY( detectedTileIndex ) > 0 )
+    {
+        if ( worldMath.isPosInsideTile( detectedTileIndex - worldMath.getTilesXCount(), isoX, isoY ) )
+            return detectedTileIndex - worldMath.getTilesXCount();
+    }
+    //south tile
+    if ( worldMath.convertIndexToX( detectedTileIndex ) < worldMath.getTilesYCount() )
+    {
+        if ( worldMath.isPosInsideTile( detectedTileIndex + worldMath.getTilesYCount(), isoX, isoY ) )
+            return detectedTileIndex + worldMath.getTilesYCount();
     }
     
     return -1;

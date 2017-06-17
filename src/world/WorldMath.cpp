@@ -34,7 +34,7 @@ int WorldMath::convertIsoToIndex( int isoX, int isoY )
     int cartX, cartY;
     convertIsoToCart( cartX, cartY, isoX, isoY );
     
-    int posx = cartX / TILE_WIDTH / 2;
+    int posx = cartX / ( TILE_WIDTH / 2 );
     int posy = cartY / TILE_HEIGHT;
     
     return convertPositionToIndex( posx, posy );
@@ -65,8 +65,8 @@ void WorldMath::convertCartToIso( int& isoX, int& isoY, int cartX, int cartY )
 
 void WorldMath::convertIsoToCart( int& cartX, int& cartY, int isoX, int isoY )
 {
-    cartX = ( 2 * isoY + isoX ) / 2;
-    cartY = ( 2 * isoY - isoX ) / 2;
+    cartX = ( ( 2 * isoY ) + isoX ) / 2;
+    cartY = ( ( 2 * isoY ) - isoX ) / 2;
 }
 
 int WorldMath::getTilesXCount() 

@@ -4,31 +4,6 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
-      <itemPath>src/characters/Bullet.h</itemPath>
-      <itemPath>src/characters/Character.h</itemPath>
-      <itemPath>src/Game.h</itemPath>
-      <itemPath>src/screens/GameOverScreen.h</itemPath>
-      <itemPath>src/screens/GameScreen.h</itemPath>
-      <itemPath>src/characters/Ghost.h</itemPath>
-      <itemPath>src/engine/InputDriver.h</itemPath>
-      <itemPath>src/screens/PauseScreen.h</itemPath>
-      <itemPath>src/world/Pickup.h</itemPath>
-      <itemPath>src/characters/Player.h</itemPath>
-      <itemPath>src/screens/Screen.h</itemPath>
-      <itemPath>src/engine/SignalManager.h</itemPath>
-      <itemPath>src/screens/StartScreen.h</itemPath>
-      <itemPath>src/engine/TextureManager.h</itemPath>
-      <itemPath>src/world/Tile.h</itemPath>
-      <itemPath>src/ui/UIBox.h</itemPath>
-      <itemPath>src/ui/UIButton.h</itemPath>
-      <itemPath>src/ui/UIElement.h</itemPath>
-      <itemPath>src/ui/UIIcon.h</itemPath>
-      <itemPath>src/ui/UILabel.h</itemPath>
-      <itemPath>src/ui/UIManager.h</itemPath>
-      <itemPath>src/engine/VideoDriver.h</itemPath>
-      <itemPath>src/world/WorldManager.h</itemPath>
-      <itemPath>src/world/WorldMath.h</itemPath>
-      <itemPath>src/world/WorldRenderManager.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -37,30 +12,67 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
-      <itemPath>src/characters/Bullet.cpp</itemPath>
-      <itemPath>src/characters/Character.cpp</itemPath>
+    </logicalFolder>
+    <logicalFolder name="src" displayName="src" projectFiles="true">
+      <logicalFolder name="characters" displayName="characters" projectFiles="true">
+        <itemPath>src/characters/Bullet.cpp</itemPath>
+        <itemPath>src/characters/Bullet.h</itemPath>
+        <itemPath>src/characters/Character.cpp</itemPath>
+        <itemPath>src/characters/Character.h</itemPath>
+        <itemPath>src/characters/Ghost.cpp</itemPath>
+        <itemPath>src/characters/Ghost.h</itemPath>
+        <itemPath>src/characters/Player.cpp</itemPath>
+        <itemPath>src/characters/Player.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="engine" displayName="engine" projectFiles="true">
+        <itemPath>src/engine/InputDriver.cpp</itemPath>
+        <itemPath>src/engine/InputDriver.h</itemPath>
+        <itemPath>src/engine/SignalManager.cpp</itemPath>
+        <itemPath>src/engine/SignalManager.h</itemPath>
+        <itemPath>src/engine/TextureManager.cpp</itemPath>
+        <itemPath>src/engine/TextureManager.h</itemPath>
+        <itemPath>src/engine/VideoDriver.cpp</itemPath>
+        <itemPath>src/engine/VideoDriver.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="screens" displayName="screens" projectFiles="true">
+        <itemPath>src/screens/GameOverScreen.cpp</itemPath>
+        <itemPath>src/screens/GameOverScreen.h</itemPath>
+        <itemPath>src/screens/GameScreen.cpp</itemPath>
+        <itemPath>src/screens/GameScreen.h</itemPath>
+        <itemPath>src/screens/PauseScreen.cpp</itemPath>
+        <itemPath>src/screens/PauseScreen.h</itemPath>
+        <itemPath>src/screens/Screen.cpp</itemPath>
+        <itemPath>src/screens/Screen.h</itemPath>
+        <itemPath>src/screens/StartScreen.cpp</itemPath>
+        <itemPath>src/screens/StartScreen.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="ui" displayName="ui" projectFiles="true">
+        <itemPath>src/ui/UIBox.cpp</itemPath>
+        <itemPath>src/ui/UIBox.h</itemPath>
+        <itemPath>src/ui/UIButton.cpp</itemPath>
+        <itemPath>src/ui/UIButton.h</itemPath>
+        <itemPath>src/ui/UIElement.cpp</itemPath>
+        <itemPath>src/ui/UIElement.h</itemPath>
+        <itemPath>src/ui/UIIcon.cpp</itemPath>
+        <itemPath>src/ui/UIIcon.h</itemPath>
+        <itemPath>src/ui/UILabel.cpp</itemPath>
+        <itemPath>src/ui/UILabel.h</itemPath>
+        <itemPath>src/ui/UIManager.cpp</itemPath>
+        <itemPath>src/ui/UIManager.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="world" displayName="world" projectFiles="true">
+        <itemPath>src/world/Pickup.cpp</itemPath>
+        <itemPath>src/world/Pickup.h</itemPath>
+        <itemPath>src/world/Tile.h</itemPath>
+        <itemPath>src/world/WorldManager.cpp</itemPath>
+        <itemPath>src/world/WorldManager.h</itemPath>
+        <itemPath>src/world/WorldMath.cpp</itemPath>
+        <itemPath>src/world/WorldMath.h</itemPath>
+        <itemPath>src/world/WorldRenderManager.cpp</itemPath>
+        <itemPath>src/world/WorldRenderManager.h</itemPath>
+      </logicalFolder>
       <itemPath>src/Game.cpp</itemPath>
-      <itemPath>src/screens/GameOverScreen.cpp</itemPath>
-      <itemPath>src/screens/GameScreen.cpp</itemPath>
-      <itemPath>src/characters/Ghost.cpp</itemPath>
-      <itemPath>src/engine/InputDriver.cpp</itemPath>
-      <itemPath>src/screens/PauseScreen.cpp</itemPath>
-      <itemPath>src/world/Pickup.cpp</itemPath>
-      <itemPath>src/characters/Player.cpp</itemPath>
-      <itemPath>src/screens/Screen.cpp</itemPath>
-      <itemPath>src/engine/SignalManager.cpp</itemPath>
-      <itemPath>src/screens/StartScreen.cpp</itemPath>
-      <itemPath>src/engine/TextureManager.cpp</itemPath>
-      <itemPath>src/ui/UIBox.cpp</itemPath>
-      <itemPath>src/ui/UIButton.cpp</itemPath>
-      <itemPath>src/ui/UIElement.cpp</itemPath>
-      <itemPath>src/ui/UIIcon.cpp</itemPath>
-      <itemPath>src/ui/UILabel.cpp</itemPath>
-      <itemPath>src/ui/UIManager.cpp</itemPath>
-      <itemPath>src/engine/VideoDriver.cpp</itemPath>
-      <itemPath>src/world/WorldManager.cpp</itemPath>
-      <itemPath>src/world/WorldMath.cpp</itemPath>
-      <itemPath>src/world/WorldRenderManager.cpp</itemPath>
+      <itemPath>src/Game.h</itemPath>
       <itemPath>src/main.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -72,10 +84,13 @@
                    displayName="Important Files"
                    projectFiles="false"
                    kind="IMPORTANT_FILES_FOLDER">
-      <itemPath>Makefile</itemPath>
+      <itemPath>HomeDefence-Makefile.mk</itemPath>
     </logicalFolder>
   </logicalFolder>
-  <projectmakefile>Makefile</projectmakefile>
+  <sourceRootList>
+    <Elem>src</Elem>
+  </sourceRootList>
+  <projectmakefile>HomeDefence-Makefile.mk</projectmakefile>
   <confs>
     <conf name="Debug" type="1">
       <toolsSet>
@@ -84,25 +99,27 @@
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
       <compileType>
+        <cTool>
+          <incDir>
+            <pElem>/usr/include/</pElem>
+          </incDir>
+        </cTool>
         <ccTool>
           <architecture>2</architecture>
           <standard>11</standard>
           <incDir>
-            <pElem>/usr/include/</pElem>
-            <pElem>/usr/include/c++/6.3.1/</pElem>
+            <pElem>/usr/include</pElem>
+            <pElem>/usr/include/c++/7.1.1/</pElem>
           </incDir>
         </ccTool>
-        <asmTool>
-          <architecture>2</architecture>
-        </asmTool>
         <linkerTool>
           <linkerAddLib>
             <pElem>/usr/lib</pElem>
           </linkerAddLib>
           <linkerLibItems>
-            <linkerLibLibItem>sfml-graphics</linkerLibLibItem>
-            <linkerLibLibItem>sfml-system</linkerLibLibItem>
-            <linkerLibLibItem>sfml-window</linkerLibLibItem>
+            <linkerOptionItem>`pkg-config --libs sfml-system`</linkerOptionItem>
+            <linkerOptionItem>`pkg-config --libs sfml-window`</linkerOptionItem>
+            <linkerOptionItem>`pkg-config --libs sfml-graphics`</linkerOptionItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>

@@ -28,7 +28,7 @@ CND_DISTDIR=dist
 CND_BUILDDIR=build
 
 # Include project Makefile
-include Makefile
+include HomeDefence-Makefile.mk
 
 # Object Directory
 OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}

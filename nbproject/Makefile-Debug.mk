@@ -28,7 +28,7 @@ CND_DISTDIR=dist
 CND_BUILDDIR=build
 
 # Include project Makefile
-include Makefile
+include HomeDefence-Makefile.mk
 
 # Object Directory
 OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
@@ -73,10 +73,10 @@ CXXFLAGS=-m64
 FFLAGS=
 
 # Assembler Flags
-ASFLAGS=--64
+ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=-L/usr/lib -lsfml-graphics -lsfml-system -lsfml-window
+LDLIBSOPTIONS=-L/usr/lib `pkg-config --libs sfml-system` `pkg-config --libs sfml-window` `pkg-config --libs sfml-graphics`  
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
@@ -89,127 +89,127 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/homedefence: ${OBJECTFILES}
 ${OBJECTDIR}/src/Game.o: src/Game.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/include/ -I/usr/include/c++/6.3.1/ -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Game.o src/Game.cpp
+	$(COMPILE.cc) -g -I/usr/include -I/usr/include/c++/7.1.1/ `pkg-config --cflags sfml-system` `pkg-config --cflags sfml-window` `pkg-config --cflags sfml-graphics` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Game.o src/Game.cpp
 
 ${OBJECTDIR}/src/characters/Bullet.o: src/characters/Bullet.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/characters
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/include/ -I/usr/include/c++/6.3.1/ -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/characters/Bullet.o src/characters/Bullet.cpp
+	$(COMPILE.cc) -g -I/usr/include -I/usr/include/c++/7.1.1/ `pkg-config --cflags sfml-system` `pkg-config --cflags sfml-window` `pkg-config --cflags sfml-graphics` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/characters/Bullet.o src/characters/Bullet.cpp
 
 ${OBJECTDIR}/src/characters/Character.o: src/characters/Character.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/characters
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/include/ -I/usr/include/c++/6.3.1/ -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/characters/Character.o src/characters/Character.cpp
+	$(COMPILE.cc) -g -I/usr/include -I/usr/include/c++/7.1.1/ `pkg-config --cflags sfml-system` `pkg-config --cflags sfml-window` `pkg-config --cflags sfml-graphics` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/characters/Character.o src/characters/Character.cpp
 
 ${OBJECTDIR}/src/characters/Ghost.o: src/characters/Ghost.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/characters
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/include/ -I/usr/include/c++/6.3.1/ -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/characters/Ghost.o src/characters/Ghost.cpp
+	$(COMPILE.cc) -g -I/usr/include -I/usr/include/c++/7.1.1/ `pkg-config --cflags sfml-system` `pkg-config --cflags sfml-window` `pkg-config --cflags sfml-graphics` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/characters/Ghost.o src/characters/Ghost.cpp
 
 ${OBJECTDIR}/src/characters/Player.o: src/characters/Player.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/characters
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/include/ -I/usr/include/c++/6.3.1/ -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/characters/Player.o src/characters/Player.cpp
+	$(COMPILE.cc) -g -I/usr/include -I/usr/include/c++/7.1.1/ `pkg-config --cflags sfml-system` `pkg-config --cflags sfml-window` `pkg-config --cflags sfml-graphics` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/characters/Player.o src/characters/Player.cpp
 
 ${OBJECTDIR}/src/engine/InputDriver.o: src/engine/InputDriver.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/engine
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/include/ -I/usr/include/c++/6.3.1/ -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/engine/InputDriver.o src/engine/InputDriver.cpp
+	$(COMPILE.cc) -g -I/usr/include -I/usr/include/c++/7.1.1/ `pkg-config --cflags sfml-system` `pkg-config --cflags sfml-window` `pkg-config --cflags sfml-graphics` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/engine/InputDriver.o src/engine/InputDriver.cpp
 
 ${OBJECTDIR}/src/engine/SignalManager.o: src/engine/SignalManager.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/engine
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/include/ -I/usr/include/c++/6.3.1/ -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/engine/SignalManager.o src/engine/SignalManager.cpp
+	$(COMPILE.cc) -g -I/usr/include -I/usr/include/c++/7.1.1/ `pkg-config --cflags sfml-system` `pkg-config --cflags sfml-window` `pkg-config --cflags sfml-graphics` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/engine/SignalManager.o src/engine/SignalManager.cpp
 
 ${OBJECTDIR}/src/engine/TextureManager.o: src/engine/TextureManager.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/engine
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/include/ -I/usr/include/c++/6.3.1/ -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/engine/TextureManager.o src/engine/TextureManager.cpp
+	$(COMPILE.cc) -g -I/usr/include -I/usr/include/c++/7.1.1/ `pkg-config --cflags sfml-system` `pkg-config --cflags sfml-window` `pkg-config --cflags sfml-graphics` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/engine/TextureManager.o src/engine/TextureManager.cpp
 
 ${OBJECTDIR}/src/engine/VideoDriver.o: src/engine/VideoDriver.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/engine
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/include/ -I/usr/include/c++/6.3.1/ -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/engine/VideoDriver.o src/engine/VideoDriver.cpp
+	$(COMPILE.cc) -g -I/usr/include -I/usr/include/c++/7.1.1/ `pkg-config --cflags sfml-system` `pkg-config --cflags sfml-window` `pkg-config --cflags sfml-graphics` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/engine/VideoDriver.o src/engine/VideoDriver.cpp
 
 ${OBJECTDIR}/src/main.o: src/main.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/include/ -I/usr/include/c++/6.3.1/ -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/main.o src/main.cpp
+	$(COMPILE.cc) -g -I/usr/include -I/usr/include/c++/7.1.1/ `pkg-config --cflags sfml-system` `pkg-config --cflags sfml-window` `pkg-config --cflags sfml-graphics` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/main.o src/main.cpp
 
 ${OBJECTDIR}/src/screens/GameOverScreen.o: src/screens/GameOverScreen.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/screens
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/include/ -I/usr/include/c++/6.3.1/ -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/screens/GameOverScreen.o src/screens/GameOverScreen.cpp
+	$(COMPILE.cc) -g -I/usr/include -I/usr/include/c++/7.1.1/ `pkg-config --cflags sfml-system` `pkg-config --cflags sfml-window` `pkg-config --cflags sfml-graphics` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/screens/GameOverScreen.o src/screens/GameOverScreen.cpp
 
 ${OBJECTDIR}/src/screens/GameScreen.o: src/screens/GameScreen.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/screens
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/include/ -I/usr/include/c++/6.3.1/ -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/screens/GameScreen.o src/screens/GameScreen.cpp
+	$(COMPILE.cc) -g -I/usr/include -I/usr/include/c++/7.1.1/ `pkg-config --cflags sfml-system` `pkg-config --cflags sfml-window` `pkg-config --cflags sfml-graphics` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/screens/GameScreen.o src/screens/GameScreen.cpp
 
 ${OBJECTDIR}/src/screens/PauseScreen.o: src/screens/PauseScreen.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/screens
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/include/ -I/usr/include/c++/6.3.1/ -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/screens/PauseScreen.o src/screens/PauseScreen.cpp
+	$(COMPILE.cc) -g -I/usr/include -I/usr/include/c++/7.1.1/ `pkg-config --cflags sfml-system` `pkg-config --cflags sfml-window` `pkg-config --cflags sfml-graphics` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/screens/PauseScreen.o src/screens/PauseScreen.cpp
 
 ${OBJECTDIR}/src/screens/Screen.o: src/screens/Screen.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/screens
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/include/ -I/usr/include/c++/6.3.1/ -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/screens/Screen.o src/screens/Screen.cpp
+	$(COMPILE.cc) -g -I/usr/include -I/usr/include/c++/7.1.1/ `pkg-config --cflags sfml-system` `pkg-config --cflags sfml-window` `pkg-config --cflags sfml-graphics` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/screens/Screen.o src/screens/Screen.cpp
 
 ${OBJECTDIR}/src/screens/StartScreen.o: src/screens/StartScreen.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/screens
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/include/ -I/usr/include/c++/6.3.1/ -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/screens/StartScreen.o src/screens/StartScreen.cpp
+	$(COMPILE.cc) -g -I/usr/include -I/usr/include/c++/7.1.1/ `pkg-config --cflags sfml-system` `pkg-config --cflags sfml-window` `pkg-config --cflags sfml-graphics` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/screens/StartScreen.o src/screens/StartScreen.cpp
 
 ${OBJECTDIR}/src/ui/UIBox.o: src/ui/UIBox.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/ui
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/include/ -I/usr/include/c++/6.3.1/ -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ui/UIBox.o src/ui/UIBox.cpp
+	$(COMPILE.cc) -g -I/usr/include -I/usr/include/c++/7.1.1/ `pkg-config --cflags sfml-system` `pkg-config --cflags sfml-window` `pkg-config --cflags sfml-graphics` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ui/UIBox.o src/ui/UIBox.cpp
 
 ${OBJECTDIR}/src/ui/UIButton.o: src/ui/UIButton.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/ui
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/include/ -I/usr/include/c++/6.3.1/ -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ui/UIButton.o src/ui/UIButton.cpp
+	$(COMPILE.cc) -g -I/usr/include -I/usr/include/c++/7.1.1/ `pkg-config --cflags sfml-system` `pkg-config --cflags sfml-window` `pkg-config --cflags sfml-graphics` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ui/UIButton.o src/ui/UIButton.cpp
 
 ${OBJECTDIR}/src/ui/UIElement.o: src/ui/UIElement.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/ui
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/include/ -I/usr/include/c++/6.3.1/ -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ui/UIElement.o src/ui/UIElement.cpp
+	$(COMPILE.cc) -g -I/usr/include -I/usr/include/c++/7.1.1/ `pkg-config --cflags sfml-system` `pkg-config --cflags sfml-window` `pkg-config --cflags sfml-graphics` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ui/UIElement.o src/ui/UIElement.cpp
 
 ${OBJECTDIR}/src/ui/UIIcon.o: src/ui/UIIcon.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/ui
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/include/ -I/usr/include/c++/6.3.1/ -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ui/UIIcon.o src/ui/UIIcon.cpp
+	$(COMPILE.cc) -g -I/usr/include -I/usr/include/c++/7.1.1/ `pkg-config --cflags sfml-system` `pkg-config --cflags sfml-window` `pkg-config --cflags sfml-graphics` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ui/UIIcon.o src/ui/UIIcon.cpp
 
 ${OBJECTDIR}/src/ui/UILabel.o: src/ui/UILabel.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/ui
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/include/ -I/usr/include/c++/6.3.1/ -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ui/UILabel.o src/ui/UILabel.cpp
+	$(COMPILE.cc) -g -I/usr/include -I/usr/include/c++/7.1.1/ `pkg-config --cflags sfml-system` `pkg-config --cflags sfml-window` `pkg-config --cflags sfml-graphics` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ui/UILabel.o src/ui/UILabel.cpp
 
 ${OBJECTDIR}/src/ui/UIManager.o: src/ui/UIManager.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/ui
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/include/ -I/usr/include/c++/6.3.1/ -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ui/UIManager.o src/ui/UIManager.cpp
+	$(COMPILE.cc) -g -I/usr/include -I/usr/include/c++/7.1.1/ `pkg-config --cflags sfml-system` `pkg-config --cflags sfml-window` `pkg-config --cflags sfml-graphics` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ui/UIManager.o src/ui/UIManager.cpp
 
 ${OBJECTDIR}/src/world/Pickup.o: src/world/Pickup.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/world
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/include/ -I/usr/include/c++/6.3.1/ -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/world/Pickup.o src/world/Pickup.cpp
+	$(COMPILE.cc) -g -I/usr/include -I/usr/include/c++/7.1.1/ `pkg-config --cflags sfml-system` `pkg-config --cflags sfml-window` `pkg-config --cflags sfml-graphics` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/world/Pickup.o src/world/Pickup.cpp
 
 ${OBJECTDIR}/src/world/WorldManager.o: src/world/WorldManager.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/world
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/include/ -I/usr/include/c++/6.3.1/ -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/world/WorldManager.o src/world/WorldManager.cpp
+	$(COMPILE.cc) -g -I/usr/include -I/usr/include/c++/7.1.1/ `pkg-config --cflags sfml-system` `pkg-config --cflags sfml-window` `pkg-config --cflags sfml-graphics` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/world/WorldManager.o src/world/WorldManager.cpp
 
 ${OBJECTDIR}/src/world/WorldMath.o: src/world/WorldMath.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/world
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/include/ -I/usr/include/c++/6.3.1/ -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/world/WorldMath.o src/world/WorldMath.cpp
+	$(COMPILE.cc) -g -I/usr/include -I/usr/include/c++/7.1.1/ `pkg-config --cflags sfml-system` `pkg-config --cflags sfml-window` `pkg-config --cflags sfml-graphics` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/world/WorldMath.o src/world/WorldMath.cpp
 
 ${OBJECTDIR}/src/world/WorldRenderManager.o: src/world/WorldRenderManager.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/world
 	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/include/ -I/usr/include/c++/6.3.1/ -std=c++14 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/world/WorldRenderManager.o src/world/WorldRenderManager.cpp
+	$(COMPILE.cc) -g -I/usr/include -I/usr/include/c++/7.1.1/ `pkg-config --cflags sfml-system` `pkg-config --cflags sfml-window` `pkg-config --cflags sfml-graphics` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/world/WorldRenderManager.o src/world/WorldRenderManager.cpp
 
 # Subprojects
 .build-subprojects:

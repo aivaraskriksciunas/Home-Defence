@@ -11,7 +11,7 @@ Game::Game( char* programPath, char* title, int width, int height ) :
                                              title,
                                              sf::Style::Default );
     
-    this->mainWindow->setFramerateLimit( 80 );
+    //this->mainWindow->setFramerateLimit( 80 );
     
     //get only the path to the file without the file name
     this->programPathWithoutName = getPathWithoutFileName( programPath );

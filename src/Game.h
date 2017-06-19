@@ -62,7 +62,7 @@ private:
     
     //game clocks
     const int enemyMoveIntervalMs = 30;
-    const int gemDamageIntervalMs = 500;
+    const int gemDamageIntervalMs = 300;
     sf::Clock enemyMoveClock;
     sf::Clock gemDamageClock;
     

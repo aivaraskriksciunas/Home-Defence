@@ -369,7 +369,7 @@ void WorldManager::moveEnemies()
 
 void WorldManager::updateEnemies()
 {
-    if ( ghosts.size() < 20 )
+    if ( ghosts.size() < 100 )
     {
         createEnemy();
     }
@@ -383,6 +383,8 @@ void WorldManager::updateGem()
     {
         gem->takeDamage( 1 );
     }
+    if ( gem->getHealth() <= 0 ) Engine::SignalManager::sendSignal( SIG_GEM_DESTROYED );
+    
     gemTakingDamage = false;
 }
 

@@ -12,6 +12,8 @@ enum Signals {
     SIG_GAME_STATE_MENU,
     SIG_GAME_PAUSED,
     
+    SIG_GEM_DESTROYED,
+    
     SIG_PLAYER_DEAD,
     SIG_PLAYER_MOVE_N,
     SIG_PLAYER_MOVE_NE,

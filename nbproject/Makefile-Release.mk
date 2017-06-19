@@ -57,6 +57,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/ui/UIIcon.o \
 	${OBJECTDIR}/src/ui/UILabel.o \
 	${OBJECTDIR}/src/ui/UIManager.o \
+	${OBJECTDIR}/src/ui/UIProgressBar.o \
 	${OBJECTDIR}/src/world/Pickup.o \
 	${OBJECTDIR}/src/world/WorldManager.o \
 	${OBJECTDIR}/src/world/WorldMath.o \
@@ -196,6 +197,11 @@ ${OBJECTDIR}/src/ui/UIManager.o: src/ui/UIManager.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/ui
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ui/UIManager.o src/ui/UIManager.cpp
+
+${OBJECTDIR}/src/ui/UIProgressBar.o: src/ui/UIProgressBar.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/ui
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ui/UIProgressBar.o src/ui/UIProgressBar.cpp
 
 ${OBJECTDIR}/src/world/Pickup.o: src/world/Pickup.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/world

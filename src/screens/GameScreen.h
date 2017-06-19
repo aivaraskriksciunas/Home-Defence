@@ -6,6 +6,7 @@
 #include "../ui/UIBox.h"
 #include "../ui/UILabel.h"
 #include "../ui/UIIcon.h"
+#include "../ui/UIProgressBar.h"
 #include "../world/WorldManager.h"
 
 namespace Screens {
@@ -19,12 +20,14 @@ public:
     void updateUI( int ammo, int wallRepairs, int playerHealth, int gemHealth );
     
 private:
+    const int maxProgressBarLength = 60;
+    
     //all ui elements
     UI::UIBox* infoBox;
-    UI::UILabel* healthLabel;
+    UI::UIProgressBar* healthLabel;
     UI::UILabel* ammoLabel;
     UI::UILabel* repairLabel;
-    UI::UILabel* gemLabel;
+    UI::UIProgressBar* gemLabel;
     UI::UIIcon* repairIcon;
     UI::UIIcon* healthIcon;
     UI::UIIcon* ammoIcon;

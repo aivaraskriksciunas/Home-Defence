@@ -62,7 +62,7 @@ void Game::handleSignals()
             if ( gameState == STATE_RUNNING ) gameState = STATE_PAUSE_SCREEN;
         }
         
-        else if ( signal == SIG_PLAYER_DEAD )
+        else if ( signal == SIG_PLAYER_DEAD || signal == SIG_GEM_DESTROYED )
         {
             gameState = STATE_GAME_OVER_SCREEN;
         }

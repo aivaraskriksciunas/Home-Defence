@@ -36,6 +36,8 @@ public:
     void getClosestTargetPos( int posx, int posy, int& targetPosX, int& targetPosY,
                               Player* player, Gem* gem );
     
+    int getTileIndexAtIsoPos( int isoX, int isoY );
+    
 private:
     static int tilesXCount, tilesYCount;
 };

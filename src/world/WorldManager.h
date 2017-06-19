@@ -13,9 +13,12 @@
 #include "Pickup.h"
 #include "WorldRenderManager.h"
 #include "WorldMath.h"
+#include "WorldCharacterManager.h"
 
 #define MIN_DISTANCE_BETWEEN_STATIONS 20
 #define MAX_LINE_LENGTH 10
+
+#define FIRST_LEVEL_GHOST_COUNT 6
 
 namespace World {
 
@@ -43,7 +46,7 @@ public:
     int getPlayerY();
     int getPlayerHealth();
     void setPlayerHealth( int value );
-    bool validateCharacterCoords( int x, int y );
+    int getGhostCount();
     
     void shoot( int direction );
     //fix wall the player is currently on
@@ -51,37 +54,28 @@ public:
     
     int getGemHealth();
     
+    void setCreateMoreEnemies( bool value );
+    void calculateLevelEnemyCount( int level );
+    
 private:
     std::vector<Tile> map;
     
     WorldRenderManager worldDrawManager;
     WorldMath worldMath;
+    WorldCharacterManager* characterManager;
     
-    //player starting positions
+    int levelGhostCount;
+    
+    Player* player;
+    //player starting position
     int startPosX, startPosY;
     
-    //characters
-    Player* player;
-    std::vector<Ghost*> ghosts;
-    Gem* gem;
-    //are there any ghosts hitting the gem
-    //using this var ensures that no matter how many ghosts are near the gem,
-    //it will take the same amount of damage
-    bool gemTakingDamage = false;
-    
-    //bullets
-    std::vector<Bullet*> bullets;
-    
-    //pickups
-    std::vector<Pickup*> pickups;
+    //whether or not create more enemies
+    bool createEnemies = false;
     
     void orientWalls();
     void resetTileWalls( int index );
     bool hasWalls( int index );
-    
-    //returns tile type at the given isometric position,
-    //I'd place it in WorldMath, but it requires access to map
-    int getTileIndexAtIsoPos( int isoX, int isoY );
     
     //checks if the neighbor tile has a wall. Used in orientWalls() function
     //takes the current tile index, neighbor direction (e.g. -1, 0)
@@ -89,13 +83,7 @@ private:
     //similar to isNeighborWall(), except it checks whether the neighbor tile is the right type
     bool validateNeighborTile( int currentIndex, int neighborDirectionX, int neighborDirectionY, int tileType );
     
-    void handleGhostWallCollision( int ghostX, int ghostY );
     
-    void moveEnemies();
-    void createEnemy();
-    
-    void createPickup( int posx, int posy );
-    void checkPlayerPickupCollision();
     
 };
 

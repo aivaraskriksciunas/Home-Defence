@@ -12,6 +12,8 @@ void WorldManager::GenerateMap( std::string path )
         Engine::SignalManager::sendSignal( SIG_RESOURCE_LOAD_ERROR );
     }
     
+    characterManager = new WorldCharacterManager( &worldMath );
+    
     int mapSize = 0;
     ifile >> mapSize; //read the size of the map
     
@@ -26,6 +28,7 @@ void WorldManager::GenerateMap( std::string path )
         map[tileIndex].texture = TEXTURE_GRASS;
         map[tileIndex].wallHealth = 100;
     }
+   
     
     //position where building from file will be placed
     int posx = mapSize / 2;
@@ -58,7 +61,7 @@ void WorldManager::GenerateMap( std::string path )
             {
                 int startPosCartX = worldMath.convertIndexToX( index ) * TILE_WIDTH / 2;
                 int startPosCartY = worldMath.convertIndexToY( index ) * TILE_HEIGHT;
-                worldMath.convertCartToIso( this->startPosX, this->startPosY, 
+                worldMath.convertCartToIso( startPosX, startPosY, 
                                             startPosCartX, startPosCartY );
             }
             else if ( line[charIndex] == 'g' )
@@ -69,7 +72,7 @@ void WorldManager::GenerateMap( std::string path )
                 worldMath.convertCartToIso( gemIsoX, gemIsoY, 
                                             gemCartX, gemCartY );
                 
-                gem = new Gem( gemIsoX, gemIsoY );
+                characterManager->createGem( gemIsoX, gemIsoY );
             }
         }
         
@@ -80,10 +83,10 @@ void WorldManager::GenerateMap( std::string path )
     ifile.close();
     orientWalls();
     
-    this->player = new Player( this->startPosX, this->startPosY );
-    this->ghosts.clear();
-    this->pickups.clear();
-    this->bullets.clear();
+    this->player = new Player( startPosX, startPosY );
+    characterManager->clearGhosts();
+    characterManager->clearPickups();
+    characterManager->clearBullets();
 }
 
 void WorldManager::orientWalls()
@@ -153,69 +156,6 @@ void WorldManager::orientWalls()
     }
 }
 
-int WorldManager::getTileIndexAtIsoPos( int isoX, int isoY )
-{
-    //we imagine the map is divided in to TILE_WIDTH by TILE_HEIGHT squares
-    //calculate the position of our current square
-    
-    //we first get the square index, then we find it's coordinates
-    //make sure to cast index to an int, otherwise we'll just get the same result
-    int squareX = 0;
-    int squareY = int( isoY / TILE_HEIGHT ) * TILE_HEIGHT;
-    
-    //if position is on the negative (left) side, offset it by one tile,
-    //otherwise we would get middle squares with same x positions
-    if ( isoX < 0 )
-        squareX = int( ( isoX - TILE_WIDTH ) / TILE_WIDTH ) * TILE_WIDTH; 
-    else
-        squareX = int( isoX / TILE_WIDTH ) * TILE_WIDTH; 
-    
-    //the square's position is also equal to position of a tile
-    //since we have some tiles position, we can calculate it's index
-    //find the tile cartesian coordinates
-    int tileCartX, tileCartY;
-    worldMath.convertIsoToCart( tileCartX, tileCartY, squareX, squareY );
-    //now get tile X and Y indexes
-    int tileIndexX = tileCartX / ( TILE_WIDTH / 2 );
-    int tileIndexY = tileCartY / TILE_HEIGHT;
-    //now just get the index
-    int detectedTileIndex = worldMath.convertPositionToIndex( tileIndexX, tileIndexY );
-    
-    //test the current tile
-    if ( worldMath.isPosInsideTile( detectedTileIndex, isoX, isoY ) )
-    {
-        return detectedTileIndex;
-    }
-    
-    //test the neighbor tiles, because they take up part of a square as well
-    //west tile
-    if ( worldMath.convertIndexToX( detectedTileIndex ) > 0 )
-    {
-        if ( worldMath.isPosInsideTile( detectedTileIndex - 1, isoX, isoY ) )
-            return detectedTileIndex - 1;
-    }
-    //east tile
-    if ( worldMath.convertIndexToX( detectedTileIndex ) < worldMath.getTilesXCount() )
-    {
-        if ( worldMath.isPosInsideTile( detectedTileIndex + 1, isoX, isoY ) )
-            return detectedTileIndex + 1;
-    }
-    //north tile
-    if ( worldMath.convertIndexToY( detectedTileIndex ) > 0 )
-    {
-        if ( worldMath.isPosInsideTile( detectedTileIndex - worldMath.getTilesXCount(), isoX, isoY ) )
-            return detectedTileIndex - worldMath.getTilesXCount();
-    }
-    //south tile
-    if ( worldMath.convertIndexToX( detectedTileIndex ) < worldMath.getTilesYCount() )
-    {
-        if ( worldMath.isPosInsideTile( detectedTileIndex + worldMath.getTilesYCount(), isoX, isoY ) )
-            return detectedTileIndex + worldMath.getTilesYCount();
-    }
-    
-    return -1;
-}
-
 bool WorldManager::hasWalls( int index )
 {
     return map[index].wallPositions[0] | 
@@ -278,9 +218,11 @@ bool WorldManager::validateNeighborTile( int currentIndex, int neighborDirection
 
 void WorldManager::draw( Engine::VideoDriver* videoDriver )
 {
-    worldDrawManager.renderMap( videoDriver, player, gem, &ghosts, &map );
-    worldDrawManager.renderPickups( videoDriver, &pickups );
-    worldDrawManager.renderBullets( videoDriver, &bullets );
+    worldDrawManager.renderMap( videoDriver, player, 
+                                characterManager->getGemPtr(), characterManager->getGhostsPtr(), 
+                                &map );
+    worldDrawManager.renderPickups( videoDriver, characterManager->getPickupsPtr() );
+    worldDrawManager.renderBullets( videoDriver, characterManager->getBulletsPtr() );
 }
 
 int WorldManager::getStartPosX()
@@ -301,126 +243,35 @@ void WorldManager::movePlayer( int direction )
     this->player->move( newPlayerX, newPlayerY );
     
     //check if the new coordinates are not wall or empty tile
-    if ( validateCharacterCoords( newPlayerX, newPlayerY + CHARACTER_HEIGHT ) &&
-         validateCharacterCoords( newPlayerX + CHARACTER_WIDTH, newPlayerY + CHARACTER_HEIGHT ) )
+    if ( characterManager->validateCharacterCoords( &map, newPlayerX, newPlayerY + CHARACTER_HEIGHT ) &&
+         characterManager->validateCharacterCoords( &map, newPlayerX + CHARACTER_WIDTH, newPlayerY + CHARACTER_HEIGHT ) )
     {
         this->player->setPosition( newPlayerX, newPlayerY );
     }
     
-    checkPlayerPickupCollision();
+    characterManager->checkPlayerPickupCollision( this->player->getX(), this->player->getY() );
 }
 
-void WorldManager::moveEnemies()
+void WorldManager::updateEnemies( )
 {
-    int playerX = player->getX();
-    int playerY = player->getY();
-    
-    for ( int ghost = 0; ghost < ghosts.size(); ghost++ )
+    if ( createEnemies )
     {
-        if ( ghosts[ghost]->getHealth() <= 0 )
+        if ( characterManager->getGhostCount() < levelGhostCount )
         {
-            createPickup( ghosts[ghost]->getX(), ghosts[ghost]->getY() );
-            ghosts.erase( ghosts.begin() + ghost );
-            continue;
-        }
-        
-        //check if enemy is hitting the player
-        if ( ghosts[ghost]->checkCollision( player->getX() + CHARACTER_WIDTH / 2, 
-                                            player->getY() + CHARACTER_HEIGHT / 2 ) )
-        {
-            player->takeDamage( 1 );
-            //check if player is dead
-            if ( player->getHealth() <= 0 )
-            {
-                Engine::SignalManager::sendSignal( SIG_PLAYER_DEAD );
-                return;
-            }
-        }
-        //check if ghost is hitting the gem
-        else if ( gem->hasCollided( ghosts[ghost]->getX() + CHARACTER_WIDTH / 2,
-                                    ghosts[ghost]->getY() + CHARACTER_HEIGHT / 2 ) )
-        {
-            this->gemTakingDamage = true;
-        }
-        
-        //get position of the closest target
-        int targetX, targetY;
-        worldMath.getClosestTargetPos( ghosts[ghost]->getX(), ghosts[ghost]->getY(),
-                                       targetX, targetY,
-                                       player, gem );
-        
-        float ghostX, ghostY;
-        ghosts[ghost]->move( targetX - ghosts[ghost]->getX(), //get the difference between player and ghost
-                             targetY - ghosts[ghost]->getY(),
-                             ghostX, ghostY );
-        
-        if ( validateCharacterCoords( ghostX, ghostY + CHARACTER_HEIGHT ) && 
-             validateCharacterCoords( ghostX + CHARACTER_WIDTH, ghostY + CHARACTER_HEIGHT ) )
-        {
-            ghosts[ghost]->setPosition( ghostX, ghostY );
-        }
-        else
-        {
-            handleGhostWallCollision( ghostX, ghostY + CHARACTER_HEIGHT );
-            handleGhostWallCollision( ghostX + CHARACTER_WIDTH, ghostY + CHARACTER_HEIGHT );
+            characterManager->createEnemy();
         }
     }
+    characterManager->moveEnemies( &map, player );
 }
 
-void WorldManager::updateEnemies()
+void WorldManager::updateBullets()
 {
-    if ( ghosts.size() < 100 )
-    {
-        createEnemy();
-    }
-    
-    moveEnemies();
+    characterManager->updateBullets();
 }
 
 void WorldManager::updateGem()
 {
-    if ( gemTakingDamage )
-    {
-        gem->takeDamage( 1 );
-    }
-    if ( gem->getHealth() <= 0 ) Engine::SignalManager::sendSignal( SIG_GEM_DESTROYED );
-    
-    gemTakingDamage = false;
-}
-
-void WorldManager::createEnemy()
-{
-    //decide at which edge to place the ghost 
-    int edge = rand() % 5;
-    
-    int spawnIndex = 0;
-    switch ( edge )
-    {
-    case 0:
-        //generate random pos on north edge
-        spawnIndex = worldMath.convertPositionToIndex( rand() % worldMath.getTilesXCount(), 0 );
-        break;
-    case 1:
-        //generate random pos on east edge
-        spawnIndex = worldMath.convertPositionToIndex( worldMath.getTilesXCount() - 1, 
-                                                       rand() % worldMath.getTilesYCount() );
-        break;
-    case 2:
-        //generate random pos on south edge
-        spawnIndex = worldMath.convertPositionToIndex( rand() % worldMath.getTilesXCount(), 
-                                                       worldMath.getTilesYCount() - 1 );
-        break;
-    case 3:
-        //generate random pos on west edge
-        spawnIndex = worldMath.convertPositionToIndex( 0, rand() % worldMath.getTilesYCount() );
-        break;
-    }
-    
-    int posx, posy;
-    worldMath.convertIndexToIso( posx, posy, spawnIndex );
-    
-    ghosts.push_back( new Ghost( posx, posy ) );
-    
+    characterManager->updateGem();
 }
 
 int WorldManager::getPlayerX()
@@ -435,7 +286,7 @@ int WorldManager::getPlayerY()
 
 int WorldManager::getGemHealth()
 {
-    return this->gem->getHealth();
+    characterManager->getGemHealth();
 }
 
 int WorldManager::getPlayerHealth()
@@ -448,80 +299,9 @@ void WorldManager::setPlayerHealth( int value )
     this->player->setHealth( value );
 }
 
-bool WorldManager::validateCharacterCoords( int x, int y )
-{
-    int currentTile = getTileIndexAtIsoPos( x , y );
-    if ( currentTile == -1 )
-    {
-        return false;
-    }
-    
-    //get character position on tile (N, E, S, W)
-    int characterPositionOnTile = worldMath.getCharacterPositionOnTile( currentTile, x, y );
-    
-    //check if there is a wall on the side where player is located
-    if ( map[currentTile].wallPositions[characterPositionOnTile] )
-    {
-        if ( worldMath.isCharacterOnEdge( currentTile, x, y ) )
-            return false;
-    }
-    return true;
-}
-
-void WorldManager::handleGhostWallCollision( int ghostX, int ghostY )
-{
-    int currentTile = getTileIndexAtIsoPos( ghostX, ghostY );
-    if ( currentTile == -1 )
-    {
-        return;
-    }
-    
-    //get character position on tile (N, E, S, W)
-    int characterPositionOnTile = worldMath.getCharacterPositionOnTile( currentTile, ghostX, ghostY );
-    
-    //check if there is a wall on the side where player is located
-    if ( map[currentTile].wallPositions[characterPositionOnTile] )
-    {
-        if ( worldMath.isCharacterOnEdge( currentTile, ghostX, ghostY ) )
-            map[currentTile].wallHealth--;
-    }
-    
-    //check if walls have been destroyed;
-    if ( map[currentTile].wallHealth <= 0 )
-    {
-        resetTileWalls( currentTile );
-    }
-}
-
-void WorldManager::shoot( int direction )
-{
-    bullets.push_back( new Bullet( player->getX(), player->getY(), direction ) );
-}
-
-void WorldManager::updateBullets()
-{
-    for ( int bulletIndex = 0; bulletIndex < bullets.size(); bulletIndex++ )
-    {
-        bullets[bulletIndex]->move();
-        
-        if ( bullets[bulletIndex]->isDead() )
-        {
-            bullets.erase( bullets.begin() + bulletIndex );
-            continue;
-        }
-        
-        int ghostHit = bullets[bulletIndex]->checkCollisionWithGhost( &ghosts );
-        if ( ghostHit != -1 )
-        {
-            ghosts[ghostHit]->takeDamage( bullets[bulletIndex]->getDamage() );
-            bullets.erase( bullets.begin() + bulletIndex );
-        }
-    }
-}
-
 bool WorldManager::fixWall()
 {
-    int playerIndex = getTileIndexAtIsoPos( player->getX() + CHARACTER_WIDTH / 2, 
+    int playerIndex = worldMath.getTileIndexAtIsoPos( player->getX() + CHARACTER_WIDTH / 2, 
                                                       player->getY() + CHARACTER_HEIGHT );
     
     if ( hasWalls( playerIndex ) )
@@ -537,23 +317,27 @@ bool WorldManager::fixWall()
     
 }
 
-void WorldManager::createPickup( int posx, int posy )
+
+void WorldManager::setCreateMoreEnemies( bool value )
 {
-    //first decide whether or not to create a pickup
-    int createPickup = rand() % 4;
-    if ( createPickup == 0 )
-    {
-        pickups.push_back( new Pickup( posx, posy ) );
-    }
+    this->createEnemies = value;
 }
 
-void WorldManager::checkPlayerPickupCollision()
+void WorldManager::calculateLevelEnemyCount( int level )
 {
-    for ( int pickupIndex = 0; pickupIndex < pickups.size(); pickupIndex++ )
-    {
-        if ( pickups[pickupIndex]->checkForCollision( player->getX(), player->getY() ) )
-        {
-            pickups.erase( pickups.begin() + pickupIndex );
-        }
-    }
+    this->levelGhostCount = FIRST_LEVEL_GHOST_COUNT * level;
+    //randomize the ghost count a bit
+    //it can take away up to 20% of total ghost count
+    int randomOffset = rand() % int( ( (float)levelGhostCount / 100 ) * 20 );
+    this->levelGhostCount -= randomOffset;
+}
+
+int WorldManager::getGhostCount()
+{
+    return characterManager->getGhostCount();
+}
+
+void WorldManager::shoot( int direction )
+{
+    characterManager->shoot( direction, player->getX(), player->getY() );
 }

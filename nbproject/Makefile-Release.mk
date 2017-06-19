@@ -59,6 +59,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/ui/UIManager.o \
 	${OBJECTDIR}/src/ui/UIProgressBar.o \
 	${OBJECTDIR}/src/world/Pickup.o \
+	${OBJECTDIR}/src/world/WorldCharacterManager.o \
 	${OBJECTDIR}/src/world/WorldManager.o \
 	${OBJECTDIR}/src/world/WorldMath.o \
 	${OBJECTDIR}/src/world/WorldRenderManager.o
@@ -207,6 +208,11 @@ ${OBJECTDIR}/src/world/Pickup.o: src/world/Pickup.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/world
 	${RM} "$@.d"
 	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/world/Pickup.o src/world/Pickup.cpp
+
+${OBJECTDIR}/src/world/WorldCharacterManager.o: src/world/WorldCharacterManager.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/world
+	${RM} "$@.d"
+	$(COMPILE.cc) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/world/WorldCharacterManager.o src/world/WorldCharacterManager.cpp
 
 ${OBJECTDIR}/src/world/WorldManager.o: src/world/WorldManager.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/world

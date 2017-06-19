@@ -6,6 +6,7 @@
                    projectFiles="true">
       <itemPath>src/characters/Gem.h</itemPath>
       <itemPath>src/ui/UIProgressBar.h</itemPath>
+      <itemPath>src/world/WorldCharacterManager.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -16,6 +17,7 @@
                    projectFiles="true">
       <itemPath>src/characters/Gem.cpp</itemPath>
       <itemPath>src/ui/UIProgressBar.cpp</itemPath>
+      <itemPath>src/world/WorldCharacterManager.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="src" displayName="src" projectFiles="true">
       <logicalFolder name="characters" displayName="characters" projectFiles="true">
@@ -223,6 +225,13 @@
       </item>
       <item path="src/world/Tile.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/world/WorldCharacterManager.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/world/WorldCharacterManager.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/world/WorldManager.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/world/WorldManager.h" ex="false" tool="3" flavor2="0">
@@ -351,6 +360,13 @@
       <item path="src/world/Pickup.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/world/Tile.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/world/WorldCharacterManager.cpp"
+            ex="false"
+            tool="1"
+            flavor2="0">
+      </item>
+      <item path="src/world/WorldCharacterManager.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/world/WorldManager.cpp" ex="false" tool="1" flavor2="0">
       </item>

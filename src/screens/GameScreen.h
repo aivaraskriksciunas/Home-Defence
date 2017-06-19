@@ -24,6 +24,8 @@ private:
     
     //all ui elements
     UI::UIBox* infoBox;
+    UI::UIBox* timeBox;
+    
     UI::UIProgressBar* healthLabel;
     UI::UILabel* ammoLabel;
     UI::UILabel* repairLabel;
@@ -32,6 +34,8 @@ private:
     UI::UIIcon* healthIcon;
     UI::UIIcon* ammoIcon;
     UI::UIIcon* gemIcon;
+    
+    UI::UILabel* timeLabel;
     
     sf::View mainViewport;
     sf::View uiViewport;

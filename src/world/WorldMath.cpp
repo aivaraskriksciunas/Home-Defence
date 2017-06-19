@@ -222,3 +222,66 @@ void WorldMath::getClosestTargetPos( int posx, int posy, int& targetPosX, int& t
         targetPosY = player->getY();
     }
 }
+
+int WorldMath::getTileIndexAtIsoPos( int isoX, int isoY )
+{
+    //we imagine the map is divided in to TILE_WIDTH by TILE_HEIGHT squares
+    //calculate the position of our current square
+    
+    //we first get the square index, then we find it's coordinates
+    //make sure to cast index to an int, otherwise we'll just get the same result
+    int squareX = 0;
+    int squareY = int( isoY / TILE_HEIGHT ) * TILE_HEIGHT;
+    
+    //if position is on the negative (left) side, offset it by one tile,
+    //otherwise we would get middle squares with same x positions
+    if ( isoX < 0 )
+        squareX = int( ( isoX - TILE_WIDTH ) / TILE_WIDTH ) * TILE_WIDTH; 
+    else
+        squareX = int( isoX / TILE_WIDTH ) * TILE_WIDTH; 
+    
+    //the square's position is also equal to position of a tile
+    //since we have some tiles position, we can calculate it's index
+    //find the tile cartesian coordinates
+    int tileCartX, tileCartY;
+    convertIsoToCart( tileCartX, tileCartY, squareX, squareY );
+    //now get tile X and Y indexes
+    int tileIndexX = tileCartX / ( TILE_WIDTH / 2 );
+    int tileIndexY = tileCartY / TILE_HEIGHT;
+    //now just get the index
+    int detectedTileIndex = convertPositionToIndex( tileIndexX, tileIndexY );
+    
+    //test the current tile
+    if ( isPosInsideTile( detectedTileIndex, isoX, isoY ) )
+    {
+        return detectedTileIndex;
+    }
+    
+    //test the neighbor tiles, because they take up part of a square as well
+    //west tile
+    if ( convertIndexToX( detectedTileIndex ) > 0 )
+    {
+        if ( isPosInsideTile( detectedTileIndex - 1, isoX, isoY ) )
+            return detectedTileIndex - 1;
+    }
+    //east tile
+    if ( convertIndexToX( detectedTileIndex ) < getTilesXCount() )
+    {
+        if ( isPosInsideTile( detectedTileIndex + 1, isoX, isoY ) )
+            return detectedTileIndex + 1;
+    }
+    //north tile
+    if ( convertIndexToY( detectedTileIndex ) > 0 )
+    {
+        if ( isPosInsideTile( detectedTileIndex - getTilesXCount(), isoX, isoY ) )
+            return detectedTileIndex - getTilesXCount();
+    }
+    //south tile
+    if ( convertIndexToX( detectedTileIndex ) < getTilesYCount() )
+    {
+        if ( isPosInsideTile( detectedTileIndex + getTilesYCount(), isoX, isoY ) )
+            return detectedTileIndex + getTilesYCount();
+    }
+    
+    return -1;
+}

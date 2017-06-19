@@ -206,16 +206,38 @@ void Game::run()
 
 void Game::handleTimers()
 {
-    if ( enemyMoveClock.getElapsedTime().asMilliseconds() >= enemyMoveIntervalMs )
+    if ( this->gamePlayState == GAME_STATE_ATTACKING )
     {
-        worldManager->updateEnemies();
-        worldManager->updateBullets();
-        enemyMoveClock.restart();
+        if ( enemyMoveClock.getElapsedTime().asMilliseconds() >= enemyMoveIntervalMs )
+        {
+            worldManager->updateEnemies();
+            worldManager->updateBullets();
+            enemyMoveClock.restart();
+        }
+        if ( gemDamageClock.getElapsedTime().asMilliseconds() >= gemDamageIntervalMs )
+        {
+            worldManager->updateGem();
+            gemDamageClock.restart();
+        }
     }
-    if ( gemDamageClock.getElapsedTime().asMilliseconds() >= gemDamageIntervalMs )
+    if ( gamePlayState == GAME_STATE_ATTACKING )
     {
-        worldManager->updateGem();
-        gemDamageClock.restart();
+        if ( gameClock.getElapsedTime().asSeconds() >= this->attackTimeS )
+        {
+            if ( worldManager->getGhostCount() <= 0 )
+            {
+                gamePlayState = GAME_STATE_BUILDING;
+                this->gameClock.restart();
+            }
+        }
+    }
+    else if ( gamePlayState == GAME_STATE_BUILDING )
+    {
+        if ( gameClock.getElapsedTime().asSeconds() >= this->gameBuildTimeS )
+        {
+            gamePlayState = GAME_STATE_ATTACKING;
+            this->gameClock.restart();
+        }
     }
 }
 
@@ -246,4 +268,24 @@ void Game::resetGame()
     
     //reset game screen
     this->gameScreen = new Screens::GameScreen( windowWidth, windowHeight );
+    this->gamePlayState = GAME_STATE_ATTACKING;
+    
+    this->gameLevel = 1;
+    worldManager->calculateLevelEnemyCount( gameLevel );
+}
+
+void Game::increaseLevel()
+{
+    this->gameLevel++;
+    worldManager->calculateLevelEnemyCount( gameLevel );
+    if ( ammo < 25 )
+    {
+        ammo = 25;
+    }
+    
+    this->worldManager->setPlayerHealth( 100 );
+            
+    //initialize clocks 
+    this->enemyMoveClock.restart();
+    this->gemDamageClock.restart();
 }

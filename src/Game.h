@@ -18,6 +18,8 @@
 #include "screens/GameOverScreen.h"
 #include "screens/GameScreen.h"
 
+#define ATTACK_TIME_INCREASE 10
+
 class Game
 {
 public:
@@ -52,7 +54,13 @@ private:
         STATE_QUIT
     };
     
+    enum GamePlayStates {
+        GAME_STATE_ATTACKING,
+        GAME_STATE_BUILDING
+    };
+    
     int gameState;
+    int gamePlayState;
     
     //game stats
     int ammo;
@@ -63,8 +71,16 @@ private:
     //game clocks
     const int enemyMoveIntervalMs = 30;
     const int gemDamageIntervalMs = 300;
+    //max amount of time player has to upgrade their building
+    const int gameBuildTimeS = 60 * 3;
+    //time the player will be attacked by ghosts
+    int attackTimeS = 60 * 2;
     sf::Clock enemyMoveClock;
     sf::Clock gemDamageClock;
+    //clock to measure attack and build game mode
+    sf::Clock gameClock;
+    
+    int gameLevel;
     
     //this function strips away the file name from full argv path
     std::string getPathWithoutFileName( std::string path );
@@ -74,5 +90,6 @@ private:
     //this checks all timers
     void handleTimers();
     
+    void increaseLevel();
 };
 

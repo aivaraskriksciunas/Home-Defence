@@ -5,6 +5,9 @@ using namespace Screens;
 GameScreen::GameScreen( int windowWidth, int windowHeight )
 {
     this->infoBox = new UI::UIBox( 0, 0, 100, 100 );
+    this->timeBox = new UI::UIBox( windowWidth - 80, 0, 80, 30 );
+    this->timeLabel = new UI::UILabel( 10, 5, "00:00", sf::Color::White, FONT_SIMPLE, 17 );
+    this->timeBox->addElement( timeLabel );
     
     this->healthIcon = new UI::UIIcon( 5, 10, TEXTURE_ICON_HEART );
     this->healthLabel = new UI::UIProgressBar( 30, 10, maxProgressBarLength, 10, 100, sf::Color::Red );
@@ -25,6 +28,7 @@ GameScreen::GameScreen( int windowWidth, int windowHeight )
     this->infoBox->addElement( repairLabel );
     
     this->uiManager.AddElement( infoBox );
+    this->uiManager.AddElement( timeBox );
     
     this->mainViewport.setSize( windowWidth, windowHeight );
     this->uiViewport.setSize( windowWidth, windowHeight );

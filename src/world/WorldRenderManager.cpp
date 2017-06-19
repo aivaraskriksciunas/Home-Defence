@@ -3,7 +3,8 @@
 using namespace World;
 
 void WorldRenderManager::renderMap( Engine::VideoDriver* videoDriver, 
-                                    Player* player, std::vector<Ghost*>* ghosts,
+                                    Player* player, Gem* gem,
+                                    std::vector<Ghost*>* ghosts,
                                     std::vector<Tile>* map )
 {
     int playerPosx = player->getX();
@@ -34,7 +35,7 @@ void WorldRenderManager::renderMap( Engine::VideoDriver* videoDriver,
             continue;
         }
        
-        renderTile( videoDriver, map, player, ghosts, tileIndex, tileIsoX, tileIsoY );
+        renderTile( videoDriver, map, player, gem, ghosts, tileIndex, tileIsoX, tileIsoY );
     }
     
 }
@@ -59,7 +60,8 @@ void WorldRenderManager::renderBullets( Engine::VideoDriver* videoDriver, std::v
 
 void WorldRenderManager::renderTile( Engine::VideoDriver* videoDriver,
                                      std::vector<Tile>* map,
-                                     Player* player, std::vector<Ghost*>* ghosts, 
+                                     Player* player, Gem* gem,
+                                     std::vector<Ghost*>* ghosts, 
                                      int tileIndex, 
                                      int tileIsoX, int tileIsoY )
 {
@@ -116,6 +118,12 @@ void WorldRenderManager::renderTile( Engine::VideoDriver* videoDriver,
          worldMath.isPosInsideTile( tileIndex, playerPosx, playerPosy + CHARACTER_HEIGHT ) )
     {
         player->draw( videoDriver );
+    }
+    //check if there's a gem on this tile
+    if ( worldMath.isPosInsideTile( tileIndex, gem->getX(), gem->getY() ) ||
+         worldMath.isPosInsideTile( tileIndex, gem->getX(), gem->getY() + GEM_SIZE ) )
+    {
+        gem->draw( videoDriver );
     }
     
     //check if there is a ghost on this tile 

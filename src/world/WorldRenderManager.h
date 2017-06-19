@@ -6,6 +6,7 @@
 #include "../characters/Player.h"
 #include "../characters/Ghost.h"
 #include "../characters/Bullet.h"
+#include "../characters/Gem.h"
 #include "Tile.h"
 #include "Pickup.h"
 #include "WorldMath.h"
@@ -16,7 +17,8 @@ class WorldRenderManager {
 public:
     
     void renderMap( Engine::VideoDriver* videoDriver, 
-                    Player* player, std::vector<Ghost*>* ghosts,
+                    Player* player, Gem* gem, 
+                    std::vector<Ghost*>* ghosts,
                     std::vector<Tile>* map );
     void renderPickups( Engine::VideoDriver* videoDriver, std::vector<Pickup*>* pickups );
     void renderBullets( Engine::VideoDriver* videoDriver, std::vector<Bullet*>* bullets );
@@ -24,7 +26,8 @@ public:
 private:
     void renderTile( Engine::VideoDriver* videoDriver,
                      std::vector<Tile>* map,
-                     Player* player, std::vector<Ghost*>* ghosts, 
+                     Player* player, Gem* gem,
+                     std::vector<Ghost*>* ghosts, 
                      int tileIndex, 
                      int tileIsoX, int tileIsoY );
     

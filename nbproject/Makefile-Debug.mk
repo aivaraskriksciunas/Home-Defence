@@ -38,6 +38,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/Game.o \
 	${OBJECTDIR}/src/characters/Bullet.o \
 	${OBJECTDIR}/src/characters/Character.o \
+	${OBJECTDIR}/src/characters/Gem.o \
 	${OBJECTDIR}/src/characters/Ghost.o \
 	${OBJECTDIR}/src/characters/Player.o \
 	${OBJECTDIR}/src/engine/InputDriver.o \
@@ -100,6 +101,11 @@ ${OBJECTDIR}/src/characters/Character.o: src/characters/Character.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/characters
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -I/usr/include -I/usr/include/c++/7.1.1/ `pkg-config --cflags sfml-system` `pkg-config --cflags sfml-window` `pkg-config --cflags sfml-graphics` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/characters/Character.o src/characters/Character.cpp
+
+${OBJECTDIR}/src/characters/Gem.o: src/characters/Gem.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/characters
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I/usr/include -I/usr/include/c++/7.1.1/ `pkg-config --cflags sfml-system` `pkg-config --cflags sfml-window` `pkg-config --cflags sfml-graphics` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/characters/Gem.o src/characters/Gem.cpp
 
 ${OBJECTDIR}/src/characters/Ghost.o: src/characters/Ghost.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/characters

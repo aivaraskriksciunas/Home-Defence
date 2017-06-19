@@ -11,7 +11,7 @@ Game::Game( char* programPath, char* title, int width, int height ) :
                                              title,
                                              sf::Style::Default );
     
-    //this->mainWindow->setFramerateLimit( 80 );
+    this->mainWindow->setFramerateLimit( 80 );
     
     //get only the path to the file without the file name
     this->programPathWithoutName = getPathWithoutFileName( programPath );
@@ -180,7 +180,9 @@ void Game::run()
         
         if ( gameState == STATE_RUNNING )
         {
-            gameScreen->updateUI( this->ammo, this->wallRepairs, this->worldManager->getPlayerHealth() );
+            gameScreen->updateUI( this->ammo, this->wallRepairs, 
+                                  this->worldManager->getPlayerHealth(), 
+                                  this->worldManager->getGemHealth() );
         
             handleTimers();
             gameScreen->renderFrame( videoDriver, worldManager );
@@ -210,6 +212,11 @@ void Game::handleTimers()
         worldManager->updateBullets();
         enemyMoveClock.restart();
     }
+    if ( gemDamageClock.getElapsedTime().asMilliseconds() >= gemDamageIntervalMs )
+    {
+        worldManager->updateGem();
+        gemDamageClock.restart();
+    }
 }
 
 std::string Game::getPathWithoutFileName( std::string path )
@@ -235,6 +242,7 @@ void Game::resetGame()
     
     //initialize clocks 
     this->enemyMoveClock.restart();
+    this->gemDamageClock.restart();
     
     //reset game screen
     this->gameScreen = new Screens::GameScreen( windowWidth, windowHeight );

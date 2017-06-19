@@ -21,9 +21,11 @@ enum TextureTypes {
     TEXTURE_PLAYER,
     TEXTURE_GHOST,
     TEXTURE_BULLET,
+    TEXTURE_GEM,
     TEXTURE_ICON_HEART,
     TEXTURE_ICON_BULLET,
-    TEXTURE_ICON_HAMMER
+    TEXTURE_ICON_HAMMER,
+    TEXTURE_ICON_GEM
 };
 
 enum WallTypes {
@@ -76,10 +78,12 @@ private:
     static sf::Texture playerTexture[TEXTURE_PLAYER_TOTAL];
     static sf::Texture ghostTexture[TEXTURE_PLAYER_TOTAL];
     static sf::Texture bulletTexture;
+    static sf::Texture gemTexture;
     
     static sf::Texture heartIcon;
     static sf::Texture bulletIcon;
     static sf::Texture hammerIcon;
+    static sf::Texture gemIcon;
     
     static sf::Font basicFont;
 };

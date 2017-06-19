@@ -24,6 +24,7 @@ void WorldManager::GenerateMap( std::string path )
     {
         map[tileIndex].tileType = TILE_GRASS;
         map[tileIndex].texture = TEXTURE_GRASS;
+        map[tileIndex].wallHealth = 100;
     }
     
     //position where building from file will be placed
@@ -39,7 +40,7 @@ void WorldManager::GenerateMap( std::string path )
         {
             int index = worldMath.convertPositionToIndex( posx + charIndex, posy );
             
-            if ( line[charIndex] == '.' || line[charIndex] == 'o' )
+            if ( line[charIndex] == '.' || line[charIndex] == 'o' || line[charIndex] == 'g' )
             {
                 map[index].texture = TEXTURE_FLOOR;
                 map[index].tileType = TILE_FLOOR;
@@ -57,9 +58,18 @@ void WorldManager::GenerateMap( std::string path )
             {
                 int startPosCartX = worldMath.convertIndexToX( index ) * TILE_WIDTH / 2;
                 int startPosCartY = worldMath.convertIndexToY( index ) * TILE_HEIGHT;
-                int startPosIsoX, startPosIsoY;
                 worldMath.convertCartToIso( this->startPosX, this->startPosY, 
                                             startPosCartX, startPosCartY );
+            }
+            else if ( line[charIndex] == 'g' )
+            {
+                int gemCartX = worldMath.convertIndexToX( index ) * TILE_WIDTH / 2;
+                int gemCartY = worldMath.convertIndexToY( index ) * TILE_HEIGHT;
+                int gemIsoX, gemIsoY;
+                worldMath.convertCartToIso( gemIsoX, gemIsoY, 
+                                            gemCartX, gemCartY );
+                
+                gem = new Gem( gemIsoX, gemIsoY );
             }
         }
         
@@ -70,7 +80,7 @@ void WorldManager::GenerateMap( std::string path )
     ifile.close();
     orientWalls();
     
-    this->player = new Player( 50, 50 );//this->startPosX, this->startPosY );
+    this->player = new Player( this->startPosX, this->startPosY );
     this->ghosts.clear();
     this->pickups.clear();
     this->bullets.clear();
@@ -268,7 +278,7 @@ bool WorldManager::validateNeighborTile( int currentIndex, int neighborDirection
 
 void WorldManager::draw( Engine::VideoDriver* videoDriver )
 {
-    worldDrawManager.renderMap( videoDriver, player, &ghosts, &map );
+    worldDrawManager.renderMap( videoDriver, player, gem, &ghosts, &map );
     worldDrawManager.renderPickups( videoDriver, &pickups );
     worldDrawManager.renderBullets( videoDriver, &bullets );
 }
@@ -326,10 +336,22 @@ void WorldManager::moveEnemies()
                 return;
             }
         }
+        //check if ghost is hitting the gem
+        else if ( gem->hasCollided( ghosts[ghost]->getX() + CHARACTER_WIDTH / 2,
+                                    ghosts[ghost]->getY() + CHARACTER_HEIGHT / 2 ) )
+        {
+            this->gemTakingDamage = true;
+        }
+        
+        //get position of the closest target
+        int targetX, targetY;
+        worldMath.getClosestTargetPos( ghosts[ghost]->getX(), ghosts[ghost]->getY(),
+                                       targetX, targetY,
+                                       player, gem );
         
         float ghostX, ghostY;
-        ghosts[ghost]->move( player->getX() - ghosts[ghost]->getX(), //get the difference between player and ghost
-                             player->getY() - ghosts[ghost]->getY(),
+        ghosts[ghost]->move( targetX - ghosts[ghost]->getX(), //get the difference between player and ghost
+                             targetY - ghosts[ghost]->getY(),
                              ghostX, ghostY );
         
         if ( validateCharacterCoords( ghostX, ghostY + CHARACTER_HEIGHT ) && 
@@ -347,12 +369,21 @@ void WorldManager::moveEnemies()
 
 void WorldManager::updateEnemies()
 {
-    if ( ghosts.size() < 50 )
+    if ( ghosts.size() < 20 )
     {
         createEnemy();
     }
     
     moveEnemies();
+}
+
+void WorldManager::updateGem()
+{
+    if ( gemTakingDamage )
+    {
+        gem->takeDamage( 1 );
+    }
+    gemTakingDamage = false;
 }
 
 void WorldManager::createEnemy()
@@ -398,6 +429,11 @@ int WorldManager::getPlayerX()
 int WorldManager::getPlayerY()
 {
     return this->player->getY();
+}
+
+int WorldManager::getGemHealth()
+{
+    return this->gem->getHealth();
 }
 
 int WorldManager::getPlayerHealth()

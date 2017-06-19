@@ -12,9 +12,11 @@ sf::Texture TextureManager::bulletTexture;
 sf::Texture TextureManager::wallTextures[TEXTURE_WALL_TOTAL];
 sf::Texture TextureManager::playerTexture[TEXTURE_PLAYER_TOTAL];
 sf::Texture TextureManager::ghostTexture[TEXTURE_PLAYER_TOTAL];
+sf::Texture TextureManager::gemTexture;
 sf::Texture TextureManager::bulletIcon;
 sf::Texture TextureManager::heartIcon;
 sf::Texture TextureManager::hammerIcon;
+sf::Texture TextureManager::gemIcon;
 sf::Font TextureManager::basicFont;
 
 TextureManager::TextureManager( std::string programPath )
@@ -23,9 +25,11 @@ TextureManager::TextureManager( std::string programPath )
     load( &this->testTexture, programPath + "/media/tiles/test.png" );
     load( &this->grassTexture, programPath + "/media/tiles/grass.png" );
     load( &this->bulletTexture, programPath + "/media/characters/bullet.png" );
+    load( &this->gemTexture, programPath + "/media/characters/gem.png" );
     load( &this->bulletIcon, programPath + "/media/icons/bullet.png" );
     load( &this->heartIcon, programPath + "/media/icons/heart.png" );
     load( &this->hammerIcon, programPath + "/media/icons/hammer.png" );
+    load( &this->gemIcon, programPath + "/media/icons/gem.png" );
     loadSpriteSheet( this->wallTextures, TEXTURE_WALL_TOTAL, programPath + "/media/tiles/wall.png", WALL_HEIGHT, WALL_WIDTH );
     loadSpriteSheet( this->playerTexture, TEXTURE_PLAYER_TOTAL, programPath + "/media/characters/player.png", CHARACTER_HEIGHT, CHARACTER_WIDTH );
     loadSpriteSheet( this->ghostTexture, TEXTURE_PLAYER_TOTAL, programPath + "/media/characters/ghost.png", CHARACTER_HEIGHT, CHARACTER_WIDTH );
@@ -93,6 +97,12 @@ sf::Texture& TextureManager::getTexture( int type, int texturePart )
             break;
         case TEXTURE_ICON_HAMMER:
             return hammerIcon;
+            break;
+        case TEXTURE_ICON_GEM:
+            return gemIcon;
+            break;
+        case TEXTURE_GEM:
+            return gemTexture;
             break;
     }
     return testTexture;

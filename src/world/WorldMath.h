@@ -2,6 +2,8 @@
 #include <vector>
 #include <cmath>
 #include "Tile.h"
+#include "../characters/Player.h"
+#include "../characters/Gem.h"
 
 namespace World {
 class WorldMath {
@@ -30,6 +32,9 @@ public:
     
     //returns which side of tile character is located
     int getCharacterPositionOnTile( int index, int isoX, int isoY );
+    
+    void getClosestTargetPos( int posx, int posy, int& targetPosX, int& targetPosY,
+                              Player* player, Gem* gem );
     
 private:
     static int tilesXCount, tilesYCount;

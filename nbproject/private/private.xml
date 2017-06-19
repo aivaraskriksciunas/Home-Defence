@@ -21,8 +21,11 @@
         <group>
             <file>file:/home/aivaras/Documents/Programming/C++/HomeDefence/src/screens/StartScreen.cpp</file>
             <file>file:/home/aivaras/Documents/Programming/C++/HomeDefence/src/world/WorldManager.h</file>
+            <file>file:/home/aivaras/Documents/Programming/C++/HomeDefence/src/world/WorldMath.cpp</file>
+            <file>file:/home/aivaras/Documents/Programming/C++/HomeDefence/src/main.cpp</file>
             <file>file:/home/aivaras/Documents/Programming/C++/HomeDefence/src/Game.cpp</file>
             <file>file:/home/aivaras/Documents/Programming/C++/HomeDefence/src/world/WorldManager.cpp</file>
+            <file>file:/home/aivaras/Documents/Programming/C++/HomeDefence/src/engine/TextureManager.h</file>
         </group>
     </open-files>
 </project-private>

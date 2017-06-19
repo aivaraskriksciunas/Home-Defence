@@ -199,3 +199,26 @@ int WorldMath::getCharacterPositionOnTile( int index, int isoX, int isoY )
     }
     return WALL_POS_TOTAL;
 }
+
+void WorldMath::getClosestTargetPos( int posx, int posy, int& targetPosX, int& targetPosY,
+                                     Player* player, Gem* gem )
+{
+    //calculate direct distance to each target
+    int distToPlayer = std::sqrt( std::pow( posx - player->getX(), 2 ) + 
+                                  std::pow( posy - player->getY(), 2 ) );
+    
+    int distToGem = std::sqrt( std::pow( posx - gem->getX(), 2 ) + 
+                               std::pow( posy - gem->getY(), 2 ) );
+    
+    //check which target is closer and return it's position
+    if ( distToGem < distToPlayer )
+    {
+        targetPosX = gem->getX();
+        targetPosY = gem->getY();
+    }
+    else 
+    {
+        targetPosX = player->getX();
+        targetPosY = player->getY();
+    }
+}

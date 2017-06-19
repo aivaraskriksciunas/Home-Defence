@@ -8,6 +8,7 @@
 #include "../engine/TextureManager.h"
 #include "../characters/Player.h"
 #include "../characters/Ghost.h"
+#include "../characters/Gem.h"
 #include "Tile.h"
 #include "Pickup.h"
 #include "WorldRenderManager.h"
@@ -28,8 +29,6 @@ public:
     int getStartPosX();
     int getStartPosY();
     
-    
-    
     //character functions
     void movePlayer( int direction );
     //checks if there are enough enemies based on game time,
@@ -37,6 +36,8 @@ public:
     void updateEnemies();
     //move and check if bullets have collided with any ghosts
     void updateBullets();
+    //if required, take away health from gem
+    void updateGem();
     
     int getPlayerX();
     int getPlayerY();
@@ -47,6 +48,8 @@ public:
     void shoot( int direction );
     //fix wall the player is currently on
     bool fixWall();
+    
+    int getGemHealth();
     
 private:
     std::vector<Tile> map;
@@ -60,6 +63,11 @@ private:
     //characters
     Player* player;
     std::vector<Ghost*> ghosts;
+    Gem* gem;
+    //are there any ghosts hitting the gem
+    //using this var ensures that no matter how many ghosts are near the gem,
+    //it will take the same amount of damage
+    bool gemTakingDamage = false;
     
     //bullets
     std::vector<Bullet*> bullets;

@@ -1,3 +1,5 @@
+#pragma once
+
 #include <cmath>
 #include "Ghost.h"
 
@@ -20,7 +22,7 @@ private:
     float posx, posy;
     int direction;
     
-    const int bulletSpeed = 4;
+    const int bulletSpeed = 8;
     const int damage = 100;
     //bullet lifespan in seconds since launch
     const int lifespan = 3;

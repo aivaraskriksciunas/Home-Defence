@@ -16,7 +16,7 @@ public:
     
     void renderFrame( Engine::VideoDriver* videoDriver, World::WorldManager* worldManager);
     
-    void updateUI( int ammo, int wallRepairs, int playerHealth );
+    void updateUI( int ammo, int wallRepairs, int playerHealth, int gemHealth );
     
 private:
     //all ui elements
@@ -24,9 +24,11 @@ private:
     UI::UILabel* healthLabel;
     UI::UILabel* ammoLabel;
     UI::UILabel* repairLabel;
+    UI::UILabel* gemLabel;
     UI::UIIcon* repairIcon;
     UI::UIIcon* healthIcon;
     UI::UIIcon* ammoIcon;
+    UI::UIIcon* gemIcon;
     
     sf::View mainViewport;
     sf::View uiViewport;

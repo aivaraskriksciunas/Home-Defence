@@ -62,7 +62,9 @@ private:
     
     //game clocks
     const int enemyMoveIntervalMs = 30;
+    const int gemDamageIntervalMs = 500;
     sf::Clock enemyMoveClock;
+    sf::Clock gemDamageClock;
     
     //this function strips away the file name from full argv path
     std::string getPathWithoutFileName( std::string path );

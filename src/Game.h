@@ -21,6 +21,7 @@
 #include "game/GameStateBuild.h"
 
 #define ATTACK_TIME_INCREASE 10
+#define GHOST_KILL_REWARD 1
 
 class Game
 {
@@ -70,13 +71,13 @@ private:
     bool texturesLoaded = true;
     
     //game clocks
-    //max amount of time player has to upgrade their building
-    const int gameBuildTimeS = 1;
     //time the player will be attacked by ghosts
     int attackTimeS = 60 * 1;
     int timeLeft = 0;
     //clock to measure attack and build game mode
     sf::Clock gameClock;
+    
+    int money;
     
     //this function strips away the file name from full argv path
     std::string getPathWithoutFileName( std::string path );

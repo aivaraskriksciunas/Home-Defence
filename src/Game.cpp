@@ -29,6 +29,8 @@ Game::Game( char* programPath, char* title, int width, int height ) :
     this->buildState = new GameStates::GameStateBuild( worldManager, windowWidth, windowHeight );
     this->attackState = new GameStates::GameStateAttack( worldManager, windowWidth, windowHeight );
     
+    this->money = 0;
+    
     this->gameState = STATE_START_SCREEN;
 }
 
@@ -113,6 +115,11 @@ void Game::handleSignals()
                                                    mainWindow->getSize().x / 2,
                                                    mainWindow->getSize().y / 2 );
                 }
+                else if ( gamePlayState == GAME_STATE_BUILDING )
+                {
+                    buildState->handleMouseClick( sf::Mouse::getPosition( *mainWindow ).x,
+                                                  sf::Mouse::getPosition( *mainWindow ).y );
+                }
             }   
             else 
             {
@@ -137,6 +144,16 @@ void Game::handleSignals()
         else if ( signal == SIG_PICKUP_REPAIRS )
         {
             attackState->addWallRepairs( 5 );
+        }
+        else if ( signal == SIG_BEGIN_ATTACK )
+        {
+            gamePlayState = GAME_STATE_ATTACKING;
+            timeLeft = attackTimeS;
+            this->gameClock.restart();
+        }
+        else if ( signal == SIG_GHOST_KILLED )
+        {
+            this->money += GHOST_KILL_REWARD; //give player some money for killing a ghost
         }
     }
 }
@@ -174,7 +191,7 @@ void Game::run()
             }
             else if ( gamePlayState == GAME_STATE_BUILDING )
             {
-                buildState->update( timeLeft );
+                buildState->update( timeLeft, money );
                 buildState->draw( videoDriver );
             }
         
@@ -220,7 +237,6 @@ void Game::handleTimers()
             {
                 gamePlayState = GAME_STATE_BUILDING;
                 attackState->increaseLevel();
-                timeLeft = gameBuildTimeS;
                 this->gameClock.restart();
             }
         }
@@ -228,12 +244,6 @@ void Game::handleTimers()
     else if ( gamePlayState == GAME_STATE_BUILDING )
     {
         worldManager->setCreateMoreEnemies( false );
-        if ( timeLeft <= 0 )
-        {
-            gamePlayState = GAME_STATE_ATTACKING;
-            timeLeft = attackTimeS;
-            this->gameClock.restart();
-        }
     }
 }
 

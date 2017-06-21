@@ -9,7 +9,7 @@ void Screen::renderFrame( Engine::VideoDriver* videoDriver )
     videoDriver->displayWindow();
 }
 
-void Screen::handleClick( int mouseX, int mouseY )
+bool Screen::handleClick( int mouseX, int mouseY )
 {
-    uiManager.handleClick( mouseX, mouseY );
+    return uiManager.handleClick( mouseX, mouseY );
 }

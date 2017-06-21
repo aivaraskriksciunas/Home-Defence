@@ -7,6 +7,7 @@
 #include "../ui/UILabel.h"
 #include "../ui/UIIcon.h"
 #include "../ui/UIProgressBar.h"
+#include "../ui/UIButton.h"
 #include "../world/WorldManager.h"
 
 namespace Screens {
@@ -17,7 +18,7 @@ public:
     
     void renderFrame( Engine::VideoDriver* videoDriver, World::WorldManager* worldManager );
     
-    void updateUI( int timeLeft );
+    void updateUI( int timeLeft, int money );
     
 private:
     //all ui elements
@@ -26,6 +27,8 @@ private:
     
     UI::UILabel* timeLabel;
     UI::UILabel* moneyLabel;
+    
+    UI::UIButton* startAttackButton;
     
     sf::View mainViewport;
     sf::View uiViewport;

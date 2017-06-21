@@ -31,6 +31,9 @@ enum Signals {
     SIG_PICKUP_HEALTH,
     SIG_PICKUP_REPAIRS,
     
+    SIG_BEGIN_ATTACK,
+    SIG_GHOST_KILLED,
+    
     SIG_QUIT
 };
 

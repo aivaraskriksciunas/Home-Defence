@@ -29,6 +29,7 @@ void WorldCharacterManager::updateBullets()
         {
             ghosts[ghostHit]->takeDamage( bullets[bulletIndex]->getDamage() );
             bullets.erase( bullets.begin() + bulletIndex );
+            Engine::SignalManager::sendSignal( SIG_GHOST_KILLED );
         }
     }
 }
@@ -194,7 +195,7 @@ void WorldCharacterManager::createEnemy()
     case 2:
         //generate random pos on south edge
         spawnIndex = worldMathPtr->convertPositionToIndex( rand() % worldMathPtr->getTilesXCount(), 
-                                                       worldMathPtr->getTilesYCount() - 2 );
+                                                       worldMathPtr->getTilesYCount() - 3 );
         break;
     case 3:
         //generate random pos on west edge

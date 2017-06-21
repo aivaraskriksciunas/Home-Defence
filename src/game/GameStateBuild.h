@@ -1,18 +1,20 @@
 #pragma once
 #include "../screens/GameBuildScreen.h"
-#include "GameState.h"
 
 namespace GameStates {
-class GameStateBuild : public GameState {
+class GameStateBuild {
 public:
     GameStateBuild( World::WorldManager* worldManager, int windowWidth, int windowHeight );
     
-    void update( int timeLeft );
+    void update( int timeLeft, int money );
     void draw( Engine::VideoDriver* videoDriver );
     
     void reset();
     
+    void handleMouseClick( int mouseX, int mouseY );
+    
 private:
+    World::WorldManager* worldManager;
     Screens::GameBuildScreen* screen;
 };
 

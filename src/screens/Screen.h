@@ -10,7 +10,7 @@ namespace Screens {
 class Screen {
 public:
     virtual void renderFrame( Engine::VideoDriver* videoDriver );
-    virtual void handleClick( int mouseX, int mouseY );
+    virtual bool handleClick( int mouseX, int mouseY );
     
 protected:
     UI::UIManager uiManager;

@@ -9,9 +9,9 @@ GameStateBuild::GameStateBuild( World::WorldManager* worldManager, int windowWid
 }
 
 
-void GameStateBuild::update( int timeLeft )
+void GameStateBuild::update( int timeLeft, int money )
 {
-    this->screen->updateUI( timeLeft );
+    this->screen->updateUI( timeLeft, money );
 }
 
 void GameStateBuild::draw( Engine::VideoDriver* videoDriver )
@@ -21,5 +21,13 @@ void GameStateBuild::draw( Engine::VideoDriver* videoDriver )
 
 void GameStateBuild::reset()
 {
+    
+}
+
+void GameStateBuild::handleMouseClick( int mouseX, int mouseY )
+{
+    if ( screen->handleClick( mouseX, mouseY ) )
+        return; //mouse click was handled in uimanager, so do not continue
+    
     
 }

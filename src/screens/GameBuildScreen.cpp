@@ -13,23 +13,34 @@ GameBuildScreen::GameBuildScreen( int windowWidth, int windowHeight )
     
     this->infoBox->addElement( moneyLabel );
     
+    int startAttackBtnWidth = 90, startAttackBtnHeight = 30;
+    this->startAttackButton = new UI::UIButton( windowWidth - startAttackBtnWidth, 50,
+                                                startAttackBtnWidth, startAttackBtnHeight,
+                                                sf::Color( 100, 150, 100, 255 ),
+                                                "Start >>",
+                                                SIG_BEGIN_ATTACK );
+    
     this->uiManager.AddElement( infoBox );
     this->uiManager.AddElement( timeBox );
+    this->uiManager.AddElement( startAttackButton );
     
     this->mainViewport.setSize( windowWidth, windowHeight );
     this->uiViewport.setSize( windowWidth, windowHeight );
     this->uiViewport.setCenter( windowWidth / 2, windowHeight / 2 );
 }
 
-void GameBuildScreen::updateUI( int timeLeft )
+void GameBuildScreen::updateUI( int timeLeft, int money )
 {
-    
     int minutes = timeLeft / 60;
     int seconds = timeLeft % 60;
     
     std::stringstream text;
     text << minutes << ":" << seconds;
     this->timeLabel->setText( text.str() );
+    
+    text.str( "" );
+    text << "Money: " << money;
+    this->moneyLabel->setText( text.str() );
 }
 
 void GameBuildScreen::renderFrame( Engine::VideoDriver* videoDriver, World::WorldManager* worldManager )

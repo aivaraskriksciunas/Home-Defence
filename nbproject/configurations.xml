@@ -5,7 +5,6 @@
                    displayName="Header Files"
                    projectFiles="true">
       <itemPath>src/screens/GameBuildScreen.h</itemPath>
-      <itemPath>src/game/GameState.h</itemPath>
       <itemPath>src/game/GameStateAttack.h</itemPath>
       <itemPath>src/game/GameStateBuild.h</itemPath>
       <itemPath>src/characters/Gem.h</itemPath>
@@ -176,8 +175,6 @@
       </item>
       <item path="src/engine/VideoDriver.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="src/game/GameState.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="src/game/GameStateAttack.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/game/GameStateAttack.h" ex="false" tool="3" flavor2="0">
@@ -325,8 +322,6 @@
       <item path="src/engine/VideoDriver.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/engine/VideoDriver.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/game/GameState.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/game/GameStateAttack.cpp" ex="false" tool="1" flavor2="0">
       </item>

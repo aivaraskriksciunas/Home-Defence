@@ -1,8 +1,8 @@
-#include "GameScreen.h"
+#include "GameAttackScreen.h"
 
 using namespace Screens;
 
-GameScreen::GameScreen( int windowWidth, int windowHeight )
+GameAttackScreen::GameAttackScreen( int windowWidth, int windowHeight )
 {
     this->infoBox = new UI::UIBox( 0, 0, 100, 100 );
     this->timeBox = new UI::UIBox( windowWidth - 80, 0, 80, 30 );
@@ -35,7 +35,7 @@ GameScreen::GameScreen( int windowWidth, int windowHeight )
     this->uiViewport.setCenter( windowWidth / 2, windowHeight / 2 );
 }
 
-void GameScreen::updateUI( int ammo, int wallRepairs, int playerHealth, int gemHealth )
+void GameAttackScreen::updateUI( int ammo, int wallRepairs, int playerHealth, int gemHealth, int timeLeft )
 {
     std::stringstream text( "" );
     text << ammo;
@@ -45,11 +45,17 @@ void GameScreen::updateUI( int ammo, int wallRepairs, int playerHealth, int gemH
     text << wallRepairs;
     this->repairLabel->setText( text.str() );
     
+    int minutes = timeLeft / 60;
+    int seconds = timeLeft % 60;
+    text.str( "" );
+    text << minutes << ":" << seconds;
+    this->timeLabel->setText( text.str() );
+    
     this->healthLabel->setValue( playerHealth );
     this->gemLabel->setValue( gemHealth );
 }
 
-void GameScreen::renderFrame( Engine::VideoDriver* videoDriver, World::WorldManager* worldManager )
+void GameAttackScreen::renderFrame( Engine::VideoDriver* videoDriver, World::WorldManager* worldManager )
 {
     videoDriver->clearWindow( sf::Color::Black );
     

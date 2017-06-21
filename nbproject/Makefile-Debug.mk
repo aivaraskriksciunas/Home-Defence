@@ -45,9 +45,12 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/engine/SignalManager.o \
 	${OBJECTDIR}/src/engine/TextureManager.o \
 	${OBJECTDIR}/src/engine/VideoDriver.o \
+	${OBJECTDIR}/src/game/GameStateAttack.o \
+	${OBJECTDIR}/src/game/GameStateBuild.o \
 	${OBJECTDIR}/src/main.o \
+	${OBJECTDIR}/src/screens/GameAttackScreen.o \
+	${OBJECTDIR}/src/screens/GameBuildScreen.o \
 	${OBJECTDIR}/src/screens/GameOverScreen.o \
-	${OBJECTDIR}/src/screens/GameScreen.o \
 	${OBJECTDIR}/src/screens/PauseScreen.o \
 	${OBJECTDIR}/src/screens/Screen.o \
 	${OBJECTDIR}/src/screens/StartScreen.o \
@@ -139,20 +142,35 @@ ${OBJECTDIR}/src/engine/VideoDriver.o: src/engine/VideoDriver.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -I/usr/include -I/usr/include/c++/7.1.1/ `pkg-config --cflags sfml-system` `pkg-config --cflags sfml-window` `pkg-config --cflags sfml-graphics` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/engine/VideoDriver.o src/engine/VideoDriver.cpp
 
+${OBJECTDIR}/src/game/GameStateAttack.o: src/game/GameStateAttack.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/game
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I/usr/include -I/usr/include/c++/7.1.1/ `pkg-config --cflags sfml-system` `pkg-config --cflags sfml-window` `pkg-config --cflags sfml-graphics` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/game/GameStateAttack.o src/game/GameStateAttack.cpp
+
+${OBJECTDIR}/src/game/GameStateBuild.o: src/game/GameStateBuild.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/game
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I/usr/include -I/usr/include/c++/7.1.1/ `pkg-config --cflags sfml-system` `pkg-config --cflags sfml-window` `pkg-config --cflags sfml-graphics` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/game/GameStateBuild.o src/game/GameStateBuild.cpp
+
 ${OBJECTDIR}/src/main.o: src/main.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -I/usr/include -I/usr/include/c++/7.1.1/ `pkg-config --cflags sfml-system` `pkg-config --cflags sfml-window` `pkg-config --cflags sfml-graphics` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/main.o src/main.cpp
 
+${OBJECTDIR}/src/screens/GameAttackScreen.o: src/screens/GameAttackScreen.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/screens
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I/usr/include -I/usr/include/c++/7.1.1/ `pkg-config --cflags sfml-system` `pkg-config --cflags sfml-window` `pkg-config --cflags sfml-graphics` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/screens/GameAttackScreen.o src/screens/GameAttackScreen.cpp
+
+${OBJECTDIR}/src/screens/GameBuildScreen.o: src/screens/GameBuildScreen.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/screens
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I/usr/include -I/usr/include/c++/7.1.1/ `pkg-config --cflags sfml-system` `pkg-config --cflags sfml-window` `pkg-config --cflags sfml-graphics` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/screens/GameBuildScreen.o src/screens/GameBuildScreen.cpp
+
 ${OBJECTDIR}/src/screens/GameOverScreen.o: src/screens/GameOverScreen.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/screens
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -I/usr/include -I/usr/include/c++/7.1.1/ `pkg-config --cflags sfml-system` `pkg-config --cflags sfml-window` `pkg-config --cflags sfml-graphics` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/screens/GameOverScreen.o src/screens/GameOverScreen.cpp
-
-${OBJECTDIR}/src/screens/GameScreen.o: src/screens/GameScreen.cpp
-	${MKDIR} -p ${OBJECTDIR}/src/screens
-	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/include -I/usr/include/c++/7.1.1/ `pkg-config --cflags sfml-system` `pkg-config --cflags sfml-window` `pkg-config --cflags sfml-graphics` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/screens/GameScreen.o src/screens/GameScreen.cpp
 
 ${OBJECTDIR}/src/screens/PauseScreen.o: src/screens/PauseScreen.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/screens

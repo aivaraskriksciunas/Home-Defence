@@ -52,7 +52,7 @@ void Ghost::move( int changeX, int changeY, float& posx, float& posy )
         this->direction = TEXTURE_PLAYER_S;
         posy += speed;
     }
-    else if ( changeX < 0 )
+    else if ( changeY < 0 )
     {
         this->direction = TEXTURE_PLAYER_N;
         posy -= speed;

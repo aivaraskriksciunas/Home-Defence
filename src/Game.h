@@ -16,7 +16,9 @@
 #include "screens/StartScreen.h"
 #include "screens/PauseScreen.h"
 #include "screens/GameOverScreen.h"
-#include "screens/GameScreen.h"
+
+#include "game/GameStateAttack.h"
+#include "game/GameStateBuild.h"
 
 #define ATTACK_TIME_INCREASE 10
 
@@ -38,7 +40,6 @@ private:
     Screens::StartScreen* startScreen;
     Screens::PauseScreen* pauseScreen;
     Screens::GameOverScreen* gameOverScreen;
-    Screens::GameScreen* gameScreen;
     Screens::Screen* currentScreen;
     
     Engine::TextureManager* textureManager;
@@ -46,7 +47,11 @@ private:
     Engine::InputDriver* inputDriver;
     World::WorldManager* worldManager;
     
-    enum GameStates {
+    //mid-game states
+    GameStates::GameStateAttack* attackState;
+    GameStates::GameStateBuild* buildState;
+    
+    enum ProgramStates {
         STATE_START_SCREEN, 
         STATE_PAUSE_SCREEN,
         STATE_GAME_OVER_SCREEN,
@@ -62,25 +67,16 @@ private:
     int gameState;
     int gamePlayState;
     
-    //game stats
-    int ammo;
-    int wallRepairs;
-    
     bool texturesLoaded = true;
     
     //game clocks
-    const int enemyMoveIntervalMs = 30;
-    const int gemDamageIntervalMs = 300;
     //max amount of time player has to upgrade their building
-    const int gameBuildTimeS = 60 * 3;
+    const int gameBuildTimeS = 1;
     //time the player will be attacked by ghosts
-    int attackTimeS = 60 * 2;
-    sf::Clock enemyMoveClock;
-    sf::Clock gemDamageClock;
+    int attackTimeS = 60 * 1;
+    int timeLeft = 0;
     //clock to measure attack and build game mode
     sf::Clock gameClock;
-    
-    int gameLevel;
     
     //this function strips away the file name from full argv path
     std::string getPathWithoutFileName( std::string path );
@@ -90,6 +86,5 @@ private:
     //this checks all timers
     void handleTimers();
     
-    void increaseLevel();
 };
 

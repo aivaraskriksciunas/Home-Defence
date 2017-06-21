@@ -19,13 +19,11 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/aivaras/Documents/Programming/C++/HomeDefence/src/screens/StartScreen.cpp</file>
-            <file>file:/home/aivaras/Documents/Programming/C++/HomeDefence/src/world/WorldManager.h</file>
-            <file>file:/home/aivaras/Documents/Programming/C++/HomeDefence/src/world/WorldMath.cpp</file>
-            <file>file:/home/aivaras/Documents/Programming/C++/HomeDefence/src/main.cpp</file>
+            <file>file:/home/aivaras/Documents/Programming/C++/HomeDefence/src/game/GameStateAttack.cpp</file>
+            <file>file:/home/aivaras/Documents/Programming/C++/HomeDefence/src/world/WorldCharacterManager.cpp</file>
+            <file>file:/home/aivaras/Documents/Programming/C++/HomeDefence/src/Game.h</file>
+            <file>file:/home/aivaras/Documents/Programming/C++/HomeDefence/src/game/GameStateAttack.h</file>
             <file>file:/home/aivaras/Documents/Programming/C++/HomeDefence/src/Game.cpp</file>
-            <file>file:/home/aivaras/Documents/Programming/C++/HomeDefence/src/world/WorldManager.cpp</file>
-            <file>file:/home/aivaras/Documents/Programming/C++/HomeDefence/src/engine/TextureManager.h</file>
         </group>
     </open-files>
 </project-private>

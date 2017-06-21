@@ -184,21 +184,21 @@ void WorldCharacterManager::createEnemy()
     {
     case 0:
         //generate random pos on north edge
-        spawnIndex = worldMathPtr->convertPositionToIndex( rand() % worldMathPtr->getTilesXCount(), 0 );
+        spawnIndex = worldMathPtr->convertPositionToIndex( rand() % worldMathPtr->getTilesXCount(), 1 );
         break;
     case 1:
         //generate random pos on east edge
-        spawnIndex = worldMathPtr->convertPositionToIndex( worldMathPtr->getTilesXCount() - 1, 
+        spawnIndex = worldMathPtr->convertPositionToIndex( worldMathPtr->getTilesXCount() - 2, 
                                                        rand() % worldMathPtr->getTilesYCount() );
         break;
     case 2:
         //generate random pos on south edge
         spawnIndex = worldMathPtr->convertPositionToIndex( rand() % worldMathPtr->getTilesXCount(), 
-                                                       worldMathPtr->getTilesYCount() - 1 );
+                                                       worldMathPtr->getTilesYCount() - 2 );
         break;
     case 3:
         //generate random pos on west edge
-        spawnIndex = worldMathPtr->convertPositionToIndex( 0, rand() % worldMathPtr->getTilesYCount() );
+        spawnIndex = worldMathPtr->convertPositionToIndex( 1, rand() % worldMathPtr->getTilesYCount() );
         break;
     }
     
@@ -244,6 +244,15 @@ void WorldCharacterManager::handleGhostWallCollision( std::vector<Tile>* map, in
     if ( (*map)[currentTile].wallPositions[characterPositionOnTile] )
     {
         if ( worldMathPtr->isCharacterOnEdge( currentTile, ghostX, ghostY ) )
+        {
             (*map)[currentTile].wallHealth--;
+            if ( (*map)[currentTile].wallHealth <= 0 )
+            {
+                (*map)[currentTile].wallPositions[0] = false;
+                (*map)[currentTile].wallPositions[1] = false;
+                (*map)[currentTile].wallPositions[2] = false;
+                (*map)[currentTile].wallPositions[3] = false;
+            }
+        }
     }
 }

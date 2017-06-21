@@ -26,6 +26,9 @@ Game::Game( char* programPath, char* title, int width, int height ) :
     this->pauseScreen = new Screens::PauseScreen( windowWidth, windowHeight );
     this->gameOverScreen = new Screens::GameOverScreen( windowWidth, windowHeight );
     
+    this->buildState = new GameStates::GameStateBuild( worldManager, windowWidth, windowHeight );
+    this->attackState = new GameStates::GameStateAttack( worldManager, windowWidth, windowHeight );
+    
     this->gameState = STATE_START_SCREEN;
 }
 
@@ -103,21 +106,12 @@ void Game::handleSignals()
         {
             if ( gameState == STATE_RUNNING )
             {
-                if ( ammo > 0 )
+                if ( gamePlayState == GAME_STATE_ATTACKING )
                 {
-                    int mouseX = sf::Mouse::getPosition( (*mainWindow) ).x;
-                    int mouseY = sf::Mouse::getPosition( (*mainWindow) ).y;
-
-                    int screenMiddleX = mainWindow->getSize().x / 2;
-                    int screenMiddleY = mainWindow->getSize().y / 2;
-                    float direction = std::atan2( mouseY - screenMiddleY,
-                                                mouseX - screenMiddleX );
-
-                    direction *= 180 / M_PI; //convert to degrees
-
-                    this->worldManager->shoot( direction );
-
-                    ammo--;
+                    attackState->handleMouseClick( sf::Mouse::getPosition( *mainWindow ).x, 
+                                                   sf::Mouse::getPosition( *mainWindow ).y,
+                                                   mainWindow->getSize().x / 2,
+                                                   mainWindow->getSize().y / 2 );
                 }
             }   
             else 
@@ -129,11 +123,7 @@ void Game::handleSignals()
         
         else if ( signal == SIG_KEY_SPACE_PRESS )
         {
-            if ( wallRepairs > 0 )
-            {
-                if ( worldManager->fixWall() )
-                    wallRepairs--;
-            }
+            attackState->fixWall();
         }
         
         else if ( signal == SIG_PICKUP_HEALTH )
@@ -142,11 +132,11 @@ void Game::handleSignals()
         }
         else if ( signal == SIG_PICKUP_AMMO )
         {
-            ammo += 25;
+            attackState->addAmmo( 25 );
         }
         else if ( signal == SIG_PICKUP_REPAIRS )
         {
-            wallRepairs += 5;
+            attackState->addWallRepairs( 5 );
         }
     }
 }
@@ -164,9 +154,6 @@ void Game::run()
         
         switch ( gameState )
         {
-            case STATE_RUNNING:
-                currentScreen = gameScreen;
-                break;
             case STATE_START_SCREEN:
                 currentScreen = startScreen;
                 break;
@@ -180,12 +167,18 @@ void Game::run()
         
         if ( gameState == STATE_RUNNING )
         {
-            gameScreen->updateUI( this->ammo, this->wallRepairs, 
-                                  this->worldManager->getPlayerHealth(), 
-                                  this->worldManager->getGemHealth() );
+            if ( gamePlayState == GAME_STATE_ATTACKING )
+            {
+                attackState->update( timeLeft );
+                attackState->draw( videoDriver );
+            }
+            else if ( gamePlayState == GAME_STATE_BUILDING )
+            {
+                buildState->update( timeLeft );
+                buildState->draw( videoDriver );
+            }
         
             handleTimers();
-            gameScreen->renderFrame( videoDriver, worldManager );
         }
         else 
         {
@@ -206,36 +199,39 @@ void Game::run()
 
 void Game::handleTimers()
 {
-    if ( this->gamePlayState == GAME_STATE_ATTACKING )
-    {
-        if ( enemyMoveClock.getElapsedTime().asMilliseconds() >= enemyMoveIntervalMs )
-        {
-            worldManager->updateEnemies();
-            worldManager->updateBullets();
-            enemyMoveClock.restart();
-        }
-        if ( gemDamageClock.getElapsedTime().asMilliseconds() >= gemDamageIntervalMs )
-        {
-            worldManager->updateGem();
-            gemDamageClock.restart();
-        }
-    }
     if ( gamePlayState == GAME_STATE_ATTACKING )
     {
-        if ( gameClock.getElapsedTime().asSeconds() >= this->attackTimeS )
+        attackState->handleTimers();
+    }
+    
+    if ( gameClock.getElapsedTime().asSeconds() >= 1 )
+    {
+        timeLeft--;
+        gameClock.restart();
+    }
+    
+    if ( gamePlayState == GAME_STATE_ATTACKING )
+    {
+        worldManager->setCreateMoreEnemies( true );
+        if ( timeLeft <= 0 )
         {
+            worldManager->setCreateMoreEnemies( false );
             if ( worldManager->getGhostCount() <= 0 )
             {
                 gamePlayState = GAME_STATE_BUILDING;
+                attackState->increaseLevel();
+                timeLeft = gameBuildTimeS;
                 this->gameClock.restart();
             }
         }
     }
     else if ( gamePlayState == GAME_STATE_BUILDING )
     {
-        if ( gameClock.getElapsedTime().asSeconds() >= this->gameBuildTimeS )
+        worldManager->setCreateMoreEnemies( false );
+        if ( timeLeft <= 0 )
         {
             gamePlayState = GAME_STATE_ATTACKING;
+            timeLeft = attackTimeS;
             this->gameClock.restart();
         }
     }
@@ -259,33 +255,8 @@ void Game::resetGame()
 {
     this->worldManager->GenerateMap( programPathWithoutName + "/media/maps/simple.txt" );
     
-    this->ammo = 50;
-    this->wallRepairs = 10;
-    
-    //initialize clocks 
-    this->enemyMoveClock.restart();
-    this->gemDamageClock.restart();
-    
-    //reset game screen
-    this->gameScreen = new Screens::GameScreen( windowWidth, windowHeight );
     this->gamePlayState = GAME_STATE_ATTACKING;
+    this->timeLeft = attackTimeS;
     
-    this->gameLevel = 1;
-    worldManager->calculateLevelEnemyCount( gameLevel );
 }
 
-void Game::increaseLevel()
-{
-    this->gameLevel++;
-    worldManager->calculateLevelEnemyCount( gameLevel );
-    if ( ammo < 25 )
-    {
-        ammo = 25;
-    }
-    
-    this->worldManager->setPlayerHealth( 100 );
-            
-    //initialize clocks 
-    this->enemyMoveClock.restart();
-    this->gemDamageClock.restart();
-}

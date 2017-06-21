@@ -11,13 +11,13 @@
 
 namespace Screens {
     
-class GameScreen : public Screen {
+class GameAttackScreen : public Screen {
 public:
-    GameScreen( int windowWidth, int windowHeight );
+    GameAttackScreen( int windowWidth, int windowHeight );
     
     void renderFrame( Engine::VideoDriver* videoDriver, World::WorldManager* worldManager);
     
-    void updateUI( int ammo, int wallRepairs, int playerHealth, int gemHealth );
+    void updateUI( int ammo, int wallRepairs, int playerHealth, int gemHealth, int timeLeft );
     
 private:
     const int maxProgressBarLength = 60;

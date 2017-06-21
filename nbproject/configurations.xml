@@ -4,6 +4,10 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>src/screens/GameBuildScreen.h</itemPath>
+      <itemPath>src/game/GameState.h</itemPath>
+      <itemPath>src/game/GameStateAttack.h</itemPath>
+      <itemPath>src/game/GameStateBuild.h</itemPath>
       <itemPath>src/characters/Gem.h</itemPath>
       <itemPath>src/ui/UIProgressBar.h</itemPath>
       <itemPath>src/world/WorldCharacterManager.h</itemPath>
@@ -15,6 +19,9 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <itemPath>src/screens/GameBuildScreen.cpp</itemPath>
+      <itemPath>src/game/GameStateAttack.cpp</itemPath>
+      <itemPath>src/game/GameStateBuild.cpp</itemPath>
       <itemPath>src/characters/Gem.cpp</itemPath>
       <itemPath>src/ui/UIProgressBar.cpp</itemPath>
       <itemPath>src/world/WorldCharacterManager.cpp</itemPath>
@@ -41,10 +48,10 @@
         <itemPath>src/engine/VideoDriver.h</itemPath>
       </logicalFolder>
       <logicalFolder name="screens" displayName="screens" projectFiles="true">
+        <itemPath>src/screens/GameAttackScreen.cpp</itemPath>
+        <itemPath>src/screens/GameAttackScreen.h</itemPath>
         <itemPath>src/screens/GameOverScreen.cpp</itemPath>
         <itemPath>src/screens/GameOverScreen.h</itemPath>
-        <itemPath>src/screens/GameScreen.cpp</itemPath>
-        <itemPath>src/screens/GameScreen.h</itemPath>
         <itemPath>src/screens/PauseScreen.cpp</itemPath>
         <itemPath>src/screens/PauseScreen.h</itemPath>
         <itemPath>src/screens/Screen.cpp</itemPath>
@@ -169,15 +176,29 @@
       </item>
       <item path="src/engine/VideoDriver.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/game/GameState.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/game/GameStateAttack.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/game/GameStateAttack.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/game/GameStateBuild.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/game/GameStateBuild.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/screens/GameAttackScreen.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/screens/GameAttackScreen.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/screens/GameBuildScreen.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/screens/GameBuildScreen.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/screens/GameOverScreen.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/screens/GameOverScreen.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/screens/GameScreen.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/screens/GameScreen.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/screens/PauseScreen.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -305,15 +326,29 @@
       </item>
       <item path="src/engine/VideoDriver.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/game/GameState.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/game/GameStateAttack.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/game/GameStateAttack.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/game/GameStateBuild.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/game/GameStateBuild.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/main.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/screens/GameAttackScreen.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/screens/GameAttackScreen.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/screens/GameBuildScreen.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/screens/GameBuildScreen.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/screens/GameOverScreen.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/screens/GameOverScreen.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="src/screens/GameScreen.cpp" ex="false" tool="1" flavor2="0">
-      </item>
-      <item path="src/screens/GameScreen.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/screens/PauseScreen.cpp" ex="false" tool="1" flavor2="0">
       </item>

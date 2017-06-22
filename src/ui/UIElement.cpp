@@ -2,6 +2,9 @@
 
 using namespace UI;
 
+int UIElement::lastMousePosX;
+int UIElement::lastMousePosY;
+
 void UIElement::setBgColor( sf::Color color )
 {
     this->bgColor = color;
@@ -47,4 +50,10 @@ bool UIElement::posInsideElement( int x, int y )
 void UIElement::setOnClickSignal( int signal )
 {
     this->onClickSignal = signal;
+}
+
+void UIElement::setLastMousePos( int mouseX, int mouseY )
+{
+    lastMousePosX = mouseX;
+    lastMousePosY = mouseY;
 }

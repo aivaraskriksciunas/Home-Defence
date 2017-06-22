@@ -6,7 +6,7 @@ class GameStateBuild {
 public:
     GameStateBuild( World::WorldManager* worldManager, int windowWidth, int windowHeight );
     
-    void update( int timeLeft, int money );
+    void update( int money );
     void draw( Engine::VideoDriver* videoDriver );
     
     void reset();

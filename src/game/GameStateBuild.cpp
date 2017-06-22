@@ -9,9 +9,9 @@ GameStateBuild::GameStateBuild( World::WorldManager* worldManager, int windowWid
 }
 
 
-void GameStateBuild::update( int timeLeft, int money )
+void GameStateBuild::update( int money )
 {
-    this->screen->updateUI( timeLeft, money );
+    this->screen->updateUI( money );
 }
 
 void GameStateBuild::draw( Engine::VideoDriver* videoDriver )

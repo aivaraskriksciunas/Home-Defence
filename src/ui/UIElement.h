@@ -14,7 +14,7 @@ public:
     
     virtual void draw( Engine::VideoDriver* videoDriver ) = 0;
     
-    void setPosition( int posx, int posy );
+    virtual void setPosition( int posx, int posy );
     void setSize( int width, int height );
     void setBgColor( sf::Color color );
     
@@ -23,10 +23,14 @@ public:
     
     bool posInsideElement( int x, int y );
     
+    static void setLastMousePos( int mouseX, int mouseY );
+    
 protected:
     int posx, posy;
     int width, height;
     sf::Color bgColor;
+    
+    static int lastMousePosX, lastMousePosY;
     
     int onClickSignal;
 };

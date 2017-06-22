@@ -72,7 +72,7 @@ private:
     
     //game clocks
     //time the player will be attacked by ghosts
-    int attackTimeS = 60 * 1;
+    int attackTimeS = 30 * 1;
     int timeLeft = 0;
     //clock to measure attack and build game mode
     sf::Clock gameClock;

@@ -15,10 +15,14 @@ public:
     
     UIButton();
     
-    void onClick();
-    void draw( Engine::VideoDriver* videoDriver );
+    virtual void onClick();
+    virtual void draw( Engine::VideoDriver* videoDriver );
     
-private:
+    void setButtonTextSize( int size );
+    
+    void setPosition( int posx, int posy );
+    
+protected:
     UILabel message;
 };
 

@@ -19,6 +19,8 @@ void UIManager::drawUI( Engine::VideoDriver* videoDriver )
 
 bool UIManager::handleClick( int mouseX, int mouseY )
 {
+    UIElement::setLastMousePos( mouseX, mouseY );
+    
     for ( int uiIndex = 0; uiIndex < uiElements.size(); uiIndex++ )
     {
         if ( uiElements[uiIndex]->posInsideElement( mouseX, mouseY ) )

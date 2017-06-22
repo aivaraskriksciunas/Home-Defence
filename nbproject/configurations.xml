@@ -9,6 +9,8 @@
       <itemPath>src/game/GameStateBuild.h</itemPath>
       <itemPath>src/characters/Gem.h</itemPath>
       <itemPath>src/ui/UIProgressBar.h</itemPath>
+      <itemPath>src/ui/UISelectButton.h</itemPath>
+      <itemPath>src/ui/UISelectButtonContainer.h</itemPath>
       <itemPath>src/world/WorldCharacterManager.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
@@ -23,6 +25,8 @@
       <itemPath>src/game/GameStateBuild.cpp</itemPath>
       <itemPath>src/characters/Gem.cpp</itemPath>
       <itemPath>src/ui/UIProgressBar.cpp</itemPath>
+      <itemPath>src/ui/UISelectButton.cpp</itemPath>
+      <itemPath>src/ui/UISelectButtonContainer.cpp</itemPath>
       <itemPath>src/world/WorldCharacterManager.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="src" displayName="src" projectFiles="true">
@@ -237,6 +241,14 @@
       </item>
       <item path="src/ui/UIProgressBar.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/ui/UISelectButton.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/ui/UISelectButton.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ui/UISelectButtonContainer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/ui/UISelectButtonContainer.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/world/Pickup.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/world/Pickup.h" ex="false" tool="3" flavor2="0">
@@ -384,6 +396,14 @@
       <item path="src/ui/UIProgressBar.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/ui/UIProgressBar.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ui/UISelectButton.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/ui/UISelectButton.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/ui/UISelectButtonContainer.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/ui/UISelectButtonContainer.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/world/Pickup.cpp" ex="false" tool="1" flavor2="0">
       </item>

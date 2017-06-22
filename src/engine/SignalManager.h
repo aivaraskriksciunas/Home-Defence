@@ -34,6 +34,8 @@ enum Signals {
     SIG_BEGIN_ATTACK,
     SIG_GHOST_KILLED,
     
+    SIG_REBUILD_WALLS,
+    
     SIG_QUIT
 };
 

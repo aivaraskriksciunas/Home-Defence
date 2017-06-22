@@ -34,7 +34,7 @@ TextureManager::TextureManager( std::string programPath )
     loadSpriteSheet( this->playerTexture, TEXTURE_PLAYER_TOTAL, programPath + "/media/characters/player.png", CHARACTER_HEIGHT, CHARACTER_WIDTH );
     loadSpriteSheet( this->ghostTexture, TEXTURE_PLAYER_TOTAL, programPath + "/media/characters/ghost.png", CHARACTER_HEIGHT, CHARACTER_WIDTH );
     
-    loadFont( &this->basicFont, programPath + "/media/fonts/RobotoMono-Regular.ttf" );
+    loadFont( &this->basicFont, programPath + "/media/fonts/PTM55FT.ttf" );
 }
 
 void TextureManager::load( sf::Texture* texture, std::string path )

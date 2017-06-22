@@ -191,7 +191,7 @@ void Game::run()
             }
             else if ( gamePlayState == GAME_STATE_BUILDING )
             {
-                buildState->update( timeLeft, money );
+                buildState->update( money );
                 buildState->draw( videoDriver );
             }
         
@@ -244,6 +244,7 @@ void Game::handleTimers()
     else if ( gamePlayState == GAME_STATE_BUILDING )
     {
         worldManager->setCreateMoreEnemies( false );
+        
     }
 }
 
@@ -265,7 +266,7 @@ void Game::resetGame()
 {
     this->worldManager->GenerateMap( programPathWithoutName + "/media/maps/simple.txt" );
     
-    this->gamePlayState = GAME_STATE_ATTACKING;
+    this->gamePlayState = GAME_STATE_BUILDING;
     this->timeLeft = attackTimeS;
     
 }

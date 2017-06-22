@@ -34,3 +34,16 @@ void UIButton::draw( Engine::VideoDriver* videoDriver )
     
     this->message.draw( videoDriver );
 }
+
+void UIButton::setButtonTextSize( int size )
+{
+    this->message.setCharacterSize( size );
+}
+
+void UIButton::setPosition( int posx, int posy ) 
+{
+    this->posx = posx;
+    this->posy = posy;
+    
+    this->message.setPosition( this->posx + this->width / 2, this->posy + this->height / 2 );
+}

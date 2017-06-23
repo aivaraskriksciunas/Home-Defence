@@ -38,6 +38,8 @@ public:
     
     int getTileIndexAtIsoPos( int isoX, int isoY );
     
+    float getWallDamagePercentage( Tile* tile );
+    
 private:
     static int tilesXCount, tilesYCount;
 };

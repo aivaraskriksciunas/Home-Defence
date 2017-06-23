@@ -17,7 +17,8 @@ enum TextureTypes {
     TEXTURE_FLOOR,
     TEXTURE_GRASS,
     TEXTURE_EMPTY_TILE,
-    TEXTURE_WALL,
+    TEXTURE_WALL_WOODEN,
+    TEXTURE_WALL_BRICK,
     TEXTURE_PLAYER,
     TEXTURE_GHOST,
     TEXTURE_BULLET,
@@ -74,7 +75,8 @@ private:
     static sf::Texture floorTexture;
     static sf::Texture grassTexture;
     static sf::Texture emptyTileTexture;
-    static sf::Texture wallTextures[TEXTURE_WALL_TOTAL];
+    static sf::Texture woodWallTextures[TEXTURE_WALL_TOTAL];
+    static sf::Texture brickWallTextures[TEXTURE_WALL_TOTAL];
     static sf::Texture playerTexture[TEXTURE_PLAYER_TOTAL];
     static sf::Texture ghostTexture[TEXTURE_PLAYER_TOTAL];
     static sf::Texture bulletTexture;

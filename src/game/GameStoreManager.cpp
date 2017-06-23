@@ -31,7 +31,7 @@ GameStoreManager::GameStoreManager( UI::UIManager* uiManagerPtr, int windowWidth
     
     std::stringstream btnText;
     btnText.str( "" );
-    btnText << "Wooden: " << WALL_1_COST;
+    btnText << "Wooden: " << wallTypeCosts[0];
     
     this->buyWall1Btn = new UI::UISelectButton( 0, 0, buyWallsWidth / 2, buyWallsHeight,
                                                 sf::Color( 150, 150, 150, 255 ), sf::Color( 200, 200, 200, 255 ),
@@ -39,7 +39,7 @@ GameStoreManager::GameStoreManager( UI::UIManager* uiManagerPtr, int windowWidth
                                                 SIG_NULL );
     
     btnText.str( "" );
-    btnText << "Brick: " << WALL_2_COST;
+    btnText << "Brick: " << wallTypeCosts[1];
     
     this->buyWall2Btn = new UI::UISelectButton( 100, 0, buyWallsWidth / 2, buyWallsHeight,
                                                 sf::Color( 150, 150, 150, 255 ), sf::Color( 180, 180, 180, 255 ),
@@ -82,4 +82,25 @@ void GameStoreManager::updateUI()
     {
         this->buyWallsContainer->setVisible( false );
     }
+}
+
+int GameStoreManager::getSelectedWall()
+{
+    if ( buyWall1Btn->isSelected() )
+    {
+        return World::WALL_TYPE_WOOD;
+    }
+    else if ( buyWall2Btn->isSelected() )
+    {
+        return World::WALL_TYPE_BRICK;
+    }
+    
+    return World::WALL_TYPE_TOTAL;
+}
+
+int GameStoreManager::getSelectedWallCost( int wallType )
+{
+    if ( wallType >= World::WALL_TYPE_TOTAL || wallType < 0 ) return 0;
+    
+    return this->wallTypeCosts[wallType];
 }

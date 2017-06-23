@@ -63,7 +63,7 @@ public:
     void selectTile( int mouseX, int mouseY );
     
     //builds wall on selected tile
-    bool buildWall();
+    bool buildWall( int wallType );
     
 private:
     std::vector<Tile> map;
@@ -73,6 +73,9 @@ private:
     WorldCharacterManager* characterManager;
     
     int levelGhostCount;
+    
+    //keeps the max health of different wall types
+    const int wallTypesMaxHealth[WALL_TYPE_TOTAL] = { 200, 800 };
     
     Player* player;
     //player starting position
@@ -92,7 +95,6 @@ private:
     bool isNeighborWall( int currentIndex, int neighborDirectionX, int neighborDirectionY );
     //similar to isNeighborWall(), except it checks whether the neighbor tile is the right type
     bool validateNeighborTile( int currentIndex, int neighborDirectionX, int neighborDirectionY, int tileType );
-    
     
     
 };

@@ -58,3 +58,13 @@ int GameBuildScreen::getBuildMode()
 {
     return storeManager->getBuildMode();
 }
+
+int GameBuildScreen::getSelectedWallType()
+{
+    return storeManager->getSelectedWall();
+}
+
+int GameBuildScreen::getSelectedWallCost( int wallType )
+{
+    return storeManager->getSelectedWallCost( wallType );
+}

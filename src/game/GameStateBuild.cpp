@@ -33,9 +33,11 @@ void GameStateBuild::handleMouseClick( int mouseX, int mouseY, int& money )
     int buildMode = screen->getBuildMode();
     if ( buildMode == MODE_BUILD_WALLS )
     {
-        if ( worldManager->buildWall() && money >= WALL_1_COST )
+        int selectedWall = screen->getSelectedWallType();
+        int selectedWallCost = screen->getSelectedWallCost( selectedWall );
+        if ( worldManager->buildWall( selectedWall ) && money >= selectedWallCost )
         {
-            money -= WALL_1_COST;
+            money -= selectedWallCost;
         }
     }
 }

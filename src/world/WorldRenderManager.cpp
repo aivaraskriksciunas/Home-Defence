@@ -78,31 +78,41 @@ void WorldRenderManager::renderTile( Engine::VideoDriver* videoDriver,
     videoDriver->drawTexture( Engine::TextureManager::getTexture( (*map)[tileIndex].texture ), 
                                       tileIsoX, tileIsoY, textureColor );
     
+    int wallTexture;
+    if ( (*map)[tileIndex].wallType == WALL_TYPE_WOOD )
+    {
+        wallTexture = TEXTURE_WALL_WOODEN;
+    }
+    else if ( (*map)[tileIndex].wallType == WALL_TYPE_BRICK )
+    {
+        wallTexture = TEXTURE_WALL_BRICK;
+    }
+    
     int wallHorTexture, wallVertTexture;
-    if ( (*map)[tileIndex].wallHealth >= 75 )
+    if ( worldMath.getWallDamagePercentage( &(*map)[tileIndex] ) >= 75 )
     {
         wallHorTexture = TEXTURE_WALL_HOR_100;
         wallVertTexture = TEXTURE_WALL_VERT_100;
     }
-    else if ( (*map)[tileIndex].wallHealth < 75 && 
-              (*map)[tileIndex].wallHealth >= 50 )
+    else if ( worldMath.getWallDamagePercentage( &(*map)[tileIndex] ) < 75 && 
+              worldMath.getWallDamagePercentage( &(*map)[tileIndex] ) >= 50 )
     {
         wallHorTexture = TEXTURE_WALL_HOR_75;
         wallVertTexture = TEXTURE_WALL_VERT_75;
     }
-    else if ( (*map)[tileIndex].wallHealth < 50 && 
-              (*map)[tileIndex].wallHealth >= 25 )
+    else if ( worldMath.getWallDamagePercentage( &(*map)[tileIndex] ) < 50 && 
+              worldMath.getWallDamagePercentage( &(*map)[tileIndex] ) >= 25 )
     {
         wallHorTexture = TEXTURE_WALL_HOR_50;
         wallVertTexture = TEXTURE_WALL_VERT_50;
     }
-    else if ( (*map)[tileIndex].wallHealth < 25 && 
-              (*map)[tileIndex].wallHealth >= 10 )
+    else if ( worldMath.getWallDamagePercentage( &(*map)[tileIndex] ) < 25 && 
+              worldMath.getWallDamagePercentage( &(*map)[tileIndex] ) >= 10 )
     {
         wallHorTexture = TEXTURE_WALL_HOR_25;
         wallVertTexture = TEXTURE_WALL_VERT_25;
     }
-    else if ( (*map)[tileIndex].wallHealth < 10 )
+    else if ( worldMath.getWallDamagePercentage( &(*map)[tileIndex] ) < 10 )
     {
         wallHorTexture = TEXTURE_WALL_HOR_10;
         wallVertTexture = TEXTURE_WALL_VERT_10;
@@ -111,12 +121,12 @@ void WorldRenderManager::renderTile( Engine::VideoDriver* videoDriver,
     //draw two upper walls, if any
     if ( (*map)[tileIndex].wallPositions[WALL_POS_N] )
     {
-        videoDriver->drawTexture( Engine::TextureManager::getTexture( TEXTURE_WALL, wallHorTexture ),
+        videoDriver->drawTexture( Engine::TextureManager::getTexture( wallTexture, wallHorTexture ),
                                   tileIsoX + TILE_WIDTH / 2, tileIsoY + TILE_HEIGHT / 2 - WALL_HEIGHT, textureColor );
     }
     if ( (*map)[tileIndex].wallPositions[WALL_POS_W] )
     {
-        videoDriver->drawTexture( Engine::TextureManager::getTexture( TEXTURE_WALL, wallVertTexture ),
+        videoDriver->drawTexture( Engine::TextureManager::getTexture( wallTexture, wallVertTexture ),
                                  tileIsoX, tileIsoY + TILE_HEIGHT / 2 - WALL_HEIGHT, textureColor );
     }
     
@@ -153,12 +163,12 @@ void WorldRenderManager::renderTile( Engine::VideoDriver* videoDriver,
     //these walls can go over the player texture, that's why they are drawn last
     if ( (*map)[tileIndex].wallPositions[WALL_POS_E] )
     {
-        videoDriver->drawTexture( Engine::TextureManager::getTexture( TEXTURE_WALL, wallVertTexture ),
+        videoDriver->drawTexture( Engine::TextureManager::getTexture( wallTexture, wallVertTexture ),
                                   tileIsoX + TILE_WIDTH / 2, tileIsoY + TILE_HEIGHT - WALL_HEIGHT, textureColor );
     }
     if ( (*map)[tileIndex].wallPositions[WALL_POS_S] )
     {
-        videoDriver->drawTexture( Engine::TextureManager::getTexture( TEXTURE_WALL, wallHorTexture ),
+        videoDriver->drawTexture( Engine::TextureManager::getTexture( wallTexture, wallHorTexture ),
                                  tileIsoX, tileIsoY + TILE_HEIGHT - WALL_HEIGHT, textureColor );
     }
 }

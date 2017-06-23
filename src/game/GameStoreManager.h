@@ -5,9 +5,7 @@
 #include "../ui/UISelectButton.h"
 #include "../ui/UILabel.h"
 #include "../engine/VideoDriver.h"
-
-#define WALL_1_COST 5
-#define WALL_2_COST 20
+#include "../world/Tile.h"
 
 enum BuildModes {
     MODE_BUILD_WALLS,
@@ -15,21 +13,19 @@ enum BuildModes {
     MODE_BUILD_NONE
 };
 
-enum WallBuildModes {
-    WALL_BUILD_1,
-    WALL_BUILD_2,
-    WALL_BUILD_NONE
-};
-
 class GameStoreManager {
 public:
     GameStoreManager( UI::UIManager* uiManagerPtr, int windowWidth, int windowHeight );
     
     int getBuildMode();
+    int getSelectedWall();
+    int getSelectedWallCost( int wallType );
     
     void updateUI();
     
+    
 private:
+    const int wallTypeCosts[World::WALL_TYPE_TOTAL] = { 5, 20 };
     
     const int actionContainerWidth = 100, actionContainerHeight = 90;
     UI::UISelectButtonContainer* actionButtonContainer;

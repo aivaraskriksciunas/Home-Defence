@@ -9,7 +9,8 @@ sf::Texture TextureManager::floorTexture;
 sf::Texture TextureManager::grassTexture;
 sf::Texture TextureManager::emptyTileTexture;
 sf::Texture TextureManager::bulletTexture;
-sf::Texture TextureManager::wallTextures[TEXTURE_WALL_TOTAL];
+sf::Texture TextureManager::woodWallTextures[TEXTURE_WALL_TOTAL];
+sf::Texture TextureManager::brickWallTextures[TEXTURE_WALL_TOTAL];
 sf::Texture TextureManager::playerTexture[TEXTURE_PLAYER_TOTAL];
 sf::Texture TextureManager::ghostTexture[TEXTURE_PLAYER_TOTAL];
 sf::Texture TextureManager::gemTexture;
@@ -30,7 +31,8 @@ TextureManager::TextureManager( std::string programPath )
     load( &this->heartIcon, programPath + "/media/icons/heart.png" );
     load( &this->hammerIcon, programPath + "/media/icons/hammer.png" );
     load( &this->gemIcon, programPath + "/media/icons/gem.png" );
-    loadSpriteSheet( this->wallTextures, TEXTURE_WALL_TOTAL, programPath + "/media/tiles/wall.png", WALL_HEIGHT, WALL_WIDTH );
+    loadSpriteSheet( this->woodWallTextures, TEXTURE_WALL_TOTAL, programPath + "/media/tiles/wallWood.png", WALL_HEIGHT, WALL_WIDTH );
+    loadSpriteSheet( this->brickWallTextures, TEXTURE_WALL_TOTAL, programPath + "/media/tiles/wallBrick.png", WALL_HEIGHT, WALL_WIDTH );
     loadSpriteSheet( this->playerTexture, TEXTURE_PLAYER_TOTAL, programPath + "/media/characters/player.png", CHARACTER_HEIGHT, CHARACTER_WIDTH );
     loadSpriteSheet( this->ghostTexture, TEXTURE_PLAYER_TOTAL, programPath + "/media/characters/ghost.png", CHARACTER_HEIGHT, CHARACTER_WIDTH );
     
@@ -71,8 +73,11 @@ sf::Texture& TextureManager::getTexture( int type, int texturePart )
         case TEXTURE_FLOOR:
             return floorTexture;
             break;
-        case TEXTURE_WALL:
-            return wallTextures[texturePart];
+        case TEXTURE_WALL_WOODEN:
+            return woodWallTextures[texturePart];
+            break;
+        case TEXTURE_WALL_BRICK:
+            return brickWallTextures[texturePart];
             break;
         case TEXTURE_GRASS:
             return grassTexture;

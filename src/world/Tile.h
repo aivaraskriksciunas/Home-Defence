@@ -26,6 +26,13 @@ enum WallPositionNames {
     WALL_POS_TOTAL
 };
 
+enum WallTypes 
+{
+    WALL_TYPE_WOOD,
+    WALL_TYPE_BRICK,
+    WALL_TYPE_TOTAL
+};
+
 /* wall positions:
  * 
  *   w/\n
@@ -37,7 +44,7 @@ enum WallPositionNames {
 struct Tile {
     int tileType;
     int texture;
-    int tileSubType; //used for tiles that might have different properties (walls)
+    int wallType; //keeps the type of wall on the current tile
     int wallHealth;
     int wallMaxHealth;
     bool wallPositions[4] = { false, false, false, false }; //which sides the walls are located at

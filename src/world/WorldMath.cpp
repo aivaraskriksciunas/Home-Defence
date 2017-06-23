@@ -285,3 +285,12 @@ int WorldMath::getTileIndexAtIsoPos( int isoX, int isoY )
     
     return -1;
 }
+
+
+float WorldMath::getWallDamagePercentage( Tile* tile )
+{
+    float maxWallHealth = tile->wallMaxHealth;
+    float wallHealth = tile->wallHealth;
+    
+    return ( 100 / maxWallHealth ) * wallHealth;
+}

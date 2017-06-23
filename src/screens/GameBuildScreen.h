@@ -24,6 +24,8 @@ public:
     void updateUI( int money );
     
     int getBuildMode();
+    int getSelectedWallType();
+    int getSelectedWallCost( int wallType );
     
 private:
     //all ui elements

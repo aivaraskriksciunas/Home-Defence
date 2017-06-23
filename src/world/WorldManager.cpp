@@ -26,7 +26,6 @@ void WorldManager::GenerateMap( std::string path )
     {
         map[tileIndex].tileType = TILE_GRASS;
         map[tileIndex].texture = TEXTURE_GRASS;
-        map[tileIndex].wallHealth = 100;
     }
    
     
@@ -52,6 +51,9 @@ void WorldManager::GenerateMap( std::string path )
             {
                 map[index].texture = TEXTURE_FLOOR;
                 map[index].tileType = TILE_FLOOR;
+                map[index].wallType = WALL_TYPE_WOOD;
+                map[index].wallMaxHealth = wallTypesMaxHealth[WALL_TYPE_WOOD];
+                map[index].wallHealth = wallTypesMaxHealth[WALL_TYPE_WOOD];
                 //place wall on one side of the tile
                 //walls will be reoriented later in orientWalls()
                 map[index].wallPositions[0] = true;
@@ -308,9 +310,9 @@ bool WorldManager::fixWall()
     
     if ( hasWalls( playerIndex ) )
     {
-        if ( map[playerIndex].wallHealth < 100 )
+        if ( map[playerIndex].wallHealth < map[playerIndex].wallMaxHealth )
         { 
-            map[playerIndex].wallHealth = 100;
+            map[playerIndex].wallHealth = map[playerIndex].wallMaxHealth;
             return true;
         }
     }
@@ -360,8 +362,10 @@ void WorldManager::selectTile( int mouseX, int mouseY )
                                                 mouseY + player->getY() );
 }
 
-bool WorldManager::buildWall()
+bool WorldManager::buildWall( int wallType )
 {
+    if ( wallType == WALL_TYPE_TOTAL ) return false;
+    
     if ( selectedTile > -1 && selectedTile < map.size() )
     {
         //check if the current tile is a wall
@@ -399,7 +403,9 @@ bool WorldManager::buildWall()
             
             if ( wallPlaced )
             {
-                map[selectedTile].wallHealth = 100;
+                map[selectedTile].wallType = wallType;
+                map[selectedTile].wallMaxHealth = wallTypesMaxHealth[wallType];
+                map[selectedTile].wallHealth = wallTypesMaxHealth[wallType];
                 return true;
             }
         }
@@ -407,3 +413,4 @@ bool WorldManager::buildWall()
     
     return false;
 }
+

@@ -29,6 +29,17 @@ void VideoDriver::drawTexture( sf::Texture& texture, int posx, int posy, float w
     
 }
 
+void VideoDriver::drawTexture( sf::Texture& texture, int posx, int posy, sf::Color textureColor )
+{
+    sf::Sprite textureSprite;
+
+    textureSprite.setTexture( texture );
+    textureSprite.setPosition( posx, posy );
+    textureSprite.setColor( textureColor );
+
+    this->windowPtr->draw( textureSprite );
+}
+
 void VideoDriver::drawRectangle( sf::Color color, int posx, int posy, int width, int height )
 {
     sf::RectangleShape rect;

@@ -6,8 +6,8 @@
 using namespace Engine;
 
 sf::Texture TextureManager::floorTexture;
-sf::Texture TextureManager::testTexture;
 sf::Texture TextureManager::grassTexture;
+sf::Texture TextureManager::emptyTileTexture;
 sf::Texture TextureManager::bulletTexture;
 sf::Texture TextureManager::wallTextures[TEXTURE_WALL_TOTAL];
 sf::Texture TextureManager::playerTexture[TEXTURE_PLAYER_TOTAL];
@@ -22,8 +22,8 @@ sf::Font TextureManager::basicFont;
 TextureManager::TextureManager( std::string programPath )
 {
     load( &this->floorTexture, programPath + "/media/tiles/floor.png" );
-    load( &this->testTexture, programPath + "/media/tiles/test.png" );
     load( &this->grassTexture, programPath + "/media/tiles/grass.png" );
+    load( &this->emptyTileTexture, programPath + "/media/tiles/empty.png" );
     load( &this->bulletTexture, programPath + "/media/characters/bullet.png" );
     load( &this->gemTexture, programPath + "/media/characters/gem.png" );
     load( &this->bulletIcon, programPath + "/media/icons/bullet.png" );
@@ -77,9 +77,6 @@ sf::Texture& TextureManager::getTexture( int type, int texturePart )
         case TEXTURE_GRASS:
             return grassTexture;
             break;
-        case TEXTURE_TEST:
-            return testTexture;
-            break;
         case TEXTURE_PLAYER:
             return playerTexture[texturePart];
             break;
@@ -105,7 +102,7 @@ sf::Texture& TextureManager::getTexture( int type, int texturePart )
             return gemTexture;
             break;
     }
-    return testTexture;
+    return emptyTileTexture;
 }
 
 sf::Font& TextureManager::getFont( int type )

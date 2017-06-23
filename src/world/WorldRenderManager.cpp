@@ -5,7 +5,8 @@ using namespace World;
 void WorldRenderManager::renderMap( Engine::VideoDriver* videoDriver, 
                                     Player* player, Gem* gem,
                                     std::vector<Ghost*>* ghosts,
-                                    std::vector<Tile>* map )
+                                    std::vector<Tile>* map,
+                                    int selectedTile )
 {
     int playerPosx = player->getX();
     int playerPosy = player->getY();
@@ -34,8 +35,11 @@ void WorldRenderManager::renderMap( Engine::VideoDriver* videoDriver,
         {
             continue;
         }
-       
-        renderTile( videoDriver, map, player, gem, ghosts, tileIndex, tileIsoX, tileIsoY );
+        
+        if ( tileIndex == selectedTile )
+            renderTile( videoDriver, map, player, gem, ghosts, tileIndex, tileIsoX, tileIsoY, true );
+        else
+            renderTile( videoDriver, map, player, gem, ghosts, tileIndex, tileIsoX, tileIsoY, false );
     }
     
 }
@@ -63,10 +67,16 @@ void WorldRenderManager::renderTile( Engine::VideoDriver* videoDriver,
                                      Player* player, Gem* gem,
                                      std::vector<Ghost*>* ghosts, 
                                      int tileIndex, 
-                                     int tileIsoX, int tileIsoY )
+                                     int tileIsoX, int tileIsoY,
+                                     bool tileSelected )
 {
+    sf::Color textureColor = sf::Color::White;
+    if ( tileSelected )
+    {
+        textureColor = selectedTileColor;
+    }
     videoDriver->drawTexture( Engine::TextureManager::getTexture( (*map)[tileIndex].texture ), 
-                                  tileIsoX, tileIsoY );
+                                      tileIsoX, tileIsoY, textureColor );
     
     int wallHorTexture, wallVertTexture;
     if ( (*map)[tileIndex].wallHealth >= 75 )
@@ -102,12 +112,12 @@ void WorldRenderManager::renderTile( Engine::VideoDriver* videoDriver,
     if ( (*map)[tileIndex].wallPositions[WALL_POS_N] )
     {
         videoDriver->drawTexture( Engine::TextureManager::getTexture( TEXTURE_WALL, wallHorTexture ),
-                                  tileIsoX + TILE_WIDTH / 2, tileIsoY + TILE_HEIGHT / 2 - WALL_HEIGHT );
+                                  tileIsoX + TILE_WIDTH / 2, tileIsoY + TILE_HEIGHT / 2 - WALL_HEIGHT, textureColor );
     }
     if ( (*map)[tileIndex].wallPositions[WALL_POS_W] )
     {
         videoDriver->drawTexture( Engine::TextureManager::getTexture( TEXTURE_WALL, wallVertTexture ),
-                                 tileIsoX, tileIsoY + TILE_HEIGHT / 2 - WALL_HEIGHT );
+                                 tileIsoX, tileIsoY + TILE_HEIGHT / 2 - WALL_HEIGHT, textureColor );
     }
     
     //if there is a character on this tile, draw it too
@@ -144,11 +154,11 @@ void WorldRenderManager::renderTile( Engine::VideoDriver* videoDriver,
     if ( (*map)[tileIndex].wallPositions[WALL_POS_E] )
     {
         videoDriver->drawTexture( Engine::TextureManager::getTexture( TEXTURE_WALL, wallVertTexture ),
-                                  tileIsoX + TILE_WIDTH / 2, tileIsoY + TILE_HEIGHT - WALL_HEIGHT );
+                                  tileIsoX + TILE_WIDTH / 2, tileIsoY + TILE_HEIGHT - WALL_HEIGHT, textureColor );
     }
     if ( (*map)[tileIndex].wallPositions[WALL_POS_S] )
     {
         videoDriver->drawTexture( Engine::TextureManager::getTexture( TEXTURE_WALL, wallHorTexture ),
-                                 tileIsoX, tileIsoY + TILE_HEIGHT - WALL_HEIGHT );
+                                 tileIsoX, tileIsoY + TILE_HEIGHT - WALL_HEIGHT, textureColor );
     }
 }

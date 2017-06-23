@@ -51,7 +51,7 @@ void WorldManager::GenerateMap( std::string path )
             else if ( line[charIndex] == '|' )
             {
                 map[index].texture = TEXTURE_FLOOR;
-                map[index].tileType = TEXTURE_FLOOR;
+                map[index].tileType = TILE_FLOOR;
                 //place wall on one side of the tile
                 //walls will be reoriented later in orientWalls()
                 map[index].wallPositions[0] = true;
@@ -84,6 +84,7 @@ void WorldManager::GenerateMap( std::string path )
     orientWalls();
     
     this->player = new Player( startPosX, startPosY );
+    this->selectedTile = -1;
     characterManager->clearGhosts();
     characterManager->clearPickups();
     characterManager->clearBullets();
@@ -134,7 +135,7 @@ void WorldManager::orientWalls()
                 {
                     map[index].wallPositions[WALL_POS_W] = true;
                 }
-                else if ( !validateNeighborTile( index, 1, 0, currentTileType ) && 
+                if ( !validateNeighborTile( index, 1, 0, currentTileType ) && 
                           validateNeighborTile( index, -1, 0, currentTileType ) )
                 {
                     map[index].wallPositions[WALL_POS_E] = true;
@@ -145,8 +146,8 @@ void WorldManager::orientWalls()
                 {
                     map[index].wallPositions[WALL_POS_N] = true;
                 }
-                else if ( !validateNeighborTile( index, 0, 1, currentTileType ) && 
-                          validateNeighborTile( index, 0, -1, currentTileType ) )
+                if ( !validateNeighborTile( index, 0, 1, currentTileType ) && 
+                      validateNeighborTile( index, 0, -1, currentTileType ) )
                 {
                     map[index].wallPositions[WALL_POS_S] = true;
                 }
@@ -219,8 +220,9 @@ bool WorldManager::validateNeighborTile( int currentIndex, int neighborDirection
 void WorldManager::draw( Engine::VideoDriver* videoDriver )
 {
     worldDrawManager.renderMap( videoDriver, player, 
-                                characterManager->getGemPtr(), characterManager->getGhostsPtr(), 
-                                &map );
+                            characterManager->getGemPtr(), characterManager->getGhostsPtr(), 
+                            &map, selectedTile );
+    
     worldDrawManager.renderPickups( videoDriver, characterManager->getPickupsPtr() );
     worldDrawManager.renderBullets( videoDriver, characterManager->getBulletsPtr() );
 }
@@ -340,4 +342,68 @@ int WorldManager::getGhostCount()
 void WorldManager::shoot( int direction )
 {
     characterManager->shoot( direction, player->getX(), player->getY() );
+}
+
+void WorldManager::clearPickups()
+{
+    characterManager->clearPickups();
+}
+
+void WorldManager::clearBullets()
+{
+    characterManager->clearBullets();
+}
+
+void WorldManager::selectTile( int mouseX, int mouseY )
+{
+    selectedTile = worldMath.convertIsoToIndex( mouseX - TILE_WIDTH / 2 + player->getX(), 
+                                                mouseY + player->getY() );
+}
+
+bool WorldManager::buildWall()
+{
+    if ( selectedTile > -1 && selectedTile < map.size() )
+    {
+        //check if the current tile is a wall
+        if ( isNeighborWall( selectedTile, 0, 0 ) )
+        {
+            return false;
+        }
+        if ( map[selectedTile].tileType == TILE_FLOOR )
+        {
+            bool wallPlaced = false;
+            //if tile to the right is different, place a wall on east side of the tile
+            if ( !validateNeighborTile( selectedTile, 1, 0, TILE_FLOOR ) )
+            {
+                map[selectedTile].wallPositions[WALL_POS_E] = true;
+                wallPlaced = true;
+            }
+            //check left tile
+            if ( !validateNeighborTile( selectedTile, -1, 0, TILE_FLOOR ) )
+            {
+                map[selectedTile].wallPositions[WALL_POS_W] = true;
+                wallPlaced = true;
+            }
+            //check lower tile
+            if ( !validateNeighborTile( selectedTile, 0, 1, TILE_FLOOR ) )
+            {
+                map[selectedTile].wallPositions[WALL_POS_S] = true;
+                wallPlaced = true;
+            }
+            //check upper tile
+            if ( !validateNeighborTile( selectedTile, 0, -1, TILE_FLOOR ) )
+            {
+                map[selectedTile].wallPositions[WALL_POS_N] = true;
+                wallPlaced = true;
+            }
+            
+            if ( wallPlaced )
+            {
+                map[selectedTile].wallHealth = 100;
+                return true;
+            }
+        }
+    }
+    
+    return false;
 }

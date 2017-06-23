@@ -57,3 +57,13 @@ void UIElement::setLastMousePos( int mouseX, int mouseY )
     lastMousePosX = mouseX;
     lastMousePosY = mouseY;
 }
+
+bool UIElement::isVisible()
+{
+    return visible;
+}
+
+void UIElement::setVisible( bool value )
+{
+    this->visible = value;
+}

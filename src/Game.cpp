@@ -118,7 +118,8 @@ void Game::handleSignals()
                 else if ( gamePlayState == GAME_STATE_BUILDING )
                 {
                     buildState->handleMouseClick( sf::Mouse::getPosition( *mainWindow ).x,
-                                                  sf::Mouse::getPosition( *mainWindow ).y );
+                                                  sf::Mouse::getPosition( *mainWindow ).y,
+                                                  money );
                 }
             }   
             else 
@@ -191,7 +192,9 @@ void Game::run()
             }
             else if ( gamePlayState == GAME_STATE_BUILDING )
             {
-                buildState->update( money );
+                buildState->update( money, sf::Mouse::getPosition( *mainWindow ).x,
+                                    sf::Mouse::getPosition( *mainWindow ).y,
+                                    mainWindow->getSize().x, mainWindow->getSize().y );
                 buildState->draw( videoDriver );
             }
         
@@ -236,6 +239,9 @@ void Game::handleTimers()
             if ( worldManager->getGhostCount() <= 0 )
             {
                 gamePlayState = GAME_STATE_BUILDING;
+                worldManager->clearBullets();
+                worldManager->clearPickups();
+                
                 attackState->increaseLevel();
                 this->gameClock.restart();
             }

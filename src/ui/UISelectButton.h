@@ -15,6 +15,7 @@ public:
     
     void onClick();
     void setSelected( bool value );
+    bool isSelected();
     
 private:
     sf::Color selectColor;

@@ -37,8 +37,9 @@ enum WallPositionNames {
 struct Tile {
     int tileType;
     int texture;
-    int tileSubType; //used for tiles that might have different orientation (e.g. walls)
-    int wallHealth = 100;
+    int tileSubType; //used for tiles that might have different properties (walls)
+    int wallHealth;
+    int wallMaxHealth;
     bool wallPositions[4] = { false, false, false, false }; //which sides the walls are located at
 };
 }

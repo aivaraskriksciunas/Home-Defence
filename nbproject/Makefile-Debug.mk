@@ -47,6 +47,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/engine/VideoDriver.o \
 	${OBJECTDIR}/src/game/GameStateAttack.o \
 	${OBJECTDIR}/src/game/GameStateBuild.o \
+	${OBJECTDIR}/src/game/GameStoreManager.o \
 	${OBJECTDIR}/src/main.o \
 	${OBJECTDIR}/src/screens/GameAttackScreen.o \
 	${OBJECTDIR}/src/screens/GameBuildScreen.o \
@@ -153,6 +154,11 @@ ${OBJECTDIR}/src/game/GameStateBuild.o: src/game/GameStateBuild.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/game
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -I/usr/include -I/usr/include/c++/7.1.1/ `pkg-config --cflags sfml-system` `pkg-config --cflags sfml-window` `pkg-config --cflags sfml-graphics` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/game/GameStateBuild.o src/game/GameStateBuild.cpp
+
+${OBJECTDIR}/src/game/GameStoreManager.o: src/game/GameStoreManager.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/game
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I/usr/include -I/usr/include/c++/7.1.1/ `pkg-config --cflags sfml-system` `pkg-config --cflags sfml-window` `pkg-config --cflags sfml-graphics` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/game/GameStoreManager.o src/game/GameStoreManager.cpp
 
 ${OBJECTDIR}/src/main.o: src/main.cpp
 	${MKDIR} -p ${OBJECTDIR}/src

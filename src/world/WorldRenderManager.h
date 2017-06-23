@@ -19,7 +19,8 @@ public:
     void renderMap( Engine::VideoDriver* videoDriver, 
                     Player* player, Gem* gem, 
                     std::vector<Ghost*>* ghosts,
-                    std::vector<Tile>* map );
+                    std::vector<Tile>* map,
+                    int selectedTile = -1 );
     void renderPickups( Engine::VideoDriver* videoDriver, std::vector<Pickup*>* pickups );
     void renderBullets( Engine::VideoDriver* videoDriver, std::vector<Bullet*>* bullets );
     
@@ -29,9 +30,12 @@ private:
                      Player* player, Gem* gem,
                      std::vector<Ghost*>* ghosts, 
                      int tileIndex, 
-                     int tileIsoX, int tileIsoY );
+                     int tileIsoX, int tileIsoY,
+                     bool tileSelected );
     
     WorldMath worldMath;
+    
+    const sf::Color selectedTileColor = sf::Color( 200, 200, 200, 255 );
 };
 
 }

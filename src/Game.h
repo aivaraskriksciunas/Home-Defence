@@ -21,7 +21,7 @@
 #include "game/GameStateBuild.h"
 
 #define ATTACK_TIME_INCREASE 10
-#define GHOST_KILL_REWARD 1
+#define GHOST_KILL_REWARD 2
 
 class Game
 {

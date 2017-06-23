@@ -14,9 +14,9 @@
 
 enum TextureTypes {
     TEXTURE_NONE,
-    TEXTURE_TEST,
     TEXTURE_FLOOR,
     TEXTURE_GRASS,
+    TEXTURE_EMPTY_TILE,
     TEXTURE_WALL,
     TEXTURE_PLAYER,
     TEXTURE_GHOST,
@@ -72,8 +72,8 @@ private:
     static void loadSpriteSheet( sf::Texture texture[], int amount, std::string path, int textureHeight = TEXTURE_HEIGHT, int textureWidth = TEXTURE_WIDTH );
     
     static sf::Texture floorTexture;
-    static sf::Texture testTexture;
     static sf::Texture grassTexture;
+    static sf::Texture emptyTileTexture;
     static sf::Texture wallTextures[TEXTURE_WALL_TOTAL];
     static sf::Texture playerTexture[TEXTURE_PLAYER_TOTAL];
     static sf::Texture ghostTexture[TEXTURE_PLAYER_TOTAL];

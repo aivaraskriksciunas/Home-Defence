@@ -4,6 +4,8 @@ using namespace Screens;
 
 GameBuildScreen::GameBuildScreen( int windowWidth, int windowHeight )
 {
+    this->storeManager = new GameStoreManager( &uiManager, windowWidth, windowHeight );
+    
     this->infoBox = new UI::UIBox( 0, 0, 100, 100 );
     
     this->moneyLabel = new UI::UILabel( 5, 10, "Money: 0", sf::Color::White, FONT_SIMPLE, 17 );
@@ -17,38 +19,19 @@ GameBuildScreen::GameBuildScreen( int windowWidth, int windowHeight )
                                                 "Start >>",
                                                 SIG_BEGIN_ATTACK );
     
-    this->actionButtonContainer = new UI::UISelectButtonContainer( 0, windowHeight - actionContainerHeight,
-                                                                  actionContainerWidth, actionContainerHeight,
-                                                                  sf::Color( 150, 150, 150, 255 ) );
-    this->actionBuildBtn = new UI::UISelectButton( 0, 0, actionContainerWidth, actionContainerHeight / 3,
-                                                   sf::Color( 150, 150, 150, 255 ), sf::Color( 200, 200, 200 ),
-                                                   "Build",
-                                                   SIG_NULL );
-    this->actionRebuildWallsBtn = new UI::UISelectButton( 0, 30, actionContainerWidth, actionContainerHeight / 3,
-                                                   sf::Color( 150, 150, 150, 255 ), sf::Color( 200, 200, 200 ),
-                                                   "Rebuild Walls",
-                                                   SIG_REBUILD_WALLS );
-    this->actionBuyDefensesBtn = new UI::UISelectButton( 0, 60, actionContainerWidth, actionContainerHeight / 3,
-                                                   sf::Color( 150, 150, 150, 255 ), sf::Color( 200, 200, 200 ),
-                                                   "Buy Defenses",
-                                                   SIG_NULL );
-    
-    this->actionButtonContainer->addButton( actionBuildBtn );
-    this->actionButtonContainer->addButton( actionRebuildWallsBtn );
-    this->actionButtonContainer->addButton( actionBuyDefensesBtn );
-    this->actionButtonContainer->setButtonsTextSize( 12 );
     
     this->uiManager.AddElement( infoBox );
     this->uiManager.AddElement( startAttackButton );
-    this->uiManager.AddElement( actionButtonContainer );
     
     this->mainViewport.setSize( windowWidth, windowHeight );
     this->uiViewport.setSize( windowWidth, windowHeight );
     this->uiViewport.setCenter( windowWidth / 2, windowHeight / 2 );
 }
 
-void GameBuildScreen::updateUI(  int money )
+void GameBuildScreen::updateUI( int money )
 {
+    storeManager->updateUI();
+    
     std::stringstream text;
     text.str( "" );
     text << "Money: " << money;
@@ -69,4 +52,9 @@ void GameBuildScreen::renderFrame( Engine::VideoDriver* videoDriver, World::Worl
     
     videoDriver->displayWindow();
     
+}
+
+int GameBuildScreen::getBuildMode()
+{
+    return storeManager->getBuildMode();
 }

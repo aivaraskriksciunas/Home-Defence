@@ -57,6 +57,14 @@ public:
     void setCreateMoreEnemies( bool value );
     void calculateLevelEnemyCount( int level );
     
+    void clearPickups();
+    void clearBullets();
+    
+    void selectTile( int mouseX, int mouseY );
+    
+    //builds wall on selected tile
+    bool buildWall();
+    
 private:
     std::vector<Tile> map;
     
@@ -72,6 +80,8 @@ private:
     
     //whether or not create more enemies
     bool createEnemies = false;
+    
+    int selectedTile;
     
     void orientWalls();
     void resetTileWalls( int index );

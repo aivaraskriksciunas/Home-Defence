@@ -13,6 +13,8 @@ UISelectButtonContainer::UISelectButtonContainer( int posx, int posy, int width,
 
 void UISelectButtonContainer::draw( Engine::VideoDriver* videoDriver ) 
 {
+    if ( !visible ) return;
+    
     videoDriver->drawRectangle( bgColor, posx, posy, width, height );
     
     for ( int elementIndex = 0; elementIndex < buttons.size(); elementIndex++ )
@@ -29,6 +31,7 @@ void UISelectButtonContainer::addButton( UISelectButton* button )
 
 void UISelectButtonContainer::onClick()
 {
+    if ( !visible ) return;
     for ( int btnIndex = 0; btnIndex < buttons.size(); btnIndex++ )
     {
         if ( buttons[btnIndex]->posInsideElement( lastMousePosX, lastMousePosY ) )

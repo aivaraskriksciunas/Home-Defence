@@ -37,4 +37,7 @@ void UISelectButton::setSelected( bool value )
     selected = value;
 }
 
-
+bool UISelectButton::isSelected()
+{
+    return selected;
+}

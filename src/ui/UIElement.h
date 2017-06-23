@@ -25,6 +25,9 @@ public:
     
     static void setLastMousePos( int mouseX, int mouseY );
     
+    void setVisible( bool value );
+    bool isVisible();
+    
 protected:
     int posx, posy;
     int width, height;
@@ -33,6 +36,8 @@ protected:
     static int lastMousePosX, lastMousePosY;
     
     int onClickSignal;
+    
+    bool visible = true;
 };
 
 }

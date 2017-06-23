@@ -21,13 +21,14 @@ bool UIManager::handleClick( int mouseX, int mouseY )
 {
     UIElement::setLastMousePos( mouseX, mouseY );
     
+    bool clicked = false;
     for ( int uiIndex = 0; uiIndex < uiElements.size(); uiIndex++ )
     {
         if ( uiElements[uiIndex]->posInsideElement( mouseX, mouseY ) )
         {
             uiElements[uiIndex]->onClick();
-            return true;
+            clicked = true;
         }
     }
-    return false;
+    return clicked;
 }

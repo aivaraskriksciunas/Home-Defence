@@ -7,6 +7,7 @@
       <itemPath>src/screens/GameBuildScreen.h</itemPath>
       <itemPath>src/game/GameStateAttack.h</itemPath>
       <itemPath>src/game/GameStateBuild.h</itemPath>
+      <itemPath>src/game/GameStoreManager.h</itemPath>
       <itemPath>src/characters/Gem.h</itemPath>
       <itemPath>src/ui/UIProgressBar.h</itemPath>
       <itemPath>src/ui/UISelectButton.h</itemPath>
@@ -23,6 +24,7 @@
       <itemPath>src/screens/GameBuildScreen.cpp</itemPath>
       <itemPath>src/game/GameStateAttack.cpp</itemPath>
       <itemPath>src/game/GameStateBuild.cpp</itemPath>
+      <itemPath>src/game/GameStoreManager.cpp</itemPath>
       <itemPath>src/characters/Gem.cpp</itemPath>
       <itemPath>src/ui/UIProgressBar.cpp</itemPath>
       <itemPath>src/ui/UISelectButton.cpp</itemPath>
@@ -187,6 +189,10 @@
       </item>
       <item path="src/game/GameStateBuild.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="src/game/GameStoreManager.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/game/GameStoreManager.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="src/main.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/screens/GameAttackScreen.cpp" ex="false" tool="1" flavor2="0">
@@ -342,6 +348,10 @@
       <item path="src/game/GameStateBuild.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/game/GameStateBuild.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="src/game/GameStoreManager.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="src/game/GameStoreManager.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/main.cpp" ex="false" tool="1" flavor2="0">
       </item>

@@ -11,6 +11,7 @@
 #include "../ui/UISelectButton.h"
 #include "../ui/UISelectButtonContainer.h"
 #include "../world/WorldManager.h"
+#include "../game/GameStoreManager.h"
 
 namespace Screens {
     
@@ -22,6 +23,8 @@ public:
     
     void updateUI( int money );
     
+    int getBuildMode();
+    
 private:
     //all ui elements
     UI::UIBox* infoBox;
@@ -29,14 +32,10 @@ private:
     
     UI::UIButton* startAttackButton;
     
-    const int actionContainerWidth = 100, actionContainerHeight = 90;
-    UI::UISelectButtonContainer* actionButtonContainer;
-    UI::UISelectButton* actionBuildBtn;
-    UI::UISelectButton* actionRebuildWallsBtn;
-    UI::UISelectButton* actionBuyDefensesBtn;
-    
     sf::View mainViewport;
     sf::View uiViewport;
+    
+    GameStoreManager* storeManager; 
 };
 
 }

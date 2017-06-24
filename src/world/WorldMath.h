@@ -17,6 +17,7 @@ public:
     int convertPositionToIndex( int posx, int posy );
     
     int getDistanceBetweenTiles( int startTile, int endTile );
+    int getDistanceBetweenPoints( int point1X, int point1Y, int point2X, int point2Y );
     
     void convertCartToIso( int& isoX, int& isoY, int cartX, int cartY );
     void convertIsoToCart( int& cartX, int& cartY, int isoX, int isoY );

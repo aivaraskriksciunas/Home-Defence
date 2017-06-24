@@ -20,6 +20,8 @@ void GameStateAttack::update( int timeLeft )
     this->screen->updateUI( this->ammo, this->wallRepairs, 
                             worldManager->getPlayerHealth(), worldManager->getGemHealth(),
                             timeLeft );
+    
+    this->worldManager->updateDefences();
 }
 
 void GameStateAttack::draw( Engine::VideoDriver* videoDriver )

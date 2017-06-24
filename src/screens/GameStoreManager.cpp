@@ -7,21 +7,16 @@ GameStoreManager::GameStoreManager( UI::UIManager* uiManagerPtr, int windowWidth
     this->actionButtonContainer = new UI::UISelectButtonContainer( 0, windowHeight - actionContainerHeight,
                                                                   actionContainerWidth, actionContainerHeight,
                                                                   sf::Color( 150, 150, 150, 255 ) );
-    this->actionBuildBtn = new UI::UISelectButton( 0, 0, actionContainerWidth, actionContainerHeight / 3,
+    this->actionBuildBtn = new UI::UISelectButton( 0, 0, actionContainerWidth, actionContainerHeight / 2,
                                                    sf::Color( 150, 150, 150, 255 ), sf::Color( 200, 200, 200 ),
                                                    "Build",
                                                    SIG_NULL );
-    this->actionRebuildWallsBtn = new UI::UISelectButton( 0, 30, actionContainerWidth, actionContainerHeight / 3,
-                                                   sf::Color( 150, 150, 150, 255 ), sf::Color( 200, 200, 200 ),
-                                                   "Rebuild Walls",
-                                                   SIG_REBUILD_WALLS );
-    this->actionBuyDefencesBtn = new UI::UISelectButton( 0, 60, actionContainerWidth, actionContainerHeight / 3,
+    this->actionBuyDefencesBtn = new UI::UISelectButton( 0, 30, actionContainerWidth, actionContainerHeight / 2,
                                                    sf::Color( 150, 150, 150, 255 ), sf::Color( 200, 200, 200 ),
                                                    "Buy Defenses",
                                                    SIG_NULL );
     
     this->actionButtonContainer->addButton( actionBuildBtn );
-    this->actionButtonContainer->addButton( actionRebuildWallsBtn );
     this->actionButtonContainer->addButton( actionBuyDefencesBtn );
     this->actionButtonContainer->setButtonsTextSize( 12 );
     
@@ -51,8 +46,24 @@ GameStoreManager::GameStoreManager( UI::UIManager* uiManagerPtr, int windowWidth
     
     this->buyWallsContainer->setVisible( false );
     
+    
+    this->buyDefencesContainer = new UI::UISelectButtonContainer( windowWidth - buyDefencesWidth, 
+                                                                  windowHeight - buyDefencesHeight,
+                                                                  buyDefencesWidth, buyDefencesHeight,
+                                                                  sf::Color( 150, 150, 150, 255 ) );
+    
+    btnText.str( "" );
+    btnText << "Plasma Gun: " << defencesCosts[0];
+    this->buyPlasmaGunBtn = new UI::UISelectButton( 0, 0, buyDefencesWidth, buyDefencesHeight,
+                                                    sf::Color( 150, 150, 150, 255 ), sf::Color( 180, 180, 180, 255 ),
+                                                    btnText.str(),
+                                                    SIG_NULL );
+    
+    this->buyDefencesContainer->addButton( buyPlasmaGunBtn );
+    
     this->uiManagerPtr->AddElement( buyWallsContainer );
     this->uiManagerPtr->AddElement( actionButtonContainer );
+    this->uiManagerPtr->AddElement( buyDefencesContainer );
 }
 
 
@@ -61,10 +72,6 @@ int GameStoreManager::getBuildMode()
     if ( actionBuildBtn->isSelected() )
     {
         return MODE_BUILD_WALLS;
-    }
-    else if ( actionRebuildWallsBtn->isSelected() )
-    {
-        return MODE_BUILD_NONE;
     }
     else if ( actionBuyDefencesBtn->isSelected() )
     {
@@ -81,6 +88,15 @@ void GameStoreManager::updateUI()
     else 
     {
         this->buyWallsContainer->setVisible( false );
+    }
+    
+    if ( actionBuyDefencesBtn->isSelected() )
+    {
+        this->buyDefencesContainer->setVisible( true );
+    }
+    else 
+    {
+        this->buyDefencesContainer->setVisible( false );
     }
 }
 
@@ -103,4 +119,20 @@ int GameStoreManager::getSelectedWallCost( int wallType )
     if ( wallType >= World::WALL_TYPE_TOTAL || wallType < 0 ) return 0;
     
     return this->wallTypeCosts[wallType];
+}
+
+int GameStoreManager::getSelectedDefence()
+{
+    if ( buyPlasmaGunBtn->isSelected() )
+    {
+        return DEFENCE_TYPE_PLASMA_GUN;
+    }
+    return DEFENCE_TYPE_TOTAL;
+}
+
+int GameStoreManager::getSelectedDefenceCost( int defenceType )
+{
+    if ( defenceType >= DEFENCE_TYPE_PLASMA_GUN || defenceType < 0 ) return 0;
+    
+    return this->defencesCosts[defenceType];
 }

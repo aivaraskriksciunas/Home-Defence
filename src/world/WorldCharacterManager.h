@@ -7,6 +7,8 @@
 #include "../characters/Gem.h"
 #include "Pickup.h"
 #include "WorldMath.h"
+#include "../characters/Defence.h"
+#include "../characters/defences/PlasmaGun.h"
 
 namespace World {
 class WorldCharacterManager {
@@ -22,6 +24,7 @@ public:
     std::vector<Bullet*>* getBulletsPtr();
     std::vector<Pickup*>* getPickupsPtr();
     std::vector<Ghost*>* getGhostsPtr();
+    std::vector<Defence>* getDefencesPtr();
     Gem* getGemPtr();
     
     void clearPickups();
@@ -32,8 +35,10 @@ public:
     void createEnemy();
     
     void createGem( int gemX, int gemY );
-    
     void updateGem();
+    
+    bool createDefence( int posx, int posy, int type );
+    void updateDefences();
     
     bool validateCharacterCoords( std::vector<Tile>* map, int x, int y );
     
@@ -50,6 +55,8 @@ private:
     //pickups
     std::vector<Pickup*> pickups;
     
+    std::vector<Defence> defences;
+    
     WorldMath* worldMathPtr;
      
     //are there any ghosts hitting the gem
@@ -59,6 +66,8 @@ private:
     
     
     void handleGhostWallCollision( std::vector<Tile>* tile, int ghostX, int ghostY );
+    
+    int getClosestGhostDirection( int posx, int posy );
 };
 
 }

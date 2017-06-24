@@ -35,9 +35,24 @@ void GameStateBuild::handleMouseClick( int mouseX, int mouseY, int& money )
     {
         int selectedWall = screen->getSelectedWallType();
         int selectedWallCost = screen->getSelectedWallCost( selectedWall );
-        if ( worldManager->buildWall( selectedWall ) && money >= selectedWallCost )
+        if ( money >= selectedWallCost )
         {
-            money -= selectedWallCost;
+            if ( worldManager->buildWall( selectedWall ) )
+            {
+                money -= selectedWallCost;
+            }
+        }
+    }
+    else if ( buildMode == MODE_BUILD_DEFENCES )
+    {
+        int selectedDefence = screen->getSelectedDefence();
+        int selectedDefenceCost = screen->getSelectedDefenceCost( selectedDefence );
+        if ( money >= selectedDefenceCost )
+        {
+            if ( worldManager->createDefence( selectedDefence ) )
+            {
+                money -= selectedDefenceCost;
+            }
         }
     }
 }

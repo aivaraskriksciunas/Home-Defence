@@ -38,20 +38,22 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/Game.o \
 	${OBJECTDIR}/src/characters/Bullet.o \
 	${OBJECTDIR}/src/characters/Character.o \
+	${OBJECTDIR}/src/characters/Defence.o \
 	${OBJECTDIR}/src/characters/Gem.o \
 	${OBJECTDIR}/src/characters/Ghost.o \
 	${OBJECTDIR}/src/characters/Player.o \
+	${OBJECTDIR}/src/characters/defences/PlasmaGun.o \
 	${OBJECTDIR}/src/engine/InputDriver.o \
 	${OBJECTDIR}/src/engine/SignalManager.o \
 	${OBJECTDIR}/src/engine/TextureManager.o \
 	${OBJECTDIR}/src/engine/VideoDriver.o \
 	${OBJECTDIR}/src/game/GameStateAttack.o \
 	${OBJECTDIR}/src/game/GameStateBuild.o \
-	${OBJECTDIR}/src/game/GameStoreManager.o \
 	${OBJECTDIR}/src/main.o \
 	${OBJECTDIR}/src/screens/GameAttackScreen.o \
 	${OBJECTDIR}/src/screens/GameBuildScreen.o \
 	${OBJECTDIR}/src/screens/GameOverScreen.o \
+	${OBJECTDIR}/src/screens/GameStoreManager.o \
 	${OBJECTDIR}/src/screens/PauseScreen.o \
 	${OBJECTDIR}/src/screens/Screen.o \
 	${OBJECTDIR}/src/screens/StartScreen.o \
@@ -110,6 +112,11 @@ ${OBJECTDIR}/src/characters/Character.o: src/characters/Character.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -I/usr/include -I/usr/include/c++/7.1.1/ `pkg-config --cflags sfml-system` `pkg-config --cflags sfml-window` `pkg-config --cflags sfml-graphics` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/characters/Character.o src/characters/Character.cpp
 
+${OBJECTDIR}/src/characters/Defence.o: src/characters/Defence.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/characters
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I/usr/include -I/usr/include/c++/7.1.1/ `pkg-config --cflags sfml-system` `pkg-config --cflags sfml-window` `pkg-config --cflags sfml-graphics` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/characters/Defence.o src/characters/Defence.cpp
+
 ${OBJECTDIR}/src/characters/Gem.o: src/characters/Gem.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/characters
 	${RM} "$@.d"
@@ -124,6 +131,11 @@ ${OBJECTDIR}/src/characters/Player.o: src/characters/Player.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/characters
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -I/usr/include -I/usr/include/c++/7.1.1/ `pkg-config --cflags sfml-system` `pkg-config --cflags sfml-window` `pkg-config --cflags sfml-graphics` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/characters/Player.o src/characters/Player.cpp
+
+${OBJECTDIR}/src/characters/defences/PlasmaGun.o: src/characters/defences/PlasmaGun.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/characters/defences
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I/usr/include -I/usr/include/c++/7.1.1/ `pkg-config --cflags sfml-system` `pkg-config --cflags sfml-window` `pkg-config --cflags sfml-graphics` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/characters/defences/PlasmaGun.o src/characters/defences/PlasmaGun.cpp
 
 ${OBJECTDIR}/src/engine/InputDriver.o: src/engine/InputDriver.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/engine
@@ -155,11 +167,6 @@ ${OBJECTDIR}/src/game/GameStateBuild.o: src/game/GameStateBuild.cpp
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -I/usr/include -I/usr/include/c++/7.1.1/ `pkg-config --cflags sfml-system` `pkg-config --cflags sfml-window` `pkg-config --cflags sfml-graphics` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/game/GameStateBuild.o src/game/GameStateBuild.cpp
 
-${OBJECTDIR}/src/game/GameStoreManager.o: src/game/GameStoreManager.cpp
-	${MKDIR} -p ${OBJECTDIR}/src/game
-	${RM} "$@.d"
-	$(COMPILE.cc) -g -I/usr/include -I/usr/include/c++/7.1.1/ `pkg-config --cflags sfml-system` `pkg-config --cflags sfml-window` `pkg-config --cflags sfml-graphics` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/game/GameStoreManager.o src/game/GameStoreManager.cpp
-
 ${OBJECTDIR}/src/main.o: src/main.cpp
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
@@ -179,6 +186,11 @@ ${OBJECTDIR}/src/screens/GameOverScreen.o: src/screens/GameOverScreen.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/screens
 	${RM} "$@.d"
 	$(COMPILE.cc) -g -I/usr/include -I/usr/include/c++/7.1.1/ `pkg-config --cflags sfml-system` `pkg-config --cflags sfml-window` `pkg-config --cflags sfml-graphics` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/screens/GameOverScreen.o src/screens/GameOverScreen.cpp
+
+${OBJECTDIR}/src/screens/GameStoreManager.o: src/screens/GameStoreManager.cpp
+	${MKDIR} -p ${OBJECTDIR}/src/screens
+	${RM} "$@.d"
+	$(COMPILE.cc) -g -I/usr/include -I/usr/include/c++/7.1.1/ `pkg-config --cflags sfml-system` `pkg-config --cflags sfml-window` `pkg-config --cflags sfml-graphics` -std=c++14  -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/screens/GameStoreManager.o src/screens/GameStoreManager.cpp
 
 ${OBJECTDIR}/src/screens/PauseScreen.o: src/screens/PauseScreen.cpp
 	${MKDIR} -p ${OBJECTDIR}/src/screens

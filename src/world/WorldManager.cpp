@@ -222,7 +222,7 @@ bool WorldManager::validateNeighborTile( int currentIndex, int neighborDirection
 void WorldManager::draw( Engine::VideoDriver* videoDriver )
 {
     worldDrawManager.renderMap( videoDriver, player, 
-                            characterManager->getGemPtr(), characterManager->getGhostsPtr(), 
+                            characterManager->getGemPtr(), characterManager->getGhostsPtr(), characterManager->getDefencesPtr(),
                             &map, selectedTile );
     
     worldDrawManager.renderPickups( videoDriver, characterManager->getPickupsPtr() );
@@ -414,3 +414,21 @@ bool WorldManager::buildWall( int wallType )
     return false;
 }
 
+void WorldManager::updateDefences()
+{
+    characterManager->updateDefences();
+}
+
+bool WorldManager::createDefence( int type )
+{
+    if ( map[selectedTile].tileType != TILE_FLOOR )
+    {
+        return false;
+    }
+    
+    
+    int tilePosx, tilePosy;
+    worldMath.convertIndexToIso( tilePosx, tilePosy, selectedTile );
+    
+    return characterManager->createDefence( tilePosx, tilePosy, type );
+}

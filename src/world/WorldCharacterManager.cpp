@@ -257,3 +257,71 @@ void WorldCharacterManager::handleGhostWallCollision( std::vector<Tile>* map, in
         }
     }
 }
+
+bool WorldCharacterManager::createDefence( int posx, int posy, int type )
+{
+    //make sure it will not overlap any other defences
+    for ( int defence = 0; defence < defences.size(); defence++ )
+    {
+        if ( defences[defence].checkCollision( posx, posy ) )
+        {
+            return false;
+        }
+    }
+    
+    switch ( type )
+    {
+        case DEFENCE_TYPE_PLASMA_GUN:
+            defences.push_back( PlasmaGun( posx, posy ) );
+            break;
+    }
+    
+    return true;
+}
+
+void WorldCharacterManager::updateDefences()
+{
+    for ( int defenceIndex = 0; defenceIndex < defences.size(); defenceIndex++ )
+    {
+        if ( ghosts.size() > 0 ) //only fire when there are ghosts
+        {
+            if ( defences[defenceIndex].isShooting() )
+            {
+                int defenceX = defences[defenceIndex].getX();
+                int defenceY = defences[defenceIndex].getY();
+                bullets.push_back( new Bullet( defenceX, defenceY, 
+                                               getClosestGhostDirection( defenceX, defenceY ) ) );
+            }
+        }
+    }
+}
+
+int WorldCharacterManager::getClosestGhostDirection( int posx, int posy )
+{
+    int closestGhostIndex = 0;
+    int closestGhostDistance = worldMathPtr->getDistanceBetweenPoints( posx, posy,
+                                                                       ghosts[0]->getX(), ghosts[0]->getY() );
+    for ( int ghostIndex = 1; ghostIndex < ghosts.size(); ghostIndex++ )
+    {
+        int currentDistance = worldMathPtr->getDistanceBetweenPoints( posx, posy,
+                                                                      ghosts[ghostIndex]->getX(), 
+                                                                      ghosts[ghostIndex]->getY() );
+        
+        if ( currentDistance < closestGhostDistance )
+        {
+            closestGhostDistance = currentDistance;
+            closestGhostIndex = ghostIndex;
+        }
+    }
+    
+    int distY = ghosts[closestGhostIndex]->getY() - posy;
+    int distX = ghosts[closestGhostIndex]->getX() - posx;
+    
+    return std::atan2( distY, distX ) * 180 / M_PI;
+    
+}
+
+std::vector<Defence>* WorldCharacterManager::getDefencesPtr()
+{
+    return &defences;
+}

@@ -68,3 +68,13 @@ int GameBuildScreen::getSelectedWallCost( int wallType )
 {
     return storeManager->getSelectedWallCost( wallType );
 }
+
+int GameBuildScreen::getSelectedDefence()
+{
+    return storeManager->getSelectedDefence();
+}
+
+int GameBuildScreen::getSelectedDefenceCost( int defenceType )
+{
+    return storeManager->getSelectedDefenceCost( defenceType );
+}

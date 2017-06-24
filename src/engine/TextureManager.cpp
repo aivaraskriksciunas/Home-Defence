@@ -18,6 +18,7 @@ sf::Texture TextureManager::bulletIcon;
 sf::Texture TextureManager::heartIcon;
 sf::Texture TextureManager::hammerIcon;
 sf::Texture TextureManager::gemIcon;
+sf::Texture TextureManager::plasmaGunTexture;
 sf::Font TextureManager::basicFont;
 
 TextureManager::TextureManager( std::string programPath )
@@ -27,6 +28,7 @@ TextureManager::TextureManager( std::string programPath )
     load( &this->emptyTileTexture, programPath + "/media/tiles/empty.png" );
     load( &this->bulletTexture, programPath + "/media/characters/bullet.png" );
     load( &this->gemTexture, programPath + "/media/characters/gem.png" );
+    load( &this->plasmaGunTexture, programPath + "/media/characters/defences/plasmaGun.png" );
     load( &this->bulletIcon, programPath + "/media/icons/bullet.png" );
     load( &this->heartIcon, programPath + "/media/icons/heart.png" );
     load( &this->hammerIcon, programPath + "/media/icons/hammer.png" );
@@ -105,6 +107,9 @@ sf::Texture& TextureManager::getTexture( int type, int texturePart )
             break;
         case TEXTURE_GEM:
             return gemTexture;
+            break;
+        case TEXTURE_DEFENCE_PLASMA_GUN:
+            return plasmaGunTexture;
             break;
     }
     return emptyTileTexture;

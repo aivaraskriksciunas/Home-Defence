@@ -57,6 +57,11 @@ int WorldMath::getDistanceBetweenTiles( int start, int end )
     return std::sqrt( std::pow( startX - endX, 2 ) + std::pow( startY - endY, 2 ) );
 }
 
+int WorldMath::getDistanceBetweenPoints( int point1X, int point1Y, int point2X, int point2Y )
+{
+    return std::sqrt( std::pow( point1X - point2X, 2 ) + std::pow( point1Y - point2Y, 2 ) );
+}
+
 void WorldMath::convertCartToIso( int& isoX, int& isoY, int cartX, int cartY )
 {
     isoX = cartX - cartY;

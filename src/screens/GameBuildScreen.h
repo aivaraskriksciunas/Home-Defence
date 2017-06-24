@@ -11,7 +11,7 @@
 #include "../ui/UISelectButton.h"
 #include "../ui/UISelectButtonContainer.h"
 #include "../world/WorldManager.h"
-#include "../game/GameStoreManager.h"
+#include "GameStoreManager.h"
 
 namespace Screens {
     
@@ -26,6 +26,9 @@ public:
     int getBuildMode();
     int getSelectedWallType();
     int getSelectedWallCost( int wallType );
+    
+    int getSelectedDefence();
+    int getSelectedDefenceCost( int defenceType );
     
 private:
     //all ui elements

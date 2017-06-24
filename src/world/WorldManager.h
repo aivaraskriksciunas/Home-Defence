@@ -41,6 +41,9 @@ public:
     void updateBullets();
     //if required, take away health from gem
     void updateGem();
+    void updateDefences();
+    
+    bool createDefence( int type );
     
     int getPlayerX();
     int getPlayerY();
